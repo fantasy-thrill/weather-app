@@ -20,6 +20,9 @@
 .header {
   margin-bottom: 10px;
 }
+#temperature {
+  margin: 10px 0
+}
 
 @keyframes logo-spin {
   from {
