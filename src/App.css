@@ -17,11 +17,22 @@
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
+.ui.card {
+  width: 400px !important;
+}
 .header {
   margin-bottom: 10px;
 }
 #temperature {
-  margin: 10px 0
+  margin: 10px 0;
+  font-size: 2em;
+}
+#weather-icon {
+  width: 40%;
+}
+#footer {
+  font-size: 0.50em;
+  margin: 20px 0 10px;
 }
 
 @keyframes logo-spin {
