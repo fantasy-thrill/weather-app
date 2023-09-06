@@ -30,6 +30,16 @@
 #weather-icon {
   width: 40%;
 }
+#details {
+  margin: 0 auto;
+  width: 80%;
+}
+.left {
+  text-align: left;
+}
+.right {
+  text-align: right;
+}
 #footer {
   font-size: 0.50em;
   margin: 20px 0 10px;
