@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../App.css';
 import { Card } from 'semantic-ui-react'
 
@@ -11,6 +12,7 @@ function CurrentWeather({weatherData}) {
   const feelsLike = Math.round((weatherData.main.feels_like * 1.8) + 32)
   const windSpeed = Math.round(2.23694 * weatherData.wind.speed)
 
+  const navigate = useNavigate()
   const optionsStyle = {
     display: "grid",
     gridTemplateColumns: "1fr 1fr",
@@ -109,7 +111,7 @@ function CurrentWeather({weatherData}) {
       </Card.Content>
       <Card.Content style={{ padding: "0" }}>
         <div className="options" style={optionsStyle}>
-          <div className="choice">
+          <div className="choice" onClick={() => navigate("/5-day-forecast")}>
             Five-Day Forecast
             <i className="calendar outline icon"></i>
           </div>

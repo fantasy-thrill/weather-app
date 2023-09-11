@@ -1,7 +1,9 @@
 import './App.css';
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
 import React, { useEffect, useState } from "react";
 import config from "../config"
 import Weather from "./components/Weather"
+import FiveDayForecast from './components/Forecast';
 
 function App() {
   const [lat, setLat] = useState([]);
@@ -26,15 +28,21 @@ function App() {
   }, [lat, long])
 
   return (
-    <div className="App">
-      {(typeof data.main != 'undefined') ? (
-        <Weather weatherData={data}/>
-      ) : (
-        <div>
-          <p>No data found</p>
-        </div>
-      )}
-    </div>
+    <Router>
+      <div className="App">
+        {(typeof data.main != 'undefined') ? (
+          <Routes>
+            <Route path="/" element={<Navigate to="/current" />} />
+            <Route path="/current" element={<Weather weatherData={data} />} />
+            <Route path="/5-day-forecast" element={<FiveDayForecast weatherData={data} />} />
+          </Routes>
+         ) : (
+          <div>
+           <p>No data found</p>
+          </div>
+        )}
+      </div>
+    </Router>
   )
 }
 
