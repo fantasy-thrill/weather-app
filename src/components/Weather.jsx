@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../App.css';
-import { Card, CardHeader } from 'semantic-ui-react'
+import { Card } from 'semantic-ui-react'
 
 function CurrentWeather({weatherData}) {
   const [periodOfDay, setPeriodOfDay] = useState("")
@@ -10,6 +10,12 @@ function CurrentWeather({weatherData}) {
   const fahrenheit = Math.round((weatherData.main.temp * 1.8) + 32)
   const feelsLike = Math.round((weatherData.main.feels_like * 1.8) + 32)
   const windSpeed = Math.round(2.23694 * weatherData.wind.speed)
+
+  const optionsStyle = {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    fontSize: "0.75em"
+  }
 
   function dateFormat(timestamp) {
     const dateStamp = new Date(parseInt(timestamp, 10) * 1000)
@@ -82,24 +88,36 @@ function CurrentWeather({weatherData}) {
             />
             <p>{newDescription}</p>
           </div>
-          <h2 id="temperature">{fahrenheit + "\u00B0F"}</h2>
-          <table id='details'>
+          <h2 id="temperature">{fahrenheit + "\u00B0F"}</h2>             
+          <table id="details">
             <tbody>
               <tr>
-               <td className='left'>Feels Like</td>
-               <td className='right'>{feelsLike + "\u00B0F"}</td>
+               <td className="left">Feels Like</td>
+               <td className="right">{feelsLike + "\u00B0F"}</td>
               </tr>
               <tr>
-               <td className='left'>Humidity</td>
-               <td className='right'>{weatherData.main.humidity + "%"}</td>
+               <td className="left">Humidity</td>
+               <td className="right">{weatherData.main.humidity + "%"}</td>
               </tr>
               <tr>
-               <td className='left'>Wind speed</td>
-               <td className='right'>{windSpeed + " mph"}</td>
+               <td className="left">Wind speed</td>
+               <td className="right">{windSpeed + " mph"}</td>
               </tr> 
             </tbody>
           </table>
           <p id="footer">Last updated {dateFormat(weatherData.dt)}</p>
+      </Card.Content>
+      <Card.Content style={{ padding: "0" }}>
+        <div className="options" style={optionsStyle}>
+          <div className="choice">
+            Five-Day Forecast
+            <i className="calendar outline icon"></i>
+          </div>
+          <div className="choice" onClick={() => window.location.reload()}>
+            Refresh
+            <i className="sync alternate icon"></i>
+          </div>
+        </div>
       </Card.Content>
     </Card>
    )

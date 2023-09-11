@@ -19,6 +19,7 @@
 }
 .ui.card {
   width: 400px !important;
+  background: rgb(255, 255, 255, 0.7) !important;
 }
 .header {
   margin-bottom: 10px;
@@ -43,6 +44,16 @@
 #footer {
   font-size: 0.50em;
   margin: 20px 0 10px;
+}
+.options div:first-child {
+  border-right: 1px solid lightgray;
+}
+.options div i {
+  margin-left: 10px;
+}
+.choice {
+  padding: 0.5em 0;
+  cursor: pointer;
 }
 
 @keyframes logo-spin {
