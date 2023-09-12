@@ -41,6 +41,19 @@ function App() {
     console.log(weatherData, forecastData)
   }, [weatherData, forecastData])
 
+  // useEffect(() => {
+  //   if (forecastData !== null) {
+  //     forecastData["list"].forEach(forecast => {
+  //       const dateStamp = new Date(parseInt(forecast["dt"], 10) * 1000)
+  //       const formattedDate = dateStamp.toLocaleDateString("en-US")
+  //       const formattedTime = dateStamp.toLocaleTimeString("en-US")
+  //       if (formattedTime === "11:00:00 AM") {
+  //         console.log(formattedDate)
+  //       }
+  //     })
+  //   }
+  // }, [forecastData])
+
   return (
     <Router>
       <div className="App">
