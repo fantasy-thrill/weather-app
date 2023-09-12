@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import '../App.css';
 import { Card } from 'semantic-ui-react'
 
-function CurrentWeather({weatherData}) {
+function CurrentWeather({data}) {
   const [periodOfDay, setPeriodOfDay] = useState("")
 
-  const description = weatherData.weather[0].description;
+  const description = data.weather[0].description;
   const newDescription = description.replace(description[0], description[0].toUpperCase())
-  const fahrenheit = Math.round((weatherData.main.temp * 1.8) + 32)
-  const feelsLike = Math.round((weatherData.main.feels_like * 1.8) + 32)
-  const windSpeed = Math.round(2.23694 * weatherData.wind.speed)
+  const fahrenheit = Math.round(data.main.temp)
+  const feelsLike = Math.round(data.main.feels_like)
+  const windSpeed = Math.round(data.wind.speed)
 
   const navigate = useNavigate()
   const optionsStyle = {
@@ -34,16 +34,16 @@ function CurrentWeather({weatherData}) {
   }
 
   function dayOrNight() {
-    if (weatherData.weather[0].icon[2] === "d") {
+    if (data.weather[0].icon[2] === "d") {
       setPeriodOfDay("day")
-    } else if (weatherData.weather[0].icon[2] === "n") {
+    } else if (data.weather[0].icon[2] === "n") {
       setPeriodOfDay("night")
     }
   }
 
   function setBackground() {
     const background = document.querySelector("body")
-    const weatherCode = weatherData.weather[0].id
+    const weatherCode = data.weather[0].id
 
     if (periodOfDay === "day") {
       if (weatherCode === 800 || weatherCode === 801) {
@@ -75,16 +75,16 @@ function CurrentWeather({weatherData}) {
   }, [periodOfDay])
 
   useEffect(() => {
-    if (weatherData.hasOwnProperty("weather")) { setBackground() }
+    if (data.hasOwnProperty("weather")) { setBackground() }
   })
 
   return (
     <Card>
       <Card.Content>
-          <Card.Header className="header">{weatherData.name}</Card.Header>
+          <Card.Header className="header">{data.name}</Card.Header>
           <div>
             <img 
-              src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`}
+              src={`https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
               alt=""
               id="weather-icon" 
             />
@@ -99,7 +99,7 @@ function CurrentWeather({weatherData}) {
               </tr>
               <tr>
                <td className="left">Humidity</td>
-               <td className="right">{weatherData.main.humidity + "%"}</td>
+               <td className="right">{data.main.humidity + "%"}</td>
               </tr>
               <tr>
                <td className="left">Wind speed</td>
@@ -107,7 +107,7 @@ function CurrentWeather({weatherData}) {
               </tr> 
             </tbody>
           </table>
-          <p id="footer">Last updated {dateFormat(weatherData.dt)}</p>
+          <p id="footer">Last updated {dateFormat(data.dt)}</p>
       </Card.Content>
       <Card.Content style={{ padding: "0" }}>
         <div className="options" style={optionsStyle}>

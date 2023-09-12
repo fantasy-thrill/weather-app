@@ -8,7 +8,8 @@ import FiveDayForecast from './components/Forecast';
 function App() {
   const [lat, setLat] = useState([]);
   const [long, setLong] = useState([]);
-  const [data, setData] = useState([])
+  const [weatherData, setWeatherData] = useState(null);
+  const [forecastData, setForecastData] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -17,24 +18,37 @@ function App() {
         setLong(position.coords.longitude);
       });
 
-      await fetch(`${config.apiURL}/weather/?lat=${lat}&lon=${long}&units=metric&APPID=${config.apiKey}`)
+      await fetch(`${config.apiURL}/weather/?lat=${lat}&lon=${long}&units=imperial&APPID=${config.apiKey}`)
       .then(res => res.json())
       .then(result => {
-        setData(result)
-        console.log(result);
+        if (result.cod !== "400") {
+          setWeatherData(result)
+        }
+      });
+
+      await fetch(`${config.apiURL}/forecast/?lat=${lat}&lon=${long}&units=imperial&APPID=${config.apiKey}`)
+      .then(res => res.json())
+      .then(result => {
+        if (result.cod !== "400") {
+          setForecastData(result)
+        }
       });
     }
-    fetchData();
+    fetchData()
   }, [lat, long])
+
+  useEffect(() => {
+    console.log(weatherData, forecastData)
+  }, [weatherData, forecastData])
 
   return (
     <Router>
       <div className="App">
-        {(typeof data.main != 'undefined') ? (
+        {(weatherData !== null && forecastData !== null) ? (
           <Routes>
             <Route path="/" element={<Navigate to="/current" />} />
-            <Route path="/current" element={<Weather weatherData={data} />} />
-            <Route path="/5-day-forecast" element={<FiveDayForecast weatherData={data} />} />
+            <Route path="/current" element={<Weather data={weatherData} />} />
+            <Route path="/5-day-forecast" element={<FiveDayForecast data={forecastData} />} />
           </Routes>
          ) : (
           <div>
