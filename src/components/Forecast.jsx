@@ -21,12 +21,11 @@ function FiveDayForecast({data}) {
   }
 
   function getForecast() {
-    for (const weatherDay of data["list"]) {
-      const timestamp = new Date(parseInt(weatherDay["dt"], 10) * 1000)
-      if (timestamp.toLocaleTimeString("en-US") === "11:00:00 AM") {
-        setForecastArr(prevState => [...prevState, weatherDay])
-      }
-    }
+    const cleanList = data["list"].filter(timePeriod => {
+      const dateObject = new Date(parseInt(timePeriod["dt"], 10) * 1000)
+      return dateObject.toLocaleTimeString("en-US") === "11:00:00 AM"
+    });
+    setForecastArr(cleanList)
   }
 
   useEffect(() => {
