@@ -78,8 +78,13 @@ function CurrentWeather({data}) {
     if (data.hasOwnProperty("weather")) { setBackground() }
   })
 
+  useEffect(() => {
+    const page = document.querySelector("html")
+    page.style.height = "100%"
+  }, [])
+
   return (
-    <Card>
+    <Card style={{ minWidth: "400px" }}>
       <Card.Content>
           <Card.Header className="header">{data.name}</Card.Header>
           <div>

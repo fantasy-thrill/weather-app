@@ -19,10 +19,7 @@
 }
 .ui.card {
   width: 400px !important;
-  background: rgb(255, 255, 255, 0.7) !important;
-}
-.header {
-  margin-bottom: 10px;
+  background: rgb(255, 255, 255, 0.5) !important;
 }
 #temperature {
   margin: 10px 0;
@@ -54,6 +51,16 @@
 .choice {
   padding: 0.5em 0;
   cursor: pointer;
+}
+.daily-fcast {
+  padding: 10px 20px;
+  border-bottom: 1px solid silver;
+}
+.weather-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr 50%;
+  margin: 10px 0;
+  align-items: center;
 }
 
 @keyframes logo-spin {
