@@ -14,8 +14,8 @@ function CurrentWeather({data}) {
 
   const navigate = useNavigate()
   const optionsStyle = {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
+    display: "flex",
+    flexDirection: "column",
     fontSize: "0.75em"
   }
 
@@ -116,13 +116,17 @@ function CurrentWeather({data}) {
       </Card.Content>
       <Card.Content style={{ padding: "0" }}>
         <div className="options" style={optionsStyle}>
-          <div className="choice" onClick={() => navigate("/5-day-forecast")}>
-            Five-Day Forecast
-            <i className="calendar outline icon"></i>
-          </div>
           <div className="choice" onClick={() => window.location.reload()}>
             Refresh
             <i className="sync alternate icon"></i>
+          </div>
+          <div className="choice" onClick={() => navigate("/3-hour-forecast")}>
+            Three-Hour Forecast
+            <i className="clock outline icon"></i>
+          </div>
+          <div className="choice" onClick={() => navigate("/5-day-forecast")}>
+            Five-Day Forecast
+            <i className="calendar outline icon"></i>
           </div>
         </div>
       </Card.Content>

@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import '../App.css';
 import { Card } from 'semantic-ui-react'
 
-function FiveDayForecast({data}) {
+function FiveDayForecast({ data }) {
   const [forecastArr, setForecastArr] = useState([])
 
   function getCurrentDateAndTime() {

@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import React, { useEffect, useState } from "react";
 import config from "../config"
 import Weather from "./components/Weather"
-import FiveDayForecast from './components/Forecast';
+import FiveDayForecast from './components/Forecast_5d';
+import ThreeHourForecast from './components/Forecast_3hr';
 
 function App() {
   const [lat, setLat] = useState([]);
@@ -39,20 +40,13 @@ function App() {
 
   useEffect(() => {
     console.log(weatherData, forecastData)
+    // if (forecastData !== null) {
+    //   forecastData["list"].forEach(forecast => {
+    //     const timestamp = new Date(parseInt(forecast["dt"], 10) * 1000)
+    //     console.log(timestamp.toLocaleString("en-US"))
+    //   })
+    // }
   }, [weatherData, forecastData])
-
-  // useEffect(() => {
-  //   if (forecastData !== null) {
-  //     forecastData["list"].forEach(forecast => {
-  //       const dateStamp = new Date(parseInt(forecast["dt"], 10) * 1000)
-  //       const formattedDate = dateStamp.toLocaleDateString("en-US")
-  //       const formattedTime = dateStamp.toLocaleTimeString("en-US")
-  //       if (formattedTime === "11:00:00 AM") {
-  //         console.log(formattedDate)
-  //       }
-  //     })
-  //   }
-  // }, [forecastData])
 
   return (
     <Router>
@@ -62,6 +56,7 @@ function App() {
             <Route path="/" element={<Navigate to="/current" />} />
             <Route path="/current" element={<Weather data={weatherData} />} />
             <Route path="/5-day-forecast" element={<FiveDayForecast data={forecastData} />} />
+            <Route path="/3-hour-forecast" element={<ThreeHourForecast data={forecastData} />} />
           </Routes>
          ) : (
           <div>
