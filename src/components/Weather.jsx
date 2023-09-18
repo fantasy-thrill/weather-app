@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../App.css';
 import { Card } from 'semantic-ui-react'
 
-function CurrentWeather({data}) {
+function CurrentWeather({ data }) {
   const [periodOfDay, setPeriodOfDay] = useState("")
 
   const description = data.weather[0].description;
@@ -52,19 +52,19 @@ function CurrentWeather({data}) {
         background.style.backgroundColor = "#A6B9C2"
       } else if (weatherCode >= 200 && weatherCode <= 531) {
         background.style.backgroundColor = "#7F888C"
-      } else if (weatherDescription.includes("snow") || weatherDescription.includes("sleet")) {
+      } else if (description.includes("snow") || description.includes("sleet")) {
         background.style.backgroundColor = "#C1CFD5"
       }
     }
 
     if (periodOfDay === "night") {
       if (weatherCode === 800 || weatherCode === 801) {
-        background.style.backgroundColor = "#12125F"
+        background.style.backgroundColor = "#3192F4"
       } else if (weatherCode >= 802 && weatherCode <= 804) {
-        background.style.backgroundColor = "#9191CE"
+        background.style.backgroundColor = "#2C77E5"
       } else if (weatherCode >= 200 && weatherCode <= 531) {
         background.style.backgroundColor = "#5B5B8E"
-      } else if (description.includes("snow") || weatherDescription.includes("sleet")) {
+      } else if (description.includes("snow") || description.includes("sleet")) {
         background.style.backgroundColor = "#9191CE"
       }
     }
