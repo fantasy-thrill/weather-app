@@ -53,3 +53,10 @@ export function displayIcon(obj) {
       break;
   }
 }
+
+export function degreesToCardinal(degrees) {
+  const cardinalDirections = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
+  const index = Math.round(degrees / 22.5);  
+  const cardinalIndex = (index + 16) % 16;   
+  return cardinalDirections[cardinalIndex];
+}

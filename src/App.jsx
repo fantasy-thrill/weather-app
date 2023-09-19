@@ -3,14 +3,14 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import React, { useEffect, useState } from "react";
 import config from "../config"
 import Weather from "./components/Weather"
-import FiveDayForecast from './components/Forecast_5d';
-import ThreeHourForecast from './components/Forecast_3hr';
+import FiveDayForecast from './components/DailyForecast';
+import HourlyForecast from './components/HourlyForecast';
 
 function App() {
   const [lat, setLat] = useState([]);
   const [long, setLong] = useState([]);
-  const [weatherData, setWeatherData] = useState(null);
-  const [forecastData, setForecastData] = useState(null);
+  const [data, setData] = useState(null);
+  const [city, setCity] = useState("")
 
   useEffect(() => {
     async function fetchData() {
@@ -19,19 +19,21 @@ function App() {
         setLong(position.coords.longitude);
       });
 
-      await fetch(`${config.apiURL}/weather/?lat=${lat}&lon=${long}&units=imperial&APPID=${config.apiKey}`)
+      await fetch(`${config.geoApiURL}/reverse?lat=${lat}&lon=${long}&limit=3&appid=${config.apiKey}`)
       .then(res => res.json())
-      .then(result => {
-        if (result.cod !== "400") {
-          setWeatherData(result)
-        }
-      });
+      .then(
+        result => {
+          setCity(result[0].name)
+          console.log(result)
+        }, 
+        error => console.log("City could not be fetched: " + error)
+      );
 
-      await fetch(`${config.apiURL}/forecast/?lat=${lat}&lon=${long}&units=imperial&APPID=${config.apiKey}`)
+      await fetch(`${config.apiURL}/onecall?lat=${lat}&lon=${long}&exclude=minutely&units=imperial&appid=${config.apiKey}`)
       .then(res => res.json())
       .then(result => {
         if (result.cod !== "400") {
-          setForecastData(result)
+          setData(result)
         }
       });
     }
@@ -39,24 +41,18 @@ function App() {
   }, [lat, long])
 
   useEffect(() => {
-    console.log(weatherData, forecastData)
-    // if (forecastData !== null) {
-    //   forecastData["list"].forEach(forecast => {
-    //     const timestamp = new Date(parseInt(forecast["dt"], 10) * 1000)
-    //     console.log(timestamp.toLocaleString("en-US"))
-    //   })
-    // }
-  }, [weatherData, forecastData])
+    console.log(data)
+  }, [data])
 
   return (
     <Router>
       <div className="App">
-        {(weatherData !== null && forecastData !== null) ? (
+        {(data !== null) ? (
           <Routes>
             <Route path="/" element={<Navigate to="/current" />} />
-            <Route path="/current" element={<Weather data={weatherData} />} />
-            <Route path="/5-day-forecast" element={<FiveDayForecast data={forecastData} />} />
-            <Route path="/3-hour-forecast" element={<ThreeHourForecast data={forecastData} />} />
+            <Route path="/current" element={<Weather weatherData={data.current} city={city} />} />
+            <Route path="/5-day-forecast" element={<FiveDayForecast weatherData={data.daily} />} />
+            <Route path="/3-hour-forecast" element={<HourlyForecast weatherData={data.hourly} />} />
           </Routes>
          ) : (
           <div>
