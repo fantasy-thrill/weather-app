@@ -114,7 +114,7 @@ function CurrentWeather({ data }) {
           </table>
           <p id="footer">Last updated {dateFormat(data.dt)}</p>
       </Card.Content>
-      <Card.Content style={{ padding: "0" }}>
+      <Card.Content style={{ padding: "0", borderTop: "none" }}>
         <div className="options" style={optionsStyle}>
           <div className="choice" onClick={() => window.location.reload()}>
             Refresh
