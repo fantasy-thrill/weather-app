@@ -77,7 +77,7 @@ function CurrentWeather({ weatherData, city }) {
 
   useEffect(() => {
     if (weatherData.hasOwnProperty("weather")) { setBackground() }
-  }, [weatherData])
+  })
 
   useEffect(() => {
     const page = document.querySelector("html")

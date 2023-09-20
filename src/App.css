@@ -50,9 +50,17 @@ i.icon {
   cursor: pointer;
   border-top: 1px solid #c0cacd;
 }
-.daily-fcast {
+.daily-fcast, .hourly-fcast {
   padding: 10px 20px;
   border-bottom: 1px solid silver;
+}
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 10px;
+}
+.nav-btn {
+  cursor: pointer;
 }
 .weather-info {
   display: grid;

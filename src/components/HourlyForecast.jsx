@@ -6,7 +6,8 @@ import { Card } from 'semantic-ui-react'
 function HourlyForecast({ weatherData }) {
   const [startIndex, setStartIndex] = useState(0)
   const [endIndex, setEndIndex] = useState(12)
-  const [hourlyGroup, setHourlyGroup] = useState(weatherData.slice(startIndex, endIndex))
+
+  let hourlyGroup = weatherData.slice(startIndex, endIndex)
 
   function getCurrentDateAndTime() {
     const dateObject = new Date()
@@ -35,15 +36,17 @@ function HourlyForecast({ weatherData }) {
     const body = document.querySelector("html")
     body.style.height = "fit-content"
   })
+
+  useEffect(() => console.log(startIndex, endIndex), [startIndex, endIndex])
   
   return (
     <Card style={{ minWidth: "750px" }}>
       <Card.Content>
         <Card.Header>Hourly Forecast</Card.Header>
       </Card.Content>
-      <Card.Content>
+      <Card.Content style={{ padding: 0 }}>
         {hourlyGroup.map(hour => (
-          <div className="daily-fcast">
+          <div className="hourly-fcast">
             <h2>{getTime(hour["dt"])}</h2>
             <div className="weather-info">
               <div className="weather-condition">
@@ -74,6 +77,26 @@ function HourlyForecast({ weatherData }) {
             </div>
           </div>
         ))}
+        <div className="nav-buttons">
+          <div className="nav-btn" onClick={() => {
+            if (startIndex !== 0) {
+              setStartIndex(startIndex - 12)
+              endIndex === undefined ? setEndIndex(startIndex) : setEndIndex(endIndex - 12)
+            }
+          }}>
+            <i className="long arrow alternate left icon"></i>
+            Previous
+          </div>
+          <div className="nav-btn" onClick={() => {
+            if (endIndex !== undefined) {
+              setStartIndex(startIndex + 12)
+              endIndex + 12 > weatherData.length - 1 ? setEndIndex(undefined) : setEndIndex(endIndex + 12)
+            }
+          }}>
+            Next
+            <i className="long arrow alternate right icon"></i>
+          </div>
+        </div>
         <p>Click <Link to="/current">here</Link> to go back to main page.</p>
       </Card.Content>
     </Card>
