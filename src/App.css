@@ -68,6 +68,9 @@ i.icon {
   margin: 10px 0;
   align-items: center;
 }
+.weather-condition, .extra-info {
+  font-size: 0.75em;
+}
 
 @keyframes logo-spin {
   from {

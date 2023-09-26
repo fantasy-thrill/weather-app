@@ -121,13 +121,17 @@ function CurrentWeather({ weatherData, city }) {
             Refresh
             <i className="sync alternate icon"></i>
           </div>
-          <div className="choice" onClick={() => navigate("/3-hour-forecast")}>
-            Three-Hour Forecast
+          <div className="choice" onClick={() => navigate("/hourly-forecast")}>
+            Hourly Forecast
             <i className="clock outline icon"></i>
           </div>
-          <div className="choice" onClick={() => navigate("/5-day-forecast")}>
-            Five-Day Forecast
+          <div className="choice" onClick={() => navigate("/8-day-forecast")}>
+            Eight-Day Forecast
             <i className="calendar outline icon"></i>
+          </div>
+          <div className="choice" onClick={() => navigate("/search")}>
+            Search
+            <i className="search icon"></i>
           </div>
         </div>
       </Card.Content>

@@ -3,8 +3,9 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import React, { useEffect, useState } from "react";
 import config from "../config"
 import Weather from "./components/Weather"
-import FiveDayForecast from './components/DailyForecast';
+import DailyForecast from './components/DailyForecast';
 import HourlyForecast from './components/HourlyForecast';
+import SearchCity from './components/SearchCity';
 
 function App() {
   const [lat, setLat] = useState([]);
@@ -29,6 +30,18 @@ function App() {
         error => console.log("City could not be fetched: " + error)
       );
 
+      // await fetch(`${config.geoApiURL}/direct?q=Elmont&limit=5&appid=${config.apiKey}`)
+      //   .then(result => result.json())
+      //   .then(
+      //     res => {
+      //       if (res.length === 0) {
+      //         console.log("City not found")
+      //       } else {
+      //         console.log(res)
+      //       }
+      //     },
+      //   )
+
       await fetch(`${config.apiURL}/onecall?lat=${lat}&lon=${long}&exclude=minutely&units=imperial&appid=${config.apiKey}`)
       .then(res => res.json())
       .then(result => {
@@ -50,9 +63,10 @@ function App() {
         {(data !== null) ? (
           <Routes>
             <Route path="/" element={<Navigate to="/current" />} />
+            <Route path="/search" element={<SearchCity />} />
             <Route path="/current" element={<Weather weatherData={data.current} city={city} />} />
-            <Route path="/5-day-forecast" element={<FiveDayForecast weatherData={data.daily} />} />
-            <Route path="/3-hour-forecast" element={<HourlyForecast weatherData={data.hourly} />} />
+            <Route path="/8-day-forecast" element={<DailyForecast weatherData={data.daily} />} />
+            <Route path="/hourly-forecast" element={<HourlyForecast weatherData={data.hourly} />} />
           </Routes>
          ) : (
           <div>

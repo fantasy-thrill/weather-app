@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import '../App.css';
 import { Card } from 'semantic-ui-react'
+import { degreesToCardinal } from '../iconAndDataHandler';
 
 function HourlyForecast({ weatherData }) {
   const [startIndex, setStartIndex] = useState(0)
@@ -69,7 +70,9 @@ function HourlyForecast({ weatherData }) {
                     </tr>
                     <tr>
                      <td className="left">Wind speed</td>
-                     <td className="right">{Math.round(hour.wind_speed) + " mph"}</td>
+                     <td className="right">
+                      {`${degreesToCardinal(hour.wind_deg)} ${Math.round(hour.wind_speed)} mph`}
+                     </td>
                     </tr> 
                   </tbody>
                 </table>

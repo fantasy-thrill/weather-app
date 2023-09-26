@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import '../App.css';
 import { Card } from 'semantic-ui-react'
+import { degreesToCardinal } from '../iconAndDataHandler';
 
 function FiveDayForecast({ weatherData }) {
-//  const [forecastArr, setForecastArr] = useState([])
-
   function getCurrentDateAndTime() {
     const dateObject = new Date()
     const options = {
@@ -30,21 +29,6 @@ function FiveDayForecast({ weatherData }) {
     return dateObject.toLocaleDateString("en-US", options)
   }
 
-  // function getForecast() {
-  //   const cleanList = weatherData["list"].filter(timePeriod => {
-  //     const dateObject = new Date(parseInt(timePeriod["dt"], 10) * 1000)
-  //     return dateObject.toLocaleTimeString("en-US") === "11:00:00 AM"
-  //   });
-  //   setForecastArr(cleanList)
-  // }
-
-  // useEffect(() => {
-  //   if (forecastArr.length < 5) {
-  //     getForecast()
-  //   }
-  //   console.log(forecastArr)
-  // }, [forecastArr])
-
   useEffect(() => {
     const body = document.querySelector("html")
     body.style.height = "fit-content"
@@ -53,7 +37,7 @@ function FiveDayForecast({ weatherData }) {
   return (
     <Card style={{ minWidth: "750px" }}>
       <Card.Content>
-        <Card.Header className="header">Five-Day Forecast</Card.Header>
+        <Card.Header className="header">Eight-Day Forecast</Card.Header>
       </Card.Content>
       <Card.Content style={{ padding: 0 }}>
         {weatherData.map(weatherDay => (
@@ -80,7 +64,9 @@ function FiveDayForecast({ weatherData }) {
                     </tr>
                     <tr>
                      <td className="left">Wind speed</td>
-                     <td className="right">{Math.round(weatherDay.wind_speed) + " mph"}</td>
+                     <td className="right">
+                      {`${degreesToCardinal(weatherDay.wind_deg)} ${Math.round(weatherDay.wind_speed)} mph`}
+                     </td>
                     </tr> 
                   </tbody>
                 </table>
