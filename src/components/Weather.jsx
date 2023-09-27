@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import '../App.css';
 import { Card } from 'semantic-ui-react'
 import { degreesToCardinal } from '../iconAndDataHandler';
 
-function CurrentWeather({ weatherData, city }) {
+function CurrentWeather() {
+  const { city, state, country } = useParams()
+
+//  const [cityDetails, setCityDetails] = useState(null)
+  const [weatherData, setWeatherData] = useState({})
   const [periodOfDay, setPeriodOfDay] = useState("")
 
   const description = weatherData.weather[0].description;
@@ -72,12 +76,36 @@ function CurrentWeather({ weatherData, city }) {
   }
 
   useEffect(() => {
-    dayOrNight()
+    async function fetchData() {
+      await fetch(`${config.geoApiURL}/direct?q=${city},${state},${country}&limit=5&appid=${config.apiKey}`)
+      .then(result => result.json())
+      .then(res => {
+        if (res.length === 0) {
+          console.log("City not found")
+        } else {
+           fetch(`${config.apiURL}/onecall?lat=${res.lat}&lon=${res.long}&exclude=minutely&units=imperial&appid=${config.apiKey}`)
+            .then(data => data.json())
+            .then(obj => {
+              if (obj.cod !== "400") {
+                setWeatherData(obj.current)
+              }
+            });
+          }
+      })
+      .catch(error => console.log("Weather data not fetched: " + error))
+    }
+    fetchData()
+  }, [city, state, country])
+
+  useEffect(() => {
+    if (weatherData !== null) {
+      dayOrNight()
+    }
   }, [periodOfDay])
 
   useEffect(() => {
     if (weatherData.hasOwnProperty("weather")) { setBackground() }
-  })
+  }, [weatherData])
 
   useEffect(() => {
     const page = document.querySelector("html")
