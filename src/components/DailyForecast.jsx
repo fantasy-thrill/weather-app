@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import '../App.css';
 import { Card } from 'semantic-ui-react'
-import { degreesToCardinal } from '../iconAndDataHandler';
+import { degreesToCardinal } from '../utilities';
 
 function FiveDayForecast({ weatherData }) {
   function getCurrentDateAndTime() {

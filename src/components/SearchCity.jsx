@@ -1,39 +1,26 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import '../App.css';
 import config from '../../config';
 import { Card } from 'semantic-ui-react'
 
 function SearchCity() {
-//  const [inputValue, setInputValue] = useState("")
   const [dropdownDisplay, setDropdownDisplay] = useState("none")
 
   const inputElem = useRef()
   const dropdownMenu = useRef()
   const navigate = useNavigate()
 
-  const divStyle = {
-    margin: "10px auto",
-    backgroundColor: "gray",
-  }
-
-  const inputStyle = {
-    width: "200px",
-    fontSize: "24px"
-  }
-
-  const buttonStyle = {
-    verticalAlign: "text-top",
-    marginLeft: "10px",
-    padding: "5px 10px"
-  }
-
-  const dropdownStyle = {
-    position: "absolute",
-    backgroundColor: "silver",
-    border: "1px solid",
-    display: dropdownDisplay,
-    width: "20em"
+  const styles = {
+    searchDiv: {
+      margin: "10px auto",
+    },
+    dropdown: {
+      position: "absolute",
+      backgroundColor: "silver",
+      border: "1px solid",
+      display: dropdownDisplay,
+      width: "20em"
+    }
   }
 
   function fetchData(inputValue) {
@@ -62,15 +49,26 @@ function SearchCity() {
       .catch(error => console.log(`Could not fetch cities: ${error}`))
   }
 
+  useEffect(() => {
+    const page = document.querySelector("html")
+    page.style.height = "100%"
+  }, [])
+
   return (
-    <div style={divStyle}>
-      <input type="text" style={inputStyle} ref={inputElem} onChange={(e) => {
-        e.target.value === "" ? setDropdownDisplay("none") : fetchData(e.target.value)
-      }} />
-      <div id="dropdown-menu" style={dropdownStyle} ref={dropdownMenu}></div>
-      <button type="submit" style={buttonStyle}>Search</button>
-      <p>Click <Link to="/current">here</Link> to return to main page.</p>
-    </div>
+    <>
+      <div id="header" style={{ marginBottom: "1.50em"}}>
+        <h1>Weather App</h1>
+        <h4 style={{ marginBlockStart: "0.25em" }}>Powered by the OpenWeather API</h4>
+      </div>
+      <p>Enter your city in the search bar below.</p>
+      <div id="search" style={styles.searchDiv}>
+        <input type="text" id="city-input" ref={inputElem} onChange={(e) => {
+          e.target.value === "" ? setDropdownDisplay("none") : fetchData(e.target.value)
+        }} />
+        <div id="dropdown-menu" style={styles.dropdown} ref={dropdownMenu}></div>
+        <button type="submit" id="city-submit">Search</button>
+      </div>
+    </>
   )
 }
 

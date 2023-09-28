@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import config from '../../config';
 import { Card, Loader } from 'semantic-ui-react'
-import { degreesToCardinal, dateFormat, getBackgroundColor } from '../iconAndDataHandler';
+import { degreesToCardinal, dateFormat, getBackgroundColor } from '../utilities';
 
 const styles = {
   options: {
@@ -86,11 +86,11 @@ function CurrentWeather() {
             Refresh
             <i className="sync alternate icon"></i>
           </div>
-          <div className="choice" onClick={() => navigate("/hourly-forecast")}>
+          <div className="choice" onClick={() => navigate(`/hourly-forecast/${city}/${state}/${country}`)}>
             Hourly Forecast
             <i className="clock outline icon"></i>
           </div>
-          <div className="choice" onClick={() => navigate("/8-day-forecast")}>
+          <div className="choice" onClick={() => navigate(`/8-day-forecast/${city}/${state}/${country}`)}>
             Eight-Day Forecast
             <i className="calendar outline icon"></i>
           </div>

@@ -108,3 +108,26 @@ export function degreesToCardinal(degrees) {
 
   return backgroundColor;
 }
+
+export function getCurrentDateAndTime() {
+  const dateObject = new Date()
+  const options = {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit"
+  }
+  const currentTime = dateObject.toLocaleTimeString("en-US", options)
+  return currentTime
+}
+
+export function getTime(timestamp) {
+  const dateObject = new Date(parseInt(timestamp, 10) * 1000)
+  const options = {
+    hour: "numeric",
+    minute: "2-digit"
+  }
+  return dateObject.toLocaleTimeString("en-US", options)
+}

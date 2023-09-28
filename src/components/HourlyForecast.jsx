@@ -1,37 +1,40 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import '../App.css';
-import { Card } from 'semantic-ui-react'
-import { degreesToCardinal } from '../iconAndDataHandler';
+import config from '../../config';
+import { Card, Loader } from 'semantic-ui-react'
+import { getCurrentDateAndTime, getTime, degreesToCardinal } from '../utilities';
 
-function HourlyForecast({ weatherData }) {
+function HourlyForecast() {
+  const { city, state, country } = useParams()
+
+  const [weatherData, setWeatherData] = useState(null)
   const [startIndex, setStartIndex] = useState(0)
   const [endIndex, setEndIndex] = useState(12)
 
-  let hourlyGroup = weatherData.slice(startIndex, endIndex)
+  let hourlyGroup = weatherData ? weatherData.slice(startIndex, endIndex) : null
 
-  function getCurrentDateAndTime() {
-    const dateObject = new Date()
-    const options = {
-      weekday: "long",
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-      hour: "numeric",
-      minute: "2-digit"
+  useEffect(() => {
+    async function fetchData() {
+      await fetch(`${config.geoApiURL}/direct?q=${city},${state},${country}&limit=5&appid=${config.apiKey}`)
+      .then(result => result.json())
+      .then(res => {
+        if (res.length === 0) {
+          console.log("City not found")
+        } else {
+           fetch(`${config.apiURL}/onecall?lat=${res[0].lat}&lon=${res[0].lon}&exclude=minutely&units=imperial&appid=${config.apiKey}`)
+            .then(data => data.json())
+            .then(obj => {
+              if (obj.cod !== "400") {
+                setWeatherData(obj.hourly)
+              }
+            });
+          }
+      })
+      .catch(error => console.log("Weather data not fetched: " + error))
     }
-    const currentTime = dateObject.toLocaleTimeString("en-US", options)
-    return currentTime
-  }
-
-  function getTime(timestamp) {
-    const dateObject = new Date(parseInt(timestamp, 10) * 1000)
-    const options = {
-      hour: "numeric",
-      minute: "2-digit"
-    }
-    return dateObject.toLocaleTimeString("en-US", options)
-  }
+    fetchData()
+  }, [city, state, country])
 
   useEffect(() => {
     const body = document.querySelector("html")
@@ -46,7 +49,7 @@ function HourlyForecast({ weatherData }) {
         <Card.Header>Hourly Forecast</Card.Header>
       </Card.Content>
       <Card.Content style={{ padding: 0 }}>
-        {hourlyGroup.map(hour => (
+        {hourlyGroup ? (hourlyGroup.map(hour => (
           <div className="hourly-fcast">
             <h2>{getTime(hour["dt"])}</h2>
             <div className="weather-info">
@@ -79,7 +82,7 @@ function HourlyForecast({ weatherData }) {
               </div>
             </div>
           </div>
-        ))}
+        ))) : (<Loader>Loading</Loader>)}
         <div className="nav-buttons">
           <div className="nav-btn" onClick={() => {
             if (startIndex !== 0) {
@@ -100,7 +103,7 @@ function HourlyForecast({ weatherData }) {
             <i className="long arrow alternate right icon"></i>
           </div>
         </div>
-        <p>Click <Link to="/current">here</Link> to go back to main page.</p>
+        <p>Click <Link to={`/current/${city}/${state}/${country}`}>here</Link> to go back to main page.</p>
       </Card.Content>
     </Card>
   )
