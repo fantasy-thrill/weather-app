@@ -80,7 +80,7 @@ export function degreesToCardinal(degrees) {
   const period = data?.weather[0]?.icon[2]
   const description = data?.weather[0]?.description
 
-  let backgroundColor = "#000000"
+  let backgroundColor = "#ffffff"
 
   if (period === "d") {
     if (weatherCode === 800 || weatherCode === 801) {
@@ -123,11 +123,22 @@ export function getCurrentDateAndTime() {
   return currentTime
 }
 
-export function getTime(timestamp) {
+export function getTime(timestamp, timeZone) {
   const dateObject = new Date(parseInt(timestamp, 10) * 1000)
   const options = {
+    timeZone: timeZone,
     hour: "numeric",
     minute: "2-digit"
   }
   return dateObject.toLocaleTimeString("en-US", options)
+}
+
+export function getDayOfWeek(timestamp) {
+  const dateObject = new Date(parseInt(timestamp, 10) * 1000)
+  const options = {
+    weekday: "long",
+    month: "long",
+    day: "numeric"
+  }
+  return dateObject.toLocaleDateString("en-US", options)
 }

@@ -56,7 +56,7 @@ function SearchCity() {
 
   return (
     <>
-      <div id="header" style={{ marginBottom: "1.50em"}}>
+      <div id="header" style={{ marginBottom: "1.50em" }}>
         <h1>Weather App</h1>
         <h4 style={{ marginBlockStart: "0.25em" }}>Powered by the OpenWeather API</h4>
       </div>

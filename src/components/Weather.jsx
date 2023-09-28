@@ -4,14 +4,6 @@ import config from '../../config';
 import { Card, Loader } from 'semantic-ui-react'
 import { degreesToCardinal, dateFormat, getBackgroundColor } from '../utilities';
 
-const styles = {
-  options: {
-    display: "flex",
-    flexDirection: "column",
-    fontSize: "0.75em"
-  }
-};
-
 function CurrentWeather() {
   const { city, state, country } = useParams()
 
@@ -22,7 +14,6 @@ function CurrentWeather() {
   const fahrenheit = weatherData ? Math.round(weatherData.temp) : null
   const feelsLike = weatherData ? Math.round(weatherData.feels_like) : null
   const windSpeed = weatherData ? Math.round(weatherData.wind_speed) : null
-  const backgroundColor = getBackgroundColor(weatherData);
 
   const navigate = useNavigate()
 
@@ -48,10 +39,16 @@ function CurrentWeather() {
     fetchData()
   }, [city, state, country])
 
+  useEffect(() => {
+    const body = document.querySelector("body")
+    body.style.height = "100%"
+    body.style.backgroundColor = getBackgroundColor(weatherData);
+  })
+
   return (
     weatherData ? (
     <Card style={{ minWidth: "400px" }}>
-      <Card.Content style={{backgroundColor}}>
+      <Card.Content>
           <Card.Header className="header">{city}</Card.Header>
           <div>
             <img 
@@ -80,8 +77,8 @@ function CurrentWeather() {
           </table>
           <p id="footer">Last updated {dateFormat(weatherData.dt)}</p>
       </Card.Content>
-      <Card.Content style={{ padding: "0", borderTop: "none", backgroundColor }}>
-        <div className="options" style={styles.options}>
+      <Card.Content style={{ padding: "0", borderTop: "none" }}>
+        <div className="options">
           <div className="choice" onClick={() => window.location.reload()}>
             Refresh
             <i className="sync alternate icon"></i>

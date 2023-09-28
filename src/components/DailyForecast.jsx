@@ -1,41 +1,44 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import '../App.css';
-import { Card } from 'semantic-ui-react'
-import { degreesToCardinal } from '../utilities';
+import { useNavigate, useParams, Link } from 'react-router-dom';
+import config from '../../config';
+import { Card, Loader } from 'semantic-ui-react'
+import { getDayOfWeek, degreesToCardinal } from '../utilities';
 
-function FiveDayForecast({ weatherData }) {
-  function getCurrentDateAndTime() {
-    const dateObject = new Date()
-    const options = {
-      weekday: "long",
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-      hour: "numeric",
-      minute: "2-digit"
-    }
-    const currentTime = dateObject.toLocaleTimeString("en-US", options)
-    return currentTime
-  }
+function FiveDayForecast() {
+  const { city, state, country } = useParams()
 
-  function getDayOfWeek(timestamp) {
-    const dateObject = new Date(parseInt(timestamp, 10) * 1000)
-    const options = {
-      weekday: "long",
-      month: "long",
-      day: "numeric"
-    }
-    return dateObject.toLocaleDateString("en-US", options)
-  }
+  const [weatherData, setWeatherData] = useState(null)
 
   useEffect(() => {
-    const body = document.querySelector("html")
+    async function fetchData() {
+      await fetch(`${config.geoApiURL}/direct?q=${city},${state},${country}&limit=5&appid=${config.apiKey}`)
+      .then(result => result.json())
+      .then(res => {
+        if (res.length === 0) {
+          console.log("City not found")
+        } else {
+           fetch(`${config.apiURL}/onecall?lat=${res[0].lat}&lon=${res[0].lon}&exclude=minutely&units=imperial&appid=${config.apiKey}`)
+            .then(data => data.json())
+            .then(obj => {
+              if (obj.cod !== "400") {
+                setWeatherData(obj.daily)
+              }
+            });
+          }
+      })
+      .catch(error => console.log("Weather data not fetched: " + error))
+    }
+    fetchData()
+  }, [city, state, country])
+
+  useEffect(() => {
+    const body = document.querySelector("body")
     body.style.height = "fit-content"
   })
 
   return (
-    <Card style={{ minWidth: "750px" }}>
+    weatherData ? (
+    <Card style={{ minWidth: "40em" }}>
       <Card.Content>
         <Card.Header className="header">Eight-Day Forecast</Card.Header>
       </Card.Content>
@@ -74,9 +77,10 @@ function FiveDayForecast({ weatherData }) {
             </div>
           </div>
         ))}
-        <p>Click <Link to="/current">here</Link> to go back to main page.</p>
+        <p>Click <Link to={`/current/${city}/${state}/${country}`}>here</Link> to go back to main page.</p>
       </Card.Content>
     </Card>
+    ) : (<Loader>Loading</Loader>)
   )
 }
 

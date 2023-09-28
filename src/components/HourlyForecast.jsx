@@ -9,6 +9,7 @@ function HourlyForecast() {
   const { city, state, country } = useParams()
 
   const [weatherData, setWeatherData] = useState(null)
+  const [timeZone, setTimeZone] = useState("")
   const [startIndex, setStartIndex] = useState(0)
   const [endIndex, setEndIndex] = useState(12)
 
@@ -27,6 +28,7 @@ function HourlyForecast() {
             .then(obj => {
               if (obj.cod !== "400") {
                 setWeatherData(obj.hourly)
+                setTimeZone(obj.timezone)
               }
             });
           }
@@ -37,21 +39,21 @@ function HourlyForecast() {
   }, [city, state, country])
 
   useEffect(() => {
-    const body = document.querySelector("html")
+    const body = document.querySelector("body")
     body.style.height = "fit-content"
   })
 
-  useEffect(() => console.log(startIndex, endIndex), [startIndex, endIndex])
+ // useEffect(() => console.log(startIndex, endIndex), [startIndex, endIndex])
   
   return (
-    <Card style={{ minWidth: "750px" }}>
+    <Card style={{ minWidth: "40em" }}>
       <Card.Content>
         <Card.Header>Hourly Forecast</Card.Header>
       </Card.Content>
       <Card.Content style={{ padding: 0 }}>
         {hourlyGroup ? (hourlyGroup.map(hour => (
           <div className="hourly-fcast">
-            <h2>{getTime(hour["dt"])}</h2>
+            <h2>{getTime(hour["dt"], timeZone)}</h2>
             <div className="weather-info">
               <div className="weather-condition">
                 <img src={`https://openweathermap.org/img/wn/${hour.weather[0].icon}@2x.png`} alt="" />

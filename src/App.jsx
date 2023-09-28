@@ -1,7 +1,6 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
 import React, { useEffect, useState } from "react";
-import config from "../config"
 import Weather from "./components/Weather"
 import DailyForecast from './components/DailyForecast';
 import HourlyForecast from './components/HourlyForecast';
