@@ -54,9 +54,57 @@ export function displayIcon(obj) {
   }
 }
 
+export function dateFormat(timestamp) {
+  const dateStamp = new Date(parseInt(timestamp, 10) * 1000)
+  const options = {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit"
+  }
+  const longFormat = dateStamp.toLocaleString("en-US", options)
+  return longFormat
+}
+
 export function degreesToCardinal(degrees) {
   const cardinalDirections = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
   const index = Math.round(degrees / 22.5);  
   const cardinalIndex = (index + 16) % 16;   
   return cardinalDirections[cardinalIndex];
+}
+
+ export function getBackgroundColor(data) {
+  const weatherCode = data?.weather[0]?.id
+  const period = data?.weather[0]?.icon[2]
+  const description = data?.weather[0]?.description
+
+  let backgroundColor = "#000000"
+
+  if (period === "d") {
+    if (weatherCode === 800 || weatherCode === 801) {
+      backgroundColor = "#87ceeb"
+    } else if (weatherCode >= 802 && weatherCode <= 804) {
+      backgroundColor = "#A6B9C2"
+    } else if (weatherCode >= 200 && weatherCode <= 531) {
+      backgroundColor = "#7F888C"
+    } else if (description.includes("snow") || description.includes("sleet")) {
+      backgroundColor = "#C1CFD5"
+    }
+  }
+
+  if (period === "n") {
+    if (weatherCode === 800 || weatherCode === 801) {
+      backgroundColor = "#3192F4"
+    } else if (weatherCode >= 802 && weatherCode <= 804) {
+      backgroundColor = "#2C77E5"
+    } else if (weatherCode >= 200 && weatherCode <= 531) {
+      backgroundColor = "#5B5B8E"
+    } else if (description.includes("snow") || description.includes("sleet")) {
+      backgroundColor = "#9191CE"
+    }
+  }
+
+  return backgroundColor;
 }
