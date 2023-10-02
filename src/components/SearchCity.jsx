@@ -50,17 +50,32 @@ function SearchCity() {
   }
 
   useEffect(() => {
+    const selection = document.getElementById("country-selection")
+    selection.innerHTML = ""
+
+    fetch("http://api.geonames.org/countryInfoJSON?username=tempguy200")
+      .then(result => result.json())
+      .then(data => data.geonames.forEach(country => {
+        const option = document.createElement("option")
+        option.textContent = country.countryName
+        selection.appendChild(option)
+      }))
+      .catch(error => "Error fetching US cities: " + error)
+  }, [])
+
+  useEffect(() => {
     const page = document.querySelector("html")
     page.style.height = "100%"
   }, [])
 
   return (
     <>
-      <div id="header" style={{ marginBottom: "1.50em" }}>
+      <div id="header" style={{ marginBottom: "1.50em"}}>
         <h1>Weather App</h1>
         <h4 style={{ marginBlockStart: "0.25em" }}>Powered by the OpenWeather API</h4>
       </div>
-      <p>Enter your city in the search bar below.</p>
+      <p>Select your country then enter your city in the search bar below.</p>
+      <select name="country" id="country-selection"></select>
       <div id="search" style={styles.searchDiv}>
         <input type="text" id="city-input" ref={inputElem} onChange={(e) => {
           e.target.value === "" ? setDropdownDisplay("none") : fetchData(e.target.value)
