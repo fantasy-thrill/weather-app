@@ -40,10 +40,10 @@ function HourlyForecast() {
 
   useEffect(() => {
     const body = document.querySelector("body")
-    body.style.height = "fit-content"
-  })
+    body.setAttribute("id", "hourly-and-daily")
+  }, [])
 
- // useEffect(() => console.log(startIndex, endIndex), [startIndex, endIndex])
+//  useEffect(() => console.log(weatherData), [weatherData])
   
   return (
     <Card style={{ minWidth: "40em" }}>
@@ -52,7 +52,7 @@ function HourlyForecast() {
       </Card.Content>
       <Card.Content style={{ padding: 0 }}>
         {hourlyGroup ? (hourlyGroup.map(hour => (
-          <div className="hourly-fcast">
+          <div className="hourly-fcast" key={hour.dt}>
             <h2>{getTime(hour["dt"], timeZone)}</h2>
             <div className="weather-info">
               <div className="weather-condition">

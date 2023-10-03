@@ -8,6 +8,7 @@ function CurrentWeather() {
   const { city, state, country } = useParams()
 
   const [weatherData, setWeatherData] = useState(null)
+  const [background, setBackground] = useState("")
 
   const description = weatherData ? weatherData.weather[0].description : null;
   const newDescription = weatherData ? description.replace(description[0], description[0].toUpperCase()) : null;
@@ -33,6 +34,7 @@ function CurrentWeather() {
             .then(obj => {
               if (obj.cod !== "400") {
                 setWeatherData(obj.current)
+                setBackground(getBackgroundColor(obj.current))
               }
             });
           }
@@ -44,9 +46,10 @@ function CurrentWeather() {
 
   useEffect(() => {
     const body = document.querySelector("body")
-    body.style.height = "100%"
-    body.style.backgroundColor = getBackgroundColor(weatherData);
-  })
+    body.setAttribute("id", "weather-body")
+    body.style.backgroundColor = background
+    console.log(background)
+  }, [background])
 
   return (
     weatherData ? (

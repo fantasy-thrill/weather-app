@@ -109,6 +109,11 @@ export function degreesToCardinal(degrees) {
   return backgroundColor;
 }
 
+export function setWeatherBackground(data) {
+  const background = document.getElementById("weather-body")
+  background.style.backgroundColor = getBackgroundColor(data)
+}
+
 export function getCurrentDateAndTime() {
   const dateObject = new Date()
   const options = {

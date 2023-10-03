@@ -17,27 +17,24 @@ function SearchCity() {
     },
     dropdown: {
       position: "absolute",
-      backgroundColor: "silver",
-      border: "1px solid",
+      backgroundColor: "#e7e7e7",
+      border: "1px solid silver",
       display: dropdownDisplay,
       width: "20em"
     }
   }
 
   function fetchData(inputValue) {
-    const capitalLetter = inputValue[0].toUpperCase()
-    const capInputValue = inputValue.replace(inputValue[0], capitalLetter)
-
-    fetch(`http://api.geonames.org/searchJSON?q=united+states&name_startsWith=${capInputValue}&maxRows=10&username=${config.geoApiUsername}`)
+    fetch(`http://api.geonames.org/searchJSON?q=united+states&name_startsWith=${inputValue}&maxRows=10&username=${config.geoApiUsername}`)
       .then(result => result.json())
       .then(cities => {
-        if (cities.geonames.length > 0) {
+        if (cities.geonames.length > 0 || inputValue !== "") {
           setDropdownDisplay("block")
           dropdownMenu.current.innerHTML = ""
           cities.geonames.forEach(city => {
             const cityDiv = document.createElement("div");
             cityDiv.textContent = `${city.toponymName}, ${city.adminName1}, ${city.countryCode}`
-            cityDiv.style.cursor = "pointer"
+            cityDiv.setAttribute("class", "city-choice")
             cityDiv.addEventListener("click", () => navigate(`/current/${city.toponymName}/${city.adminCode1}/${city.countryCode}`))
             dropdownMenu.current.appendChild(cityDiv);
           });
@@ -54,8 +51,8 @@ function SearchCity() {
   }, [])
 
   useEffect(() => {
-    const page = document.querySelector("html")
-    page.style.height = "100%"
+    const page = document.querySelector("body")
+    page.setAttribute("id", "search-page-body")
   }, [])
 
   return (

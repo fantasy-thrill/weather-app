@@ -33,8 +33,8 @@ function FiveDayForecast() {
 
   useEffect(() => {
     const body = document.querySelector("body")
-    body.style.height = "fit-content"
-  })
+    body.setAttribute("id", "hourly-and-daily")
+  }, [])
 
   return (
     weatherData ? (
