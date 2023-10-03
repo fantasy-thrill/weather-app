@@ -8,16 +8,6 @@ import HourlyForecast from './components/HourlyForecast';
 import SearchCity from './components/SearchCity';
 
 function App() {
-  useEffect(() => {
-    fetch("http://api.geonames.org/searchJSON?q=united+states&name_startsWith=nas&username=tempguy200")
-      .then(result => result.json())
-      .then(data => {
-        const filteredList = data.geonames.filter(country => country.fclName === "city, village,...")
-        console.log(filteredList)
-      })
-      .catch(error => "Error fetching US cities: " + error)
-  })
-
   return (
     <Router>
       <div className="App">

@@ -5,6 +5,7 @@ import { Card } from 'semantic-ui-react'
 
 function SearchCity() {
   const [dropdownDisplay, setDropdownDisplay] = useState("none")
+  const [countriesList, setCountriesList] = useState(null)
 
   const inputElem = useRef()
   const dropdownMenu = useRef()
@@ -27,21 +28,17 @@ function SearchCity() {
     const capitalLetter = inputValue[0].toUpperCase()
     const capInputValue = inputValue.replace(inputValue[0], capitalLetter)
 
-    fetch(`${config.geoApiURL}/direct?q=${capInputValue}&limit=5&appid=${config.apiKey}`)
+    fetch(`http://api.geonames.org/searchJSON?q=united+states&name_startsWith=${capInputValue}&maxRows=10&username=${config.geoApiUsername}`)
       .then(result => result.json())
       .then(cities => {
-        if (cities.length > 0) {
+        if (cities.geonames.length > 0) {
           setDropdownDisplay("block")
           dropdownMenu.current.innerHTML = ""
-          cities.forEach(city => {
+          cities.geonames.forEach(city => {
             const cityDiv = document.createElement("div");
-            if (city.state === undefined) {
-              cityDiv.textContent = `${city.name}, ${city.country}`
-            } else {
-              cityDiv.textContent = `${city.name}, ${city.state} ${city.country}`
-            }
+            cityDiv.textContent = `${city.toponymName}, ${city.adminName1}, ${city.countryCode}`
             cityDiv.style.cursor = "pointer"
-            cityDiv.addEventListener("click", () => navigate(`/current/${city.name}/${city.state}/${city.country}`))
+            cityDiv.addEventListener("click", () => navigate(`/current/${city.toponymName}/${city.adminCode1}/${city.countryCode}`))
             dropdownMenu.current.appendChild(cityDiv);
           });
         }
@@ -50,17 +47,10 @@ function SearchCity() {
   }
 
   useEffect(() => {
-    const selection = document.getElementById("country-selection")
-    selection.innerHTML = ""
-
-    fetch("http://api.geonames.org/countryInfoJSON?username=tempguy200")
+    fetch(`http://api.geonames.org/countryInfoJSON?username=${config.geoApiUsername}`)
       .then(result => result.json())
-      .then(data => data.geonames.forEach(country => {
-        const option = document.createElement("option")
-        option.textContent = country.countryName
-        selection.appendChild(option)
-      }))
-      .catch(error => "Error fetching US cities: " + error)
+      .then(data => setCountriesList(data.geonames))
+      .catch(error => "Error fetching cities: " + error)
   }, [])
 
   useEffect(() => {
@@ -75,7 +65,9 @@ function SearchCity() {
         <h4 style={{ marginBlockStart: "0.25em" }}>Powered by the OpenWeather API</h4>
       </div>
       <p>Select your country then enter your city in the search bar below.</p>
-      <select name="country" id="country-selection"></select>
+      <select name="country" id="country-selection">
+        {countriesList ? (countriesList.map(country => (<option key={country.geonameId}>{country.countryName}</option>))) : ""}
+      </select>
       <div id="search" style={styles.searchDiv}>
         <input type="text" id="city-input" ref={inputElem} onChange={(e) => {
           e.target.value === "" ? setDropdownDisplay("none") : fetchData(e.target.value)

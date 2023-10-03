@@ -19,7 +19,10 @@ function CurrentWeather() {
 
   useEffect(() => {
     async function fetchData() {
-      await fetch(`${config.geoApiURL}/direct?q=${city},${state},${country}&limit=5&appid=${config.apiKey}`)
+      let fetchURL = country === "US" ? `${config.geoApiURL}/direct?q=${city},${state},${country}&limit=5&appid=${config.apiKey}` :
+      `${config.geoApiURL}/direct?q=${city},${country}&limit=5&appid=${config.apiKey}`
+
+      await fetch(fetchURL)
       .then(result => result.json())
       .then(res => {
         if (res.length === 0) {
