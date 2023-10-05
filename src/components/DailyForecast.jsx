@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import config from '../../config';
 import { Card, Loader } from 'semantic-ui-react'
-import { getDayOfWeek, degreesToCardinal } from '../utilities';
+import { getDayOfWeek, degreesToCardinal, displayIcon } from '../utilities';
 
 function FiveDayForecast() {
   const { city, state, country } = useParams()
@@ -48,7 +48,7 @@ function FiveDayForecast() {
             <h2>{getDayOfWeek(weatherDay["dt"])}</h2>
             <div className="weather-info">
               <div className="weather-condition">
-                <img src={`https://openweathermap.org/img/wn/${weatherDay.weather[0].icon}@2x.png`} alt="" />
+                <img src={displayIcon(weatherDay)} alt="" id="weather-icon" />
                 <p>{weatherDay.weather[0].description}</p>
               </div>
               <div className="temperature">

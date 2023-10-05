@@ -35,6 +35,7 @@ function CurrentWeather() {
               if (obj.cod !== "400") {
                 setWeatherData(obj.current)
                 setBackground(getBackgroundColor(obj.current))
+                console.log(obj.current)
               }
             });
           }
@@ -52,31 +53,47 @@ function CurrentWeather() {
 
   return (
     weatherData ? (
-    <Card style={{ minWidth: "400px" }}>
+    <Card style={{ minWidth: "700px" }}>
       <Card.Content>
-          <Card.Header className="header">{city}</Card.Header>
-          <div>
-            <img src={displayIcon(weatherData)} alt="" id="weather-icon" />
+          {country === "US" ? (
+            <Card.Header className="header">{city}, {state}</Card.Header>
+          ) : (
+          <Card.Header className="header">{city}, {country}</Card.Header>
+          )}
+      </Card.Content>
+      <Card.Content style={{ display: "flex" }}>
+          <div style={{ margin: "0 2.5em" }}>
+            <img src={displayIcon(weatherData)} alt="" style={{ width: "7.5em", margin: "0.5em" }} />
             <p>{newDescription}</p>
+            <h2 id="temperature">{fahrenheit + "\u00B0F"}</h2>
+            <p id="footer">Last updated {dateFormat(weatherData.dt)}</p>
           </div>
-          <h2 id="temperature">{fahrenheit + "\u00B0F"}</h2>          
-          <table id="details">
-            <tbody>
-              <tr>
-               <td className="left">Feels Like</td>
-               <td className="right">{feelsLike + "\u00B0F"}</td>
-              </tr>
-              <tr>
-               <td className="left">Humidity</td>
-               <td className="right">{weatherData.humidity + "%"}</td>
-              </tr>
-              <tr>
-               <td className="left">Wind speed</td>
-               <td className="right">{`${degreesToCardinal(weatherData.wind_deg)} ${windSpeed} mph`}</td>
-              </tr> 
-            </tbody>
-          </table>
-          <p id="footer">Last updated {dateFormat(weatherData.dt)}</p>
+          <div style={{ width: "15em" }}>
+            <table id="details">
+              <tbody>
+                <tr>
+                  <td className="left">Feels Like</td>
+                  <td className="right">{feelsLike + "\u00B0F"}</td>
+                </tr>
+                <tr>
+                 <td className="left">Humidity</td>
+                 <td className="right">{weatherData.humidity + "%"}</td>
+                </tr>
+                <tr>
+                 <td className="left">Wind speed</td>
+                 <td className="right">{`${degreesToCardinal(weatherData.wind_deg)} ${windSpeed} mph`}</td>
+                </tr>
+                <tr>
+                  <td className="left">Cloud cover</td>
+                  <td className="right">{weatherData.clouds + "%"}</td>
+                </tr>
+                <tr>
+                  <td className='left'>Dew point</td>
+                  <td className='right'>{Math.round(weatherData.dew_point) + "\u00B0F"}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
       </Card.Content>
       <Card.Content style={{ padding: "0", borderTop: "none" }}>
         <div className="options">

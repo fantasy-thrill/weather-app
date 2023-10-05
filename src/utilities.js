@@ -24,16 +24,24 @@ export function displayIcon(obj) {
       }
       break;
     case "Clouds":
-      if (obj.weather[0].description === "few clouds") {
-        if (period === "n") {
-          return icons.partlyCloudyNight
-        } else {
-          return icons.partlySunny
-        }
-      } else if (obj.weather[0].description === "overcast clouds") {
-        return icons.cloudy
-      } else {
-        return icons.partlyCloudy
+      switch (obj.weather[0].description) {
+        case "few clouds":
+          if (period === "n") {
+            return icons.clearNight
+          } else {
+            return icons.partlySunny
+          }
+          break;
+        case "scattered clouds":
+        case "broken clouds":
+          if (period === "n") {
+            return icons.partlyCloudyNight
+          } else {
+            return icons.partlyCloudy
+          }
+          break;
+        default:
+          return icons.cloudy
       }
       break;
     case "Rain":

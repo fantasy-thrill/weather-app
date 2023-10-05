@@ -54,7 +54,7 @@
 }
 #temperature {
   margin: 10px 0;
-  font-size: 2em;
+  font-size: 2.5em;
 }
 #weather-icon {
   width: 5em;
@@ -69,6 +69,7 @@
 }
 .right {
   text-align: right;
+  font-weight: bold;
 }
 #footer {
   font-size: 0.50em;

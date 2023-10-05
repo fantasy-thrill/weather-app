@@ -29,6 +29,7 @@ function HourlyForecast() {
               if (obj.cod !== "400") {
                 setWeatherData(obj.hourly)
                 setTimeZone(obj.timezone)
+                console.log(obj.hourly)
               }
             });
           }
@@ -103,7 +104,7 @@ function HourlyForecast() {
             <i className="long arrow alternate right icon"></i>
           </div>
         </div>
-        <p>Click <Link to={`/current/${city}/${state}/${country}`}>here</Link> to go back to main page.</p>
+        <p style={{ margin: "0.75em 0"}}>Click <Link to={`/current/${city}/${state}/${country}`}>here</Link> to go back to main page.</p>
       </Card.Content>
     </Card>
   )
