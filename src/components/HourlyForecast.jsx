@@ -3,7 +3,7 @@ import { useNavigate, useParams, Link } from 'react-router-dom';
 import '../App.css';
 import config from '../../config';
 import { Card, Loader } from 'semantic-ui-react'
-import { getCurrentDateAndTime, getTime, degreesToCardinal } from '../utilities';
+import { displayIcon, getTime, degreesToCardinal } from '../utilities';
 
 function HourlyForecast() {
   const { city, state, country } = useParams()
@@ -42,8 +42,6 @@ function HourlyForecast() {
     const body = document.querySelector("body")
     body.setAttribute("id", "hourly-and-daily")
   }, [])
-
-//  useEffect(() => console.log(weatherData), [weatherData])
   
   return (
     <Card style={{ minWidth: "40em" }}>
@@ -56,7 +54,7 @@ function HourlyForecast() {
             <h2>{getTime(hour["dt"], timeZone)}</h2>
             <div className="weather-info">
               <div className="weather-condition">
-                <img src={`https://openweathermap.org/img/wn/${hour.weather[0].icon}@2x.png`} alt="" />
+                <img src={displayIcon(hour)} alt="" id="weather-icon"/>
                 <p>{hour.weather[0].description}</p>
               </div>
               <div className="temperature">

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import config from '../../config';
 import { Card, Loader } from 'semantic-ui-react'
-import { degreesToCardinal, dateFormat, getBackgroundColor } from '../utilities';
+import { degreesToCardinal, dateFormat, getBackgroundColor, displayIcon } from '../utilities';
 
 function CurrentWeather() {
   const { city, state, country } = useParams()
@@ -48,7 +48,6 @@ function CurrentWeather() {
     const body = document.querySelector("body")
     body.setAttribute("id", "weather-body")
     body.style.backgroundColor = background
-    console.log(background)
   }, [background])
 
   return (
@@ -57,11 +56,7 @@ function CurrentWeather() {
       <Card.Content>
           <Card.Header className="header">{city}</Card.Header>
           <div>
-            <img 
-              src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`}
-              alt=""
-              id="weather-icon" 
-            />
+            <img src={displayIcon(weatherData)} alt="" id="weather-icon" />
             <p>{newDescription}</p>
           </div>
           <h2 id="temperature">{fahrenheit + "\u00B0F"}</h2>          

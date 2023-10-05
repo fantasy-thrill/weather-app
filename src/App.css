@@ -29,7 +29,7 @@
 }
 #search-page-body {
   height: 100% !important;
-  background: linear-gradient(blue, yellow);
+  background: linear-gradient(#ffee00, #ffc400);
 }
 #city-input {
   width: 12.5em;
@@ -57,7 +57,8 @@
   font-size: 2em;
 }
 #weather-icon {
-  width: 40%;
+  width: 5em;
+  margin: 1em 0;
 }
 #details {
   margin: 0 auto;

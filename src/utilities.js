@@ -1,14 +1,15 @@
 export const icons = {
-  sunny: "",
-  clearNight: "",
-  partlyCloudy: "",
-  partlyCloudyNight: "",
-  cloudy: "",
-  rain: "",
-  thunderstorms: "",
-  snow: "",
-  snowflake: "",
-  fog: ""
+  sunny: "https://i.postimg.cc/X7FVcxGQ/sun.png",
+  clearNight: "https://i.postimg.cc/rs0HTnXb/crescent-moon.png",
+  partlySunny: "https://i.postimg.cc/XvLmkBk2/partly-sunny.png",
+  partlyCloudy: "https://i.postimg.cc/0ypLrBM1/partly-cloudy.png",
+  partlyCloudyNight: "https://i.postimg.cc/Zq4XNxpB/partly-cloudy-night.png",
+  cloudy: "https://i.postimg.cc/nzL5RVdn/cloud.png",
+  rain: "https://i.postimg.cc/0jTByY9N/rain.png",
+  thunderstorms: "https://i.postimg.cc/MpSzsR1x/thunder.png",
+  snow: "https://i.postimg.cc/FFYF1h9t/snow.png",
+  snowflake: "https://i.postimg.cc/fW1z91LV/snowflake.png",
+  fog: "https://i.postimg.cc/wvbrSKPL/fog.png"
 }
 
 export function displayIcon(obj) {
@@ -27,10 +28,12 @@ export function displayIcon(obj) {
         if (period === "n") {
           return icons.partlyCloudyNight
         } else {
-          return icons.partlyCloudy
+          return icons.partlySunny
         }
-      } else {
+      } else if (obj.weather[0].description === "overcast clouds") {
         return icons.cloudy
+      } else {
+        return icons.partlyCloudy
       }
       break;
     case "Rain":
