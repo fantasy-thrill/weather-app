@@ -45,7 +45,7 @@ function HourlyForecast() {
   }, [])
   
   return (
-    <Card style={{ minWidth: "40em" }}>
+    <Card style={{ minWidth: "35em" }}>
       <Card.Content>
         <Card.Header>Hourly Forecast</Card.Header>
       </Card.Content>
@@ -85,24 +85,24 @@ function HourlyForecast() {
           </div>
         ))) : (<Loader>Loading</Loader>)}
         <div className="nav-buttons">
-          <div className="nav-btn" onClick={() => {
-            if (startIndex !== 0) {
+          {startIndex !== 0 ? (
+            <div className="nav-btn" onClick={() => {
               setStartIndex(startIndex - 12)
               endIndex === undefined ? setEndIndex(startIndex) : setEndIndex(endIndex - 12)
-            }
-          }}>
-            <i className="long arrow alternate left icon"></i>
-            Previous
-          </div>
-          <div className="nav-btn" onClick={() => {
-            if (endIndex !== undefined) {
+            }}>
+              <i className="long arrow alternate left icon"></i>
+              Previous
+            </div>
+          ) : ""}
+          {endIndex !== undefined ? (
+            <div className="nav-btn" style={{ margin: "0 0 0 auto" }} onClick={() => {
               setStartIndex(startIndex + 12)
               endIndex + 12 > weatherData.length - 1 ? setEndIndex(undefined) : setEndIndex(endIndex + 12)
-            }
-          }}>
-            Next
-            <i className="long arrow alternate right icon"></i>
-          </div>
+            }}>
+              Next
+              <i className="long arrow alternate right icon"></i>
+            </div>
+          ) : ""}
         </div>
         <p style={{ margin: "0.75em 0"}}>Click <Link to={`/current/${city}/${state}/${country}`}>here</Link> to go back to main page.</p>
       </Card.Content>

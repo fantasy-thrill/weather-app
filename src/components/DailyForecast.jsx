@@ -22,6 +22,7 @@ function FiveDayForecast() {
             .then(obj => {
               if (obj.cod !== "400") {
                 setWeatherData(obj.daily)
+                console.log(obj.daily)
               }
             });
           }
@@ -38,7 +39,7 @@ function FiveDayForecast() {
 
   return (
     weatherData ? (
-    <Card style={{ minWidth: "40em" }}>
+    <Card style={{ minWidth: "35em" }}>
       <Card.Content>
         <Card.Header className="header">Eight-Day Forecast</Card.Header>
       </Card.Content>
@@ -52,10 +53,12 @@ function FiveDayForecast() {
                 <p>{weatherDay.weather[0].description}</p>
               </div>
               <div className="temperature">
-                <h1 style={{ fontSize: "2em" }}>{Math.round(weatherDay.temp.max) + "\u00B0F"}</h1>
+                <h1 style={{ fontSize: "1.5em", textAlign: "right" }}>
+                  {Math.round(weatherDay.temp.max) + "\u00B0F"} / {Math.round(weatherDay.temp.min) + "\u00B0F"}
+                </h1>
               </div>
               <div className="extra-info">
-                <table id="details">
+                <table style={{ margin: "0 0 0 auto", width: "80%" }}>
                   <tbody>
                     <tr>
                      <td className="left">Feels Like</td>

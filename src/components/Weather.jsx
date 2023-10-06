@@ -61,15 +61,15 @@ function CurrentWeather() {
           <Card.Header className="header">{city}, {country}</Card.Header>
           )}
       </Card.Content>
-      <Card.Content style={{ display: "flex" }}>
+      <Card.Content style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
           <div style={{ margin: "0 2.5em" }}>
             <img src={displayIcon(weatherData)} alt="" style={{ width: "7.5em", margin: "0.5em" }} />
             <p>{newDescription}</p>
             <h2 id="temperature">{fahrenheit + "\u00B0F"}</h2>
             <p id="footer">Last updated {dateFormat(weatherData.dt)}</p>
           </div>
-          <div style={{ width: "15em" }}>
-            <table id="details">
+          <div>
+            <table style={{ width: "90%" }}>
               <tbody>
                 <tr>
                   <td className="left">Feels Like</td>
