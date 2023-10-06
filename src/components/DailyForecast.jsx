@@ -40,8 +40,13 @@ function FiveDayForecast() {
   return (
     weatherData ? (
     <Card style={{ minWidth: "35em" }}>
-      <Card.Content>
-        <Card.Header className="header">Eight-Day Forecast</Card.Header>
+      <Card.Content className="heading">
+        {country === "US" ? (
+          <Card.Header>{city}, {state}</Card.Header>
+        ) : (
+          <Card.Header>{city}, {country}</Card.Header>
+        )}
+        <p style={{ fontSize: "0.75em", color: "#a9a9a9" }}>Eight-day forecast</p>
       </Card.Content>
       <Card.Content style={{ padding: 0 }}>
         {weatherData.map(weatherDay => (
@@ -58,7 +63,7 @@ function FiveDayForecast() {
                 </h1>
               </div>
               <div className="extra-info">
-                <table style={{ margin: "0 0 0 auto", width: "80%" }}>
+                <table style={{ margin: "0 1em 0 auto", width: "80%" }}>
                   <tbody>
                     <tr>
                      <td className="left">Feels Like</td>

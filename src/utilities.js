@@ -1,3 +1,8 @@
+export function setSearchQuery(str) {
+  const lower = str.toLowerCase()
+  return lower.replace(" ", "+")
+}
+
 export const icons = {
   sunny: "https://i.postimg.cc/X7FVcxGQ/sun.png",
   clearNight: "https://i.postimg.cc/rs0HTnXb/crescent-moon.png",

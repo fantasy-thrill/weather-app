@@ -53,13 +53,14 @@ function CurrentWeather() {
 
   return (
     weatherData ? (
-    <Card style={{ minWidth: "700px" }}>
-      <Card.Content>
-          {country === "US" ? (
-            <Card.Header className="header">{city}, {state}</Card.Header>
-          ) : (
-          <Card.Header className="header">{city}, {country}</Card.Header>
-          )}
+    <Card style={{ minWidth: "35em" }}>
+      <Card.Content className="heading">
+        {country === "US" ? (
+          <Card.Header>{city}, {state}</Card.Header>
+        ) : (
+          <Card.Header>{city}, {country}</Card.Header>
+        )}
+        <p style={{ fontSize: "0.75em", color: "#a9a9a9" }}>Current weather</p>
       </Card.Content>
       <Card.Content style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
           <div style={{ margin: "0 2.5em" }}>
