@@ -14,7 +14,9 @@ export const icons = {
   thunderstorms: "https://i.postimg.cc/MpSzsR1x/thunder.png",
   snow: "https://i.postimg.cc/FFYF1h9t/snow.png",
   snowflake: "https://i.postimg.cc/fW1z91LV/snowflake.png",
-  fog: "https://i.postimg.cc/wvbrSKPL/fog.png"
+  fog: "https://i.postimg.cc/wvbrSKPL/fog.png",
+  sunrise: "https://i.postimg.cc/KjC4kdYG/sunrise.png",
+  sunset: "https://i.postimg.cc/SQPnvzfB/sunset.png"
 }
 
 export function displayIcon(obj) {
@@ -65,6 +67,7 @@ export function displayIcon(obj) {
       break;
     case "Fog":
     case "Mist":
+    case "Haze":
       return icons.fog
       break;
   }

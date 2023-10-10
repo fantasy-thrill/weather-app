@@ -2,13 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import config from '../../config';
 import { Card, Loader } from 'semantic-ui-react'
-import { degreesToCardinal, dateFormat, getBackgroundColor, displayIcon, uvIndexFormat } from '../utilities';
+import { 
+  degreesToCardinal, 
+  dateFormat,
+  getTime, 
+  getBackgroundColor, 
+  displayIcon, 
+  uvIndexFormat, 
+  icons } from '../utilities';
 
 function CurrentWeather() {
   const { city, state, country } = useParams()
 
   const [weatherData, setWeatherData] = useState(null)
   const [background, setBackground] = useState("")
+  const [timeZone, setTimeZone] = useState("")  
 
   const description = weatherData ? weatherData.weather[0].description : null;
   const newDescription = weatherData ? description.replace(description[0], description[0].toUpperCase()) : null;
@@ -35,6 +43,7 @@ function CurrentWeather() {
               if (obj.cod !== "400") {
                 setWeatherData(obj.current)
                 setBackground(getBackgroundColor(obj.current))
+                setTimeZone(obj.timezone)
                 console.log(obj.current)
               }
             });
@@ -101,6 +110,22 @@ function CurrentWeather() {
               </tbody>
             </table>
           </div>
+      </Card.Content>
+      <Card.Content style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+        <div className="rise-and-set">
+          <img src={icons.sunrise} alt="sunrise" style={{ width: "3em", margin: "0 auto" }} />
+          <div style={{ textAlign: "left" }}>
+            <p style={{ fontSize: "0.75em" }}>Sunrise</p>
+            <p style={{ fontSize: "1em", fontWeight: "bold" }}>{getTime(weatherData.sunrise, timeZone)}</p>
+          </div>
+        </div>
+        <div className="rise-and-set">
+          <img src={icons.sunset} alt="sunset" style={{ width: "3em", margin: "0 auto" }} />
+          <div style={{ textAlign: "left" }}>
+            <p style={{ fontSize: "0.75em" }}>Sunset</p>
+            <p style={{ fontSize: "1em", fontWeight: "bold" }}>{getTime(weatherData.sunset, timeZone)}</p>
+          </div>
+        </div>
       </Card.Content>
       <Card.Content style={{ padding: "0", borderTop: "none" }}>
         <div className="options">

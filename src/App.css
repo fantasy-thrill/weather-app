@@ -79,6 +79,10 @@
   text-align: right;
   font-weight: bold;
 }
+.rise-and-set {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
 #footer {
   font-size: 0.50em;
   margin: 20px 0 10px;
