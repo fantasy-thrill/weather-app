@@ -163,3 +163,31 @@ export function getDayOfWeek(timestamp) {
   }
   return dateObject.toLocaleDateString("en-US", options)
 }
+
+export function uvIndexFormat(index) {
+  const roundedIndex = Math.round(index)
+
+  switch (roundedIndex) {
+    case 0:
+    case 1:
+    case 2:
+      return roundedIndex + " Low"
+      break;
+    case 3:
+    case 4:
+    case 5:
+      return roundedIndex + " Moderate"
+      break;
+    case 6:
+    case 7:
+      return roundedIndex + " High"
+      break;
+    case 8:
+    case 9:
+    case 10:
+      return roundedIndex + " Very High"
+      break;
+    default:
+      return roundedIndex + " Extreme"
+  }
+}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import config from '../../config';
 import { Card, Loader } from 'semantic-ui-react'
-import { getDayOfWeek, degreesToCardinal, displayIcon } from '../utilities';
+import { getDayOfWeek, degreesToCardinal, displayIcon, uvIndexFormat } from '../utilities';
 
 function FiveDayForecast() {
   const { city, state, country } = useParams()
@@ -69,10 +69,13 @@ function FiveDayForecast() {
                      <td className="left">Feels Like</td>
                      <td className="right">{Math.round(weatherDay.feels_like.eve) + "\u00B0F"}</td>
                     </tr>
-                    <tr>
-                     <td className="left">Humidity</td>
-                     <td className="right">{weatherDay.humidity + "%"}</td>
-                    </tr>
+                    {weatherDay.clouds >= 85 ? (<tr>
+                      <td className="left">Humidity</td>
+                      <td className="right">{weatherDay.humidity + "%"}</td>
+                    </tr>) : (<tr>
+                      <td className="left">UV Index</td>
+                      <td className="right">{uvIndexFormat(weatherDay.uvi)}</td>
+                    </tr>)}
                     <tr>
                      <td className="left">Wind speed</td>
                      <td className="right">

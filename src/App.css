@@ -54,6 +54,9 @@
   padding: 0.5em 1.25em;
   background: #d3d3d3;
 }
+.content.heading::after {
+  display: none !important;
+}
 #weather-body {
   height: 100% !important;
 }

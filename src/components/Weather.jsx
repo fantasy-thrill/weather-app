@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import config from '../../config';
 import { Card, Loader } from 'semantic-ui-react'
-import { degreesToCardinal, dateFormat, getBackgroundColor, displayIcon } from '../utilities';
+import { degreesToCardinal, dateFormat, getBackgroundColor, displayIcon, uvIndexFormat } from '../utilities';
 
 function CurrentWeather() {
   const { city, state, country } = useParams()
@@ -92,6 +92,12 @@ function CurrentWeather() {
                   <td className='left'>Dew point</td>
                   <td className='right'>{Math.round(weatherData.dew_point) + "\u00B0F"}</td>
                 </tr>
+                {weatherData.weather[0].id >= 800 && weatherData.weather[0].id < 804 ? (
+                 <tr>
+                  <td className="left">UV Index</td>
+                  <td className="right">{uvIndexFormat(weatherData.uvi)}</td>
+                 </tr>) : ""
+                }
               </tbody>
             </table>
           </div>
@@ -111,7 +117,7 @@ function CurrentWeather() {
             <i className="calendar outline icon"></i>
           </div>
           <div className="choice" onClick={() => navigate("/search")}>
-            Search
+            Search another city
             <i className="search icon"></i>
           </div>
         </div>
