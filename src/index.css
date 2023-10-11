@@ -68,3 +68,20 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+table, th, td {
+  border: 1px solid #808080;
+  border-left: transparent;
+  border-top: transparent;
+  border-right: transparent;
+  border-collapse: collapse;
+  padding: 0.25em;
+}
+
+table {
+  border-bottom: transparent;
+}
+
+tr:last-child td {
+  border: transparent;
+}
