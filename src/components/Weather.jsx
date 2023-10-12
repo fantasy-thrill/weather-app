@@ -7,7 +7,8 @@ import {
   dateFormat,
   getTime, 
   getBackgroundColor, 
-  displayIcon, 
+  displayIcon,
+  capitalizeName, 
   uvIndexFormat, 
   icons } from '../utilities';
 
@@ -62,12 +63,12 @@ function CurrentWeather() {
 
   return (
     weatherData ? (
-    <Card style={{ minWidth: "35em" }}>
+    <Card style={{ minWidth: "36em" }}>
       <Card.Content className="heading">
-        {country === "US" ? (
-          <Card.Header>{city}, {state}</Card.Header>
+        {country === "us" ? (
+          <Card.Header>{capitalizeName(city)}, {state.toUpperCase()}</Card.Header>
         ) : (
-          <Card.Header>{city}, {country}</Card.Header>
+          <Card.Header>{capitalizeName(city)}, {country.toUpperCase()}</Card.Header>
         )}
         <p style={{ fontSize: "0.75em", color: "#a9a9a9" }}>Current weather</p>
       </Card.Content>

@@ -3,6 +3,14 @@ export function setSearchQuery(str) {
   return lower.replace(" ", "+")
 }
 
+export function capitalizeName(city) {
+  const capitalized = city.match(/\b\w+\b/g).map(word => {
+    const capWord = word.replace(word[0], word[0].toUpperCase())
+    return capWord
+  })
+  return capitalized.join(" ")
+}
+
 export const icons = {
   sunny: "https://i.postimg.cc/X7FVcxGQ/sun.png",
   clearNight: "https://i.postimg.cc/rs0HTnXb/crescent-moon.png",

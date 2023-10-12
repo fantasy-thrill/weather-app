@@ -37,7 +37,13 @@ function SearchCity() {
             const cityDiv = document.createElement("div");
             cityDiv.textContent = `${city.toponymName}, ${city.adminName1}, ${city.countryCode}`
             cityDiv.setAttribute("class", "city-choice")
-            cityDiv.addEventListener("click", () => navigate(`/current/${city.toponymName}/${city.adminCode1}/${city.countryCode}`))
+
+            const parameters = {
+              cityName: city.toponymName.toLowerCase(),
+              stateAbbr: city.adminCode1.toLowerCase(),
+              countryAbbr: city.countryCode.toLowerCase()
+            }
+            cityDiv.addEventListener("click", () => navigate(`/current/${parameters.cityName}/${parameters.stateAbbr}/${parameters.countryAbbr}`))
             dropdownMenu.current.appendChild(cityDiv);
           });
         }

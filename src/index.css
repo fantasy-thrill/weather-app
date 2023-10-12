@@ -70,7 +70,7 @@ button:focus-visible {
 }
 
 table, th, td {
-  border: 1px solid #808080;
+  border: 1px solid #a3a3a3;
   border-left: transparent;
   border-top: transparent;
   border-right: transparent;

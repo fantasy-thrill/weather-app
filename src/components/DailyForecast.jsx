@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import config from '../../config';
 import { Card, Loader } from 'semantic-ui-react'
-import { getDayOfWeek, degreesToCardinal, displayIcon, uvIndexFormat } from '../utilities';
+import { getDayOfWeek, capitalizeName, degreesToCardinal, displayIcon, uvIndexFormat } from '../utilities';
 
 function FiveDayForecast() {
   const { city, state, country } = useParams()
@@ -41,10 +41,10 @@ function FiveDayForecast() {
     weatherData ? (
     <Card style={{ minWidth: "35em" }}>
       <Card.Content className="heading">
-        {country === "US" ? (
-          <Card.Header>{city}, {state}</Card.Header>
+        {country === "us" ? (
+          <Card.Header>{capitalizeName(city)}, {state.toUpperCase()}</Card.Header>
         ) : (
-          <Card.Header>{city}, {country}</Card.Header>
+          <Card.Header>{capitalizeName(city)}, {country.toUpperCase()}</Card.Header>
         )}
         <p style={{ fontSize: "0.75em", color: "#a9a9a9" }}>Eight-day forecast</p>
       </Card.Content>

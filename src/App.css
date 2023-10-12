@@ -52,7 +52,8 @@
   vertical-align: top;
   margin-left: 0.5em;
   padding: 0.5em 1.25em;
-  background: #d3d3d3;
+  background: #ff4500;
+  color: #ffffff;
 }
 .content.heading::after {
   display: none !important;
@@ -105,7 +106,13 @@ i.icon {
 }
 .daily-fcast, .hourly-fcast {
   padding: 10px 20px;
-  border-bottom: 1px solid silver;
+  border-bottom: 1px solid #c0c0c0;
+}
+.new-day {
+  font-weight: bold;
+  text-align: left;
+  border-bottom: 1px solid #c0c0c0;
+  padding-left: 1em;
 }
 .nav-buttons {
   display: flex;

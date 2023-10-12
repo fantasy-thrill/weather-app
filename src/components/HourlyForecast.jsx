@@ -3,7 +3,7 @@ import { useNavigate, useParams, Link } from 'react-router-dom';
 import '../App.css';
 import config from '../../config';
 import { Card, Loader } from 'semantic-ui-react'
-import { displayIcon, getTime, degreesToCardinal } from '../utilities';
+import { displayIcon, getTime, getDayOfWeek, capitalizeName, degreesToCardinal } from '../utilities';
 
 function HourlyForecast() {
   const { city, state, country } = useParams()
@@ -47,48 +47,56 @@ function HourlyForecast() {
   return (
     <Card style={{ minWidth: "35em" }}>
       <Card.Content className="heading">
-        {country === "US" ? (
-          <Card.Header>{city}, {state}</Card.Header>
+        {country === "us" ? (
+          <Card.Header>{capitalizeName(city)}, {state.toUpperCase()}</Card.Header>
         ) : (
-          <Card.Header>{city}, {country}</Card.Header>
+          <Card.Header>{capitalizeName(city)}, {country.toUpperCase()}</Card.Header>
         )}
         <p style={{ fontSize: "0.75em", color: "#a9a9a9" }}>Hourly forecast</p>
       </Card.Content>
       <Card.Content style={{ padding: 0 }}>
-        {hourlyGroup ? (hourlyGroup.map(hour => (
-          <div className="hourly-fcast" key={hour.dt}>
-            <h2>{getTime(hour["dt"], timeZone)}</h2>
-            <div className="weather-info">
-              <div className="weather-condition">
-                <img src={displayIcon(hour)} alt="" id="weather-icon"/>
-                <p>{hour.weather[0].description}</p>
+        {hourlyGroup ? (hourlyGroup.map(hour => {
+          const description = hour.weather[0].description
+          const newDescription = description.replace(description[0], description[0].toUpperCase())
+
+          return (
+            <>
+              {getTime(hour.dt, timeZone) === "12:00 AM" ? (<div className="new-day">{getDayOfWeek(hour.dt)}</div>) : ""}
+              <div className="hourly-fcast" key={hour.dt}>
+                <h2>{getTime(hour.dt, timeZone)}</h2>
+                <div className="weather-info">
+                  <div className="weather-condition">
+                    <img src={displayIcon(hour)} alt="" id="weather-icon"/>
+                    <p>{newDescription}</p>
+                  </div>
+                  <div className="temperature">
+                    <h1 style={{ fontSize: "2em" }}>{Math.round(hour.temp) + "\u00B0F"}</h1>
+                  </div>
+                  <div className="extra-info">
+                    <table id="details">
+                      <tbody>
+                        <tr>
+                         <td className="left">Feels Like</td>
+                         <td className="right">{Math.round(hour.feels_like) + "\u00B0F"}</td>
+                        </tr>
+                        <tr>
+                         <td className="left">Humidity</td>
+                         <td className="right">{hour.humidity + "%"}</td>
+                        </tr>
+                        <tr>
+                         <td className="left">Wind speed</td>
+                         <td className="right">
+                          {`${degreesToCardinal(hour.wind_deg)} ${Math.round(hour.wind_speed)} mph`}
+                         </td>
+                        </tr> 
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
-              <div className="temperature">
-                <h1 style={{ fontSize: "2em" }}>{Math.round(hour.temp) + "\u00B0F"}</h1>
-              </div>
-              <div className="extra-info">
-                <table id="details">
-                  <tbody>
-                    <tr>
-                     <td className="left">Feels Like</td>
-                     <td className="right">{Math.round(hour.feels_like) + "\u00B0F"}</td>
-                    </tr>
-                    <tr>
-                     <td className="left">Humidity</td>
-                     <td className="right">{hour.humidity + "%"}</td>
-                    </tr>
-                    <tr>
-                     <td className="left">Wind speed</td>
-                     <td className="right">
-                      {`${degreesToCardinal(hour.wind_deg)} ${Math.round(hour.wind_speed)} mph`}
-                     </td>
-                    </tr> 
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        ))) : (<Loader>Loading</Loader>)}
+            </>
+          )
+        })) : (<Loader>Loading</Loader>)}
         <div className="nav-buttons">
           {startIndex !== 0 ? (
             <div className="nav-btn" onClick={() => {
