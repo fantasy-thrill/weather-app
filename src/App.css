@@ -33,8 +33,10 @@
   font-size: 1.25em;
 }
 #search-page-body {
-  height: 100% !important;
   background: linear-gradient(#ffee00, #ffc400);
+}
+#search-page-body > #root {
+  margin: -10em auto 0;
 }
 #city-input {
   width: 12.5em;
@@ -66,7 +68,7 @@
   font-size: 2.5em;
 }
 #weather-icon {
-  width: 5em;
+  width: 4em;
   margin: 1em 0;
 }
 #details {
@@ -105,8 +107,11 @@ i.icon {
   height: fit-content !important;
 }
 .daily-fcast, .hourly-fcast {
-  padding: 10px 20px;
-  border-bottom: 1px solid #c0c0c0;
+  padding: 0.25em;
+  border-bottom: 5px solid #a09f9f;
+}
+.daily-fcast:first-of-type, .hourly-fcast:first-of-type {
+  border-top: 5px solid #a09f9f;
 }
 .new-day {
   font-weight: bold;
@@ -124,12 +129,15 @@ i.icon {
 }
 .weather-info {
   display: grid;
-  grid-template-columns: 1fr 1fr 50%;
+  grid-template-columns: 1fr 1fr 1fr 50%;
   margin: 10px 0;
   align-items: center;
 }
 .weather-condition, .extra-info {
   font-size: 0.75em;
+}
+.low-temp {
+  color: #5e5e5e;
 }
 
 @keyframes logo-spin {

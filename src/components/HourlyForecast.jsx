@@ -45,7 +45,7 @@ function HourlyForecast() {
   }, [])
   
   return (
-    <Card style={{ minWidth: "35em" }}>
+    <Card style={{ minWidth: "40em" }}>
       <Card.Content className="heading">
         {country === "us" ? (
           <Card.Header>{capitalizeName(city)}, {state.toUpperCase()}</Card.Header>
@@ -61,10 +61,12 @@ function HourlyForecast() {
 
           return (
             <>
-              {getTime(hour.dt, timeZone) === "12:00 AM" ? (<div className="new-day">{getDayOfWeek(hour.dt)}</div>) : ""}
+              {getTime(hour.dt, timeZone) === "12:00 AM" ? (<div className="new-day">{getDayOfWeek(hour.dt, "long")}</div>) : ""}
               <div className="hourly-fcast" key={hour.dt}>
-                <h2>{getTime(hour.dt, timeZone)}</h2>
                 <div className="weather-info">
+                  <div>
+                    <p>{getTime(hour.dt, timeZone)}</p>
+                  </div>
                   <div className="weather-condition">
                     <img src={displayIcon(hour)} alt="" id="weather-icon"/>
                     <p>{newDescription}</p>

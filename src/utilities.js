@@ -165,14 +165,24 @@ export function getTime(timestamp, timeZone) {
   return dateObject.toLocaleTimeString("en-US", options)
 }
 
-export function getDayOfWeek(timestamp) {
+export function getDayOfWeek(timestamp, length) {
   const dateObject = new Date(parseInt(timestamp, 10) * 1000)
-  const options = {
+  const firstOptions = {
     weekday: "long",
     month: "long",
     day: "numeric"
   }
-  return dateObject.toLocaleDateString("en-US", options)
+  const secondOptions = {
+    weekday: "short",
+    month: "numeric",
+    day: "numeric"
+  }
+  
+  if (length === "short") {
+    return dateObject.toLocaleDateString("en-US", secondOptions)
+  } else {
+    return dateObject.toLocaleDateString("en-US", firstOptions)
+  }
 }
 
 export function uvIndexFormat(index) {

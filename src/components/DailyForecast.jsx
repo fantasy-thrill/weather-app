@@ -39,7 +39,7 @@ function FiveDayForecast() {
 
   return (
     weatherData ? (
-    <Card style={{ minWidth: "35em" }}>
+    <Card style={{ minWidth: "40em" }}>
       <Card.Content className="heading">
         {country === "us" ? (
           <Card.Header>{capitalizeName(city)}, {state.toUpperCase()}</Card.Header>
@@ -51,15 +51,15 @@ function FiveDayForecast() {
       <Card.Content style={{ padding: 0 }}>
         {weatherData.map(weatherDay => (
           <div className="daily-fcast">
-            <h2>{getDayOfWeek(weatherDay["dt"])}</h2>
             <div className="weather-info">
+              <div>{getDayOfWeek(weatherDay["dt"], "short")}</div>
               <div className="weather-condition">
                 <img src={displayIcon(weatherDay)} alt="" id="weather-icon" />
                 <p>{weatherDay.weather[0].description}</p>
               </div>
               <div className="temperature">
                 <h1 style={{ fontSize: "1.5em", textAlign: "right" }}>
-                  {Math.round(weatherDay.temp.max) + "\u00B0F"} / {Math.round(weatherDay.temp.min) + "\u00B0F"}
+                  {Math.round(weatherDay.temp.max) + "\u00B0F"} / <span className="low-temp">{Math.round(weatherDay.temp.min) + "\u00B0F"}</span>
                 </h1>
               </div>
               <div className="extra-info">
