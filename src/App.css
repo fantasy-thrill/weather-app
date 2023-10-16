@@ -95,13 +95,19 @@ i.icon {
 }
 .options {
   display: flex;
-  flex-direction: column;
   font-size: 0.75em;
 }
 .choice {
-  padding: 0.25em 0;
+  padding: 0.5em 0.25em;
+  width: 25%;
   cursor: pointer;
-  border-top: 1px solid #c0cacd;
+  border-right: 1px solid #c0cacd;
+}
+i.icon {
+  margin: 0 0 0 10px !important;
+}
+.choice:last-of-type {
+  border-right: none;
 }
 #hourly-and-daily {
   height: fit-content !important;
@@ -109,6 +115,9 @@ i.icon {
 .daily-fcast, .hourly-fcast {
   padding: 0.25em;
   border-bottom: 5px solid #a09f9f;
+}
+.new-day, .hourly-fcast {
+  transition: opacity 0.5s ease-in-out;
 }
 .daily-fcast:first-of-type, .hourly-fcast:first-of-type {
   border-top: 5px solid #a09f9f;

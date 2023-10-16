@@ -69,13 +69,10 @@ function FiveDayForecast() {
                      <td className="left">Feels Like</td>
                      <td className="right">{Math.round(weatherDay.feels_like.eve) + "\u00B0F"}</td>
                     </tr>
-                    {weatherDay.clouds >= 85 ? (<tr>
+                    <tr>
                       <td className="left">Humidity</td>
                       <td className="right">{weatherDay.humidity + "%"}</td>
-                    </tr>) : (<tr>
-                      <td className="left">UV Index</td>
-                      <td className="right">{uvIndexFormat(weatherDay.uvi)}</td>
-                    </tr>)}
+                    </tr>
                     <tr>
                      <td className="left">Wind speed</td>
                      <td className="right">
@@ -88,7 +85,7 @@ function FiveDayForecast() {
             </div>
           </div>
         ))}
-        <p>Click <Link to={`/current/${city}/${state}/${country}`}>here</Link> to go back to main page.</p>
+        <p style={{ margin: "0.75em 0" }}>Click <Link to={`/current/${city}/${state}/${country}`}>here</Link> to go back to main page.</p>
       </Card.Content>
     </Card>
     ) : (<Loader>Loading</Loader>)

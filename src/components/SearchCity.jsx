@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import config from '../../config';
-import { setSearchQuery } from '../utilities';
 import { Card } from 'semantic-ui-react'
 
 function SearchCity() {
@@ -56,7 +55,7 @@ function SearchCity() {
 
   return (
     <>
-      <div id="header" style={{ marginBottom: "1.50em"}}>
+      <div id="header" style={{ marginBottom: "1.50em" }}>
         <img src={"https://i.postimg.cc/W10SmZDF/weather-forecast.png"} alt="weather app icon" style={{ width: "7.5em" }} />
         <h1>Weather App</h1>
         <h4 style={{ marginBlockStart: "0.25em" }}>Powered by the OpenWeather API</h4>

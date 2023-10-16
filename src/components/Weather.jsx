@@ -128,7 +128,7 @@ function CurrentWeather() {
           </div>
         </div>
       </Card.Content>
-      <Card.Content style={{ padding: "0", borderTop: "none" }}>
+      <Card.Content style={{ padding: "0" }}>
         <div className="options">
           <div className="choice" onClick={() => window.location.reload()}>
             Refresh

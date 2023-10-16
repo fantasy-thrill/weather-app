@@ -1,10 +1,7 @@
-export function setSearchQuery(str) {
-  const lower = str.toLowerCase()
-  return lower.replace(" ", "+")
-}
-
 export function capitalizeName(city) {
-  const capitalized = city.match(/\b\w+\b/g).map(word => {
+  const capitalized = city
+                        .match(/\b\w+\b/g)
+                        .map(word => {
     const capWord = word.replace(word[0], word[0].toUpperCase())
     return capWord
   })
