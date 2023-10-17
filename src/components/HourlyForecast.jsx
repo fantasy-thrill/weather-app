@@ -3,7 +3,8 @@ import { useNavigate, useParams, Link } from 'react-router-dom';
 import '../App.css';
 import config from '../../config';
 import { Card, Loader } from 'semantic-ui-react'
-import { displayIcon, getTime, getDayOfWeek, capitalizeName, degreesToCardinal } from '../utilities';
+import { CSSTransition } from 'react-transition-group';
+import { displayIcon, getTime, getDayOfWeek, capitalizeName, degreesToCardinal, uvIndexFormat } from '../utilities';
 
 function HourlyForecast() {
   const { city, state, country } = useParams()
@@ -55,16 +56,24 @@ function HourlyForecast() {
         )}
         <p style={{ fontSize: "0.75em", color: "#a9a9a9" }}>Hourly forecast</p>
       </Card.Content>
-      <Card.Content style={{ padding: 0 }}>
+      <Card.Content style={{ padding: 0, animation: 'opac 0.8s' }}>
         {hourlyGroup ? (hourlyGroup.map(hour => {
           const description = hour.weather[0].description
           const newDescription = description.replace(description[0], description[0].toUpperCase())
 
           return (
-            <>
+            <React.Fragment key={hour.dt}>
               {getTime(hour.dt, timeZone) === "12:00 AM" ? (<div className="new-day">{getDayOfWeek(hour.dt, "long")}</div>) : ""}
-              <div className="hourly-fcast" key={hour.dt}>
+              <div className="hourly-fcast">
                 <div className="weather-info">
+                  <div>
+                    <i className="angle right icon" onClick={(e) => {
+                      e.target.classList.toggle("active")
+                      const parentDiv = e.target.closest(".hourly-fcast")
+                      const extraConditions = parentDiv.querySelector(".extra-info")
+                      extraConditions.classList.toggle("flex-displayed")
+                    }}></i>
+                  </div>
                   <div>
                     <p>{getTime(hour.dt, timeZone)}</p>
                   </div>
@@ -75,7 +84,7 @@ function HourlyForecast() {
                   <div className="temperature">
                     <h1 style={{ fontSize: "2em" }}>{Math.round(hour.temp) + "\u00B0F"}</h1>
                   </div>
-                  <div className="extra-info">
+                  <div className="main-info">
                     <table id="details">
                       <tbody>
                         <tr>
@@ -96,8 +105,42 @@ function HourlyForecast() {
                     </table>
                   </div>
                 </div>
+                <div className="extra-info">
+                  <div>
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td className="left">Wind gusts</td>
+                          <td className="right">{`${Math.round(hour.wind_gust)} mph`}</td>
+                        </tr>
+                        <tr>
+                          <td className="left">Cloud cover</td>
+                          <td className="right">{hour.clouds}%</td>
+                        </tr>
+                        <tr>
+                          <td className="left">Dew point</td>
+                          <td className="right">{Math.round(hour.dew_point)}&deg;F</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div>
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td className="left">UV Index</td>
+                          <td className="right">{uvIndexFormat(hour.uvi)}</td>
+                        </tr>
+                        <tr>
+                          <td className="left">Chance of precipitation</td>
+                          <td className="right">{hour.pop * 100}%</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
-            </>
+            </React.Fragment>
           )
         })) : (<Loader>Loading</Loader>)}
         <div className="nav-buttons">
@@ -125,7 +168,7 @@ function HourlyForecast() {
         <div className="options">
           <div className="choice" onClick={() => navigate(`/current/${city}/${state}/${country}`)}>
             Current Weather
-            <i class="sun icon"></i>
+            <i className="sun icon"></i>
           </div>
           <div className="choice" onClick={() => navigate(`/hourly-forecast/${city}/${state}/${country}`)}>
             Hourly Forecast

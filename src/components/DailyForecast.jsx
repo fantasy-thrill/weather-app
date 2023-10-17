@@ -51,48 +51,95 @@ function FiveDayForecast() {
         <p style={{ fontSize: "0.75em", color: "#a9a9a9" }}>Eight-day forecast</p>
       </Card.Content>
       <Card.Content style={{ padding: 0 }}>
-        {weatherData.map(weatherDay => (
-          <div className="daily-fcast">
-            <div className="weather-info">
-              <div>{getDayOfWeek(weatherDay["dt"], "short")}</div>
-              <div className="weather-condition">
-                <img src={displayIcon(weatherDay)} alt="" id="weather-icon" />
-                <p>{weatherDay.weather[0].description}</p>
-              </div>
-              <div className="temperature">
-                <h1 style={{ fontSize: "1.5em", textAlign: "right" }}>
-                  {Math.round(weatherDay.temp.max) + "\u00B0F"} / <span className="low-temp">{Math.round(weatherDay.temp.min) + "\u00B0F"}</span>
-                </h1>
+        {weatherData.map(weatherDay => {
+          const description = weatherDay.weather[0].description
+          const newDescription = description.replace(description[0], description[0].toUpperCase())
+
+          return (
+            <div className="daily-fcast">
+              <div className="weather-info">
+                <div>
+                  <i className="angle right icon" onClick={(e) => {
+                    e.target.classList.toggle("active")
+                    const parentDiv = e.target.closest(".daily-fcast")
+                    const extraConditions = parentDiv.querySelector(".extra-info")
+                    extraConditions.classList.toggle("flex-displayed")
+                  }}></i>
+                </div>
+                <div>{getDayOfWeek(weatherDay["dt"], "short")}</div>
+                <div className="weather-condition">
+                  <img src={displayIcon(weatherDay)} alt="" id="weather-icon" />
+                  <p>{newDescription}</p>
+                </div>
+                <div className="temperature">
+                  <h1 style={{ fontSize: "1.5em" }}>
+                    {Math.round(weatherDay.temp.max) + "\u00B0F"} / <span className="low-temp">{Math.round(weatherDay.temp.min) + "\u00B0F"}</span>
+                  </h1>
+                </div>
+                <div className="main-info">
+                  <table style={{ margin: "0 auto", width: "80%" }}>
+                    <tbody>
+                      <tr>
+                        <td className="left">Feels Like</td>
+                        <td className="right">{Math.round(weatherDay.feels_like.eve) + "\u00B0F"}</td>
+                      </tr>
+                      <tr>
+                        <td className="left">Humidity</td>
+                        <td className="right">{weatherDay.humidity + "%"}</td>
+                      </tr>
+                      <tr>
+                        <td className="left">Wind speed</td>
+                        <td className="right">
+                          {`${degreesToCardinal(weatherDay.wind_deg)} ${Math.round(weatherDay.wind_speed)} mph`}
+                        </td>
+                      </tr> 
+                    </tbody>
+                  </table>
+                </div>
               </div>
               <div className="extra-info">
-                <table style={{ margin: "0 1em 0 auto", width: "80%" }}>
-                  <tbody>
-                    <tr>
-                     <td className="left">Feels Like</td>
-                     <td className="right">{Math.round(weatherDay.feels_like.eve) + "\u00B0F"}</td>
-                    </tr>
-                    <tr>
-                      <td className="left">Humidity</td>
-                      <td className="right">{weatherDay.humidity + "%"}</td>
-                    </tr>
-                    <tr>
-                     <td className="left">Wind speed</td>
-                     <td className="right">
-                      {`${degreesToCardinal(weatherDay.wind_deg)} ${Math.round(weatherDay.wind_speed)} mph`}
-                     </td>
-                    </tr> 
-                  </tbody>
-                </table>
+                <div>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td className="left">Wind gusts</td>
+                        <td className="right">{`${Math.round(weatherDay.wind_gust)} mph`}</td>
+                      </tr>
+                      <tr>
+                        <td className="left">Cloud cover</td>
+                        <td className="right">{weatherDay.clouds}%</td>
+                      </tr>
+                      <tr>
+                        <td className="left">Dew point</td>
+                        <td className="right">{Math.round(weatherDay.dew_point)}&deg;F</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td className="left">UV Index</td>
+                        <td className="right">{uvIndexFormat(weatherDay.uvi)}</td>
+                      </tr>
+                      <tr>
+                        <td className="left">Chance of precipitation</td>
+                        <td className="right">{Math.round(weatherDay.pop * 100)}%</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          )
+        })}
       </Card.Content>
       <Card.Content style={{ padding: "0" }}>
         <div className="options">
           <div className="choice" onClick={() => navigate(`/current/${city}/${state}/${country}`)}>
             Current Weather
-            <i class="sun icon"></i>
+            <i className="sun icon"></i>
           </div>
           <div className="choice" onClick={() => navigate(`/hourly-forecast/${city}/${state}/${country}`)}>
             Hourly Forecast
