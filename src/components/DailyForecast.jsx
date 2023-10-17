@@ -9,6 +9,8 @@ function FiveDayForecast() {
 
   const [weatherData, setWeatherData] = useState(null)
 
+  const navigate = useNavigate()
+
   useEffect(() => {
     async function fetchData() {
       await fetch(`${config.geoApiURL}/direct?q=${city},${state},${country}&limit=5&appid=${config.apiKey}`)
@@ -85,7 +87,26 @@ function FiveDayForecast() {
             </div>
           </div>
         ))}
-        <p style={{ margin: "0.75em 0" }}>Click <Link to={`/current/${city}/${state}/${country}`}>here</Link> to go back to main page.</p>
+      </Card.Content>
+      <Card.Content style={{ padding: "0" }}>
+        <div className="options">
+          <div className="choice" onClick={() => navigate(`/current/${city}/${state}/${country}`)}>
+            Current Weather
+            <i class="sun icon"></i>
+          </div>
+          <div className="choice" onClick={() => navigate(`/hourly-forecast/${city}/${state}/${country}`)}>
+            Hourly Forecast
+            <i className="clock outline icon"></i>
+          </div>
+          <div className="choice" onClick={() => navigate(`/8-day-forecast/${city}/${state}/${country}`)}>
+            Eight-Day Forecast
+            <i className="calendar outline icon"></i>
+          </div>
+          <div className="choice" onClick={() => navigate("/search")}>
+            Search another city
+            <i className="search icon"></i>
+          </div>
+        </div>
       </Card.Content>
     </Card>
     ) : (<Loader>Loading</Loader>)

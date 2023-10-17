@@ -131,10 +131,13 @@ i.icon {
 .nav-buttons {
   display: flex;
   justify-content: space-between;
-  padding: 5px 10px;
+  padding: 0.5em 0.5em;
 }
 .nav-btn {
   cursor: pointer;
+}
+i.arrow {
+  margin: 0 0.5em !important;
 }
 .weather-info {
   display: grid;
