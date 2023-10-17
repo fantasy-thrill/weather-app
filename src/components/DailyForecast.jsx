@@ -98,7 +98,7 @@ function FiveDayForecast() {
                 </div>
               </div>
               <div className="extra-info">
-                <div>
+                <div className="first-subtable">
                   <table>
                     <tbody>
                       <tr>
@@ -116,7 +116,7 @@ function FiveDayForecast() {
                     </tbody>
                   </table>
                 </div>
-                <div>
+                <div className="second-subtable">
                   <table>
                     <tbody>
                       <tr>
