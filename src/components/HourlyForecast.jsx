@@ -3,7 +3,6 @@ import { useNavigate, useParams, Link } from 'react-router-dom';
 import '../App.css';
 import config from '../../config';
 import { Card, Loader } from 'semantic-ui-react'
-import { CSSTransition } from 'react-transition-group';
 import { displayIcon, getTime, getDayOfWeek, capitalizeName, degreesToCardinal, uvIndexFormat } from '../utilities';
 
 function HourlyForecast() {
@@ -19,24 +18,29 @@ function HourlyForecast() {
 
   useEffect(() => {
     async function fetchData() {
-      await fetch(`${config.geoApiURL}/direct?q=${city},${state},${country}&limit=5&appid=${config.apiKey}`)
-      .then(result => result.json())
-      .then(res => {
+      try {
+        const result = await fetch(
+          `${config.geoApiURL}/direct?q=${city},${state},${country}&limit=5&appid=${config.apiKey}`
+        )
+        const res = await result.json()
+        
         if (res.length === 0) {
           console.log("City not found")
         } else {
-           fetch(`${config.apiURL}/onecall?lat=${res[0].lat}&lon=${res[0].lon}&exclude=minutely&units=imperial&appid=${config.apiKey}`)
-            .then(data => data.json())
-            .then(obj => {
-              if (obj.cod !== "400") {
-                setWeatherData(obj.hourly)
-                setTimeZone(obj.timezone)
-                console.log(obj.hourly)
-              }
-            });
+          const data = await fetch(
+            `${config.apiURL}/onecall?lat=${res[0].lat}&lon=${res[0].lon}&exclude=minutely&units=imperial&appid=${config.apiKey}`
+          )
+          const obj = await data.json()
+
+          if (obj.cod !== "400") {
+            setWeatherData(obj.hourly)
+            setTimeZone(obj.timezone)
+            console.log(obj.hourly)
           }
-      })
-      .catch(error => console.log("Weather data not fetched: " + error))
+        }
+      } catch (error) {
+        console.log('Weather data not fetched: ' + error);
+      }
     }
     fetchData()
   }, [city, state, country])
@@ -55,6 +59,26 @@ function HourlyForecast() {
           <Card.Header>{capitalizeName(city)}, {country.toUpperCase()}</Card.Header>
         )}
         <p style={{ fontSize: "0.75em", color: "#a9a9a9" }}>Hourly forecast</p>
+      </Card.Content>
+      <Card.Content style={{ padding: "0" }}>
+        <div className="options">
+          <div className="choice" onClick={() => navigate(`/current/${city}/${state}/${country}`)}>
+            Current Weather
+            <i className="sun icon"></i>
+          </div>
+          <div className="choice" onClick={() => navigate(`/hourly-forecast/${city}/${state}/${country}`)}>
+            Hourly Forecast
+            <i className="clock outline icon"></i>
+          </div>
+          <div className="choice" onClick={() => navigate(`/8-day-forecast/${city}/${state}/${country}`)}>
+            Eight-Day Forecast
+            <i className="calendar outline icon"></i>
+          </div>
+          <div className="choice" onClick={() => navigate("/search")}>
+            Search another city
+            <i className="search icon"></i>
+          </div>
+        </div>
       </Card.Content>
       <Card.Content style={{ padding: 0, animation: 'opac 0.8s' }}>
         {hourlyGroup ? (hourlyGroup.map(hour => {
@@ -163,27 +187,7 @@ function HourlyForecast() {
             </div>
           ) : ""}
         </div>
-      </Card.Content>
-      <Card.Content style={{ padding: "0" }}>
-        <div className="options">
-          <div className="choice" onClick={() => navigate(`/current/${city}/${state}/${country}`)}>
-            Current Weather
-            <i className="sun icon"></i>
-          </div>
-          <div className="choice" onClick={() => navigate(`/hourly-forecast/${city}/${state}/${country}`)}>
-            Hourly Forecast
-            <i className="clock outline icon"></i>
-          </div>
-          <div className="choice" onClick={() => navigate(`/8-day-forecast/${city}/${state}/${country}`)}>
-            Eight-Day Forecast
-            <i className="calendar outline icon"></i>
-          </div>
-          <div className="choice" onClick={() => navigate("/search")}>
-            Search another city
-            <i className="search icon"></i>
-          </div>
-        </div>
-      </Card.Content>
+      </Card.Content> 
     </Card>
   )
 }

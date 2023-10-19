@@ -29,29 +29,35 @@ function CurrentWeather() {
 
   useEffect(() => {
     async function fetchData() {
-      let fetchURL = country === "US" ? `${config.geoApiURL}/direct?q=${city},${state},${country}&limit=5&appid=${config.apiKey}` :
-      `${config.geoApiURL}/direct?q=${city},${country}&limit=5&appid=${config.apiKey}`
-
-      await fetch(fetchURL)
-      .then(result => result.json())
-      .then(res => {
+      let fetchURL =
+        country === 'us'
+          ? `${config.geoApiURL}/direct?q=${city},${state},${country}&limit=5&appid=${config.apiKey}`
+          : `${config.geoApiURL}/direct?q=${city},${country}&limit=5&appid=${config.apiKey}`;
+    
+      try {
+        const result = await fetch(fetchURL);
+        const res = await result.json();
+    
         if (res.length === 0) {
-          console.log("City not found")
+          console.log('City not found');
         } else {
-           fetch(`${config.apiURL}/onecall?lat=${res[0].lat}&lon=${res[0].lon}&exclude=minutely&units=imperial&appid=${config.apiKey}`)
-            .then(data => data.json())
-            .then(obj => {
-              if (obj.cod !== "400") {
-                setWeatherData(obj.current)
-                setBackground(getBackgroundColor(obj.current))
-                setTimeZone(obj.timezone)
-                console.log(obj.current)
-              }
-            });
+          const data = await fetch(
+            `${config.apiURL}/onecall?lat=${res[0].lat}&lon=${res[0].lon}&exclude=minutely&units=imperial&appid=${config.apiKey}`
+          );
+          const obj = await data.json();
+    
+          if (obj.cod !== '400') {
+            setWeatherData(obj.current);
+            setBackground(getBackgroundColor(obj.current));
+            setTimeZone(obj.timezone);
+            console.log(obj.current);
+            console.log(fetchURL)
           }
-      })
-      .catch(error => console.log("Weather data not fetched: " + error))
-    }
+        }
+      } catch (error) {
+        console.log('Weather data not fetched: ' + error);
+      }
+    }    
     fetchData()
   }, [city, state, country])
 
@@ -71,6 +77,26 @@ function CurrentWeather() {
           <Card.Header>{capitalizeName(city)}, {country.toUpperCase()}</Card.Header>
         )}
         <p style={{ fontSize: "0.75em", color: "#a9a9a9" }}>Current weather</p>
+      </Card.Content>
+      <Card.Content style={{ padding: "0" }}>
+        <div className="options">
+          <div className="choice" onClick={() => window.location.reload()}>
+            Refresh
+            <i className="sync alternate icon"></i>
+          </div>
+          <div className="choice" onClick={() => navigate(`/hourly-forecast/${city}/${state}/${country}`)}>
+            Hourly Forecast
+            <i className="clock outline icon"></i>
+          </div>
+          <div className="choice" onClick={() => navigate(`/8-day-forecast/${city}/${state}/${country}`)}>
+            Eight-Day Forecast
+            <i className="calendar outline icon"></i>
+          </div>
+          <div className="choice" onClick={() => navigate("/search")}>
+            Search another city
+            <i className="search icon"></i>
+          </div>
+        </div>
       </Card.Content>
       <Card.Content style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
           <div style={{ margin: "0 2.5em" }}>
@@ -125,26 +151,6 @@ function CurrentWeather() {
           <div style={{ textAlign: "left" }}>
             <p style={{ fontSize: "0.75em" }}>Sunset</p>
             <p style={{ fontSize: "1em", fontWeight: "bold" }}>{getTime(weatherData.sunset, timeZone)}</p>
-          </div>
-        </div>
-      </Card.Content>
-      <Card.Content style={{ padding: "0" }}>
-        <div className="options">
-          <div className="choice" onClick={() => window.location.reload()}>
-            Refresh
-            <i className="sync alternate icon"></i>
-          </div>
-          <div className="choice" onClick={() => navigate(`/hourly-forecast/${city}/${state}/${country}`)}>
-            Hourly Forecast
-            <i className="clock outline icon"></i>
-          </div>
-          <div className="choice" onClick={() => navigate(`/8-day-forecast/${city}/${state}/${country}`)}>
-            Eight-Day Forecast
-            <i className="calendar outline icon"></i>
-          </div>
-          <div className="choice" onClick={() => navigate("/search")}>
-            Search another city
-            <i className="search icon"></i>
           </div>
         </div>
       </Card.Content>
