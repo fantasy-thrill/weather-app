@@ -112,12 +112,15 @@ i.icon {
 #hourly-and-daily {
   height: fit-content !important;
 }
-.daily-fcast, .hourly-fcast {
-  /* padding: 0.25em; */
+.hourly-fcast {
+  border-bottom: 5px solid #a09f9f;
+}
+.hourly-fcast:first-of-type {
   border-top: 5px solid #a09f9f;
 }
-.hourly-fcast:nth-of-type(12) {
-  border-bottom: 5px solid #a09f9f;
+.daily-fcast {
+  /* padding: 0.25em; */
+  border-top: 5px solid #a09f9f;
 }
 .new-day {
   font-weight: bold;

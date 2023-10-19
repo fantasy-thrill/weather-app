@@ -51,7 +51,6 @@ function CurrentWeather() {
             setBackground(getBackgroundColor(obj.current));
             setTimeZone(obj.timezone);
             console.log(obj.current);
-            console.log(fetchURL)
           }
         }
       } catch (error) {

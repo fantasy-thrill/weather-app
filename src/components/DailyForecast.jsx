@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams, Link } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import config from '../../config';
 import { Card, Loader } from 'semantic-ui-react'
 import { getDayOfWeek, capitalizeName, degreesToCardinal, displayIcon, uvIndexFormat } from '../utilities';
 
-function FiveDayForecast() {
+function DailyForecast() {
   const { city, state, country } = useParams()
 
   const [weatherData, setWeatherData] = useState(null)
@@ -29,7 +29,6 @@ function FiveDayForecast() {
 
           if (obj.cod !== "400") {
             setWeatherData(obj.daily)
-            setTimeZone(obj.timezone)
             console.log(obj.daily)
           }
         }
@@ -164,4 +163,4 @@ function FiveDayForecast() {
   )
 }
 
-export default FiveDayForecast
+export default DailyForecast
