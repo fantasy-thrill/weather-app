@@ -209,3 +209,27 @@ export function uvIndexFormat(index) {
       return roundedIndex + " Extreme"
   }
 }
+
+export function isWithinTimeFrame(startHour, endHour) {
+  const now = new Date();
+  const start = new Date();
+  const end = new Date();
+  
+  if (startHour > endHour) {
+    end.setDate(end.getDate() + 1)
+  }
+
+  start.setHours(startHour, 0, 0);
+  end.setHours(endHour, 0, 0);
+
+  return now >= start && now <= end;
+}
+
+export function buildTwelveHour(objArr, firstTime, secondTime, timeZone) {
+  const forecastArr = []
+  
+  const firstForecast = objArr.find(hour => getTime(hour.dt, timeZone) === firstTime)
+  const secondForecast = objArr.find(hour => getTime(hour.dt, timeZone) === secondTime)
+  forecastArr.push(firstForecast, secondForecast)
+  return forecastArr
+}

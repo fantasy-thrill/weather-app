@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import config from '../../config';
 import { Card, Loader } from 'semantic-ui-react'
+import TwelveHourForecast from './TwelveHourForecast';
 import { 
   degreesToCardinal, 
   dateFormat,
@@ -17,7 +18,8 @@ function CurrentWeather() {
 
   const [weatherData, setWeatherData] = useState(null)
   const [background, setBackground] = useState("")
-  const [timeZone, setTimeZone] = useState("")  
+  const [timeZone, setTimeZone] = useState("")
+  const [coordinates, setCoordinates] = useState({ lat: 0, long: 0 })
 
   const description = weatherData ? weatherData.weather[0].description : null;
   const newDescription = weatherData ? description.replace(description[0], description[0].toUpperCase()) : null;
@@ -48,9 +50,10 @@ function CurrentWeather() {
     
           if (obj.cod !== '400') {
             setWeatherData(obj.current);
+            setCoordinates(prevState => ({ ...prevState, lat: obj.lat, long: obj.lon }))
             setBackground(getBackgroundColor(obj.current));
             setTimeZone(obj.timezone);
-            console.log(obj.current);
+            console.log(obj.current, "current weather object");
           }
         }
       } catch (error) {
@@ -75,7 +78,7 @@ function CurrentWeather() {
         ) : (
           <Card.Header>{capitalizeName(city)}, {country.toUpperCase()}</Card.Header>
         )}
-        <p style={{ fontSize: "0.75em", color: "#a9a9a9" }}>Current weather</p>
+        <p className="subheader">Current weather</p>
       </Card.Content>
       <Card.Content style={{ padding: "0" }}>
         <div className="options">
@@ -137,6 +140,7 @@ function CurrentWeather() {
             </table>
           </div>
       </Card.Content>
+      <TwelveHourForecast lat={coordinates.lat} long={coordinates.long} timeZone={timeZone}/>
       <Card.Content style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
         <div className="rise-and-set">
           <img src={icons.sunrise} alt="sunrise" style={{ width: "3em", margin: "0 auto" }} />
@@ -153,7 +157,7 @@ function CurrentWeather() {
           </div>
         </div>
       </Card.Content>
-    </Card>) : (<Loader>Loading</Loader>)
+    </Card>) : (<Loader active>Loading</Loader>)
    )
 }
 

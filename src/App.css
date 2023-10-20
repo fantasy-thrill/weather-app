@@ -60,6 +60,10 @@
 .content.heading::after {
   display: none !important;
 }
+.subheader {
+  font-size: 0.75em;
+  color: #a9a9a9;
+}
 #weather-body {
   height: 100% !important;
 }
@@ -115,11 +119,7 @@ i.icon {
 .hourly-fcast {
   border-bottom: 5px solid #a09f9f;
 }
-.hourly-fcast:first-of-type {
-  border-top: 5px solid #a09f9f;
-}
-.daily-fcast {
-  /* padding: 0.25em; */
+.daily-fcast, .hourly-fcast:first-of-type {
   border-top: 5px solid #a09f9f;
 }
 .new-day {
