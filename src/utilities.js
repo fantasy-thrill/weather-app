@@ -210,19 +210,19 @@ export function uvIndexFormat(index) {
   }
 }
 
-export function isWithinTimeFrame(startHour, endHour) {
-  const now = new Date();
-  const start = new Date();
-  const end = new Date();
+export function isTimeWithinFrame(startTime, endTime) {
+  const current = new Date()
+  const timeString = current.toLocaleString("en-GB", {
+    hour12: false,
+    hour: "numeric",
+    minute: "2-digit"
+  })
   
-  if (startHour > endHour) {
-    end.setDate(end.getDate() + 1)
-  }
-
-  start.setHours(startHour, 0, 0);
-  end.setHours(endHour, 0, 0);
-
-  return now >= start && now <= end;
+  const currentHourAndMin = timeString.split(":")
+  const startHourAndMin = startTime.split(":")
+  const endHourAndMin = endTime.split(":")
+  
+  return currentHourAndMin[0] >= startHourAndMin[0] && currentHourAndMin[0] < endHourAndMin[0]
 }
 
 export function buildTwelveHour(objArr, firstTime, secondTime, timeZone) {
