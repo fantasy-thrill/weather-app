@@ -210,15 +210,8 @@ export function uvIndexFormat(index) {
   }
 }
 
-export function isTimeWithinFrame(startTime, endTime) {
-  const current = new Date()
-  const timeString = current.toLocaleString("en-GB", {
-    hour12: false,
-    hour: "numeric",
-    minute: "2-digit"
-  })
-  
-  const currentHourAndMin = timeString.split(":")
+export function isTimeWithinFrame(current, startTime, endTime) {
+  const currentHourAndMin = current.split(":")
   const startHourAndMin = startTime.split(":")
   const endHourAndMin = endTime.split(":")
 
@@ -236,4 +229,31 @@ export function buildTwelveHour(objArr, firstTime, secondTime, timeZone) {
   const secondForecast = objArr.find(hour => getTime(hour.dt, timeZone) === secondTime)
   forecastArr.push(firstForecast, secondForecast)
   return forecastArr
+}
+
+export function setTwelveHour(current, objArr, timeZone) {
+  if (isTimeWithinFrame(current, "0:00", "11:00")) {
+
+    return buildTwelveHour(objArr, "11:00 AM", "8:00 PM", timeZone)
+
+  } else if (isTimeWithinFrame(current, "11:00", "14:00")) {
+
+    return buildTwelveHour(objArr, "2:00 PM", "8:00 PM", timeZone)
+
+  } else if (isTimeWithinFrame(current, "14:00", "17:00")) {
+
+    return buildTwelveHour(objArr, "5:00 PM", "11:00 PM", timeZone)
+
+  } else if (isTimeWithinFrame(current, "17:00", "20:00")) {
+
+    return buildTwelveHour(objArr, "8:00 PM", "8:00 AM", timeZone)
+
+  } else if (isTimeWithinFrame(current, "20:00", "23:00")) {
+
+    return buildTwelveHour(objArr, "11:00 PM", "8:00 AM", timeZone)
+
+  } else if (isTimeWithinFrame(current, "23:00", "0:00")) {
+
+    return buildTwelveHour(objArr, "2:00 AM", "8:00 AM", timeZone)
+  }
 }

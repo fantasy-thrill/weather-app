@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import config from "../../config";
-import { getCurrentDateAndTime, getTime } from "../utilities";
+import { degreesToCardinal, displayIcon, getCurrentDateAndTime, getTime, setTwelveHour, uvIndexFormat } from "../utilities";
 import { Card, Loader } from "semantic-ui-react";
 
 function TwelveHourForecast({ lat, long, timeZone }) {
@@ -29,21 +29,81 @@ function TwelveHourForecast({ lat, long, timeZone }) {
     const dateObject = new Date()
     const options = {
       timeZone: timeZone,
+      hour12: false,
       hour: "numeric",
       minute: "2-digit"
     }
-    setCurrentTime(dateObject.toLocaleTimeString("en-US", options))
+    setCurrentTime(dateObject.toLocaleTimeString("en-GB", options))
   }, [])
 
+  useEffect(() => {
+    if (weatherData && currentTime.length !== 0) {
+      setForecastArr(setTwelveHour(currentTime, weatherData.list, timeZone))
+      console.log(forecastArr)
+    }
+  }, [currentTime, weatherData])
+
   return (
-    weatherData ? (
+    forecastArr ? (
       <Card.Content>
         <div className="timeframe">{currentTime}</div>
         <div className="timeframe">
-          {weatherData ? (
-            "The data is here. First time: " + getTime(weatherData.list[0].dt, timeZone)
+          {forecastArr.map(period => {
+            const description = period.weather[0].description
+            const newDescription = description.replace(description[0], description[0].toUpperCase())
+
+            return (
+              <div className="forecast-12hr">
+                <div className="weather-info-12hr">
+                  <img src={displayIcon(period)} alt="" className="weather-icon-12hr" />
+                  <p>{newDescription}</p>
+                </div>
+                <div className="temperature-12hr">
+                  <h1>{Math.round(period.main.temp)}&deg;F</h1>
+                </div>
+                <div className="table-12hr">
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td className="left downsize">Feels like</td>
+                        <td className="right downsize">{Math.round(period.main.feels_like)}</td>
+                      </tr>
+                      <tr>
+                        <td className="left downsize">Wind speed</td>
+                        <td className="right downsize">{`${degreesToCardinal(period.wind.deg)} ${Math.round(period.wind.speed)} mph`}</td>
+                      </tr>
+                      <tr>
+                        <td className="left downsize">Wind gusts</td>
+                        <td className="right downsize">{Math.round(period.wind.gust)} mph</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="table-12hr">
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td className="left downsize">Humidity</td>
+                        <td className="right downsize">{period.main.humidity}%</td>
+                      </tr>
+                      <tr>
+                        <td className="left downsize">Cloud cover</td>
+                        <td className="right downsize">{period.clouds.all}%</td>
+                      </tr>
+                      <tr>
+                        <td className="left downsize">Chance of precipitation</td>
+                        <td className="right downsize">{Math.round(period.pop * 100)}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )
+          })}
+          {/* {forecastArr ? (
+            "The data is here. First time: " + getTime(forecastArr[0].dt, timeZone)
             ) : "There is no data"
-          }
+          } */}
         </div>
       </Card.Content>
     ) : (<Loader active>Loading</Loader>)
