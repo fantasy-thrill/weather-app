@@ -221,8 +221,12 @@ export function isTimeWithinFrame(startTime, endTime) {
   const currentHourAndMin = timeString.split(":")
   const startHourAndMin = startTime.split(":")
   const endHourAndMin = endTime.split(":")
-  
-  return currentHourAndMin[0] >= startHourAndMin[0] && currentHourAndMin[0] < endHourAndMin[0]
+
+  if (startTime > endTime) {
+    return currentHourAndMin[0] >= startHourAndMin[0] || currentHourAndMin[0] < endHourAndMin[0]
+  } else {
+    return currentHourAndMin[0] >= startHourAndMin[0] && currentHourAndMin[0] < endHourAndMin[0]
+  }
 }
 
 export function buildTwelveHour(objArr, firstTime, secondTime, timeZone) {
