@@ -215,10 +215,14 @@ export function isTimeWithinFrame(current, startTime, endTime) {
   const startHourAndMin = startTime.split(":")
   const endHourAndMin = endTime.split(":")
 
-  if (startTime > endTime) {
-    return currentHourAndMin[0] >= startHourAndMin[0] || currentHourAndMin[0] < endHourAndMin[0]
+  const currentHour = Number(currentHourAndMin[0])
+  const startHour = Number(startHourAndMin[0])
+  const endHour = Number(endHourAndMin[0])
+
+  if (startHour > endHour) {
+    return currentHour >= startHour || currentHour < endHour
   } else {
-    return currentHourAndMin[0] >= startHourAndMin[0] && currentHourAndMin[0] < endHourAndMin[0]
+    return currentHour >= startHour && currentHour < endHour
   }
 }
 

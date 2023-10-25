@@ -64,9 +64,6 @@
   font-size: 0.75em;
   color: #a9a9a9;
 }
-#weather-body {
-  height: 100% !important;
-}
 #temperature {
   margin: 10px 0;
   font-size: 2.5em;
@@ -113,7 +110,7 @@ i.icon {
 .choice:last-of-type {
   border-right: none;
 }
-#hourly-and-daily {
+#weather-body, #hourly-and-daily {
   height: fit-content !important;
 }
 .hourly-fcast {
@@ -144,11 +141,21 @@ i.angle {
   cursor: pointer;
   font-size: 1.5em !important;
 }
-/* i.long.alternate {
-  font-size: 1.5em !important;
-} */
 .active {
   transform: rotate(90deg);
+}
+#twelve-hour {
+  padding: 0;
+}
+.timeframe {
+  padding: 1em;
+}
+.timeframe:first-of-type {
+  border-bottom: 1px solid #c1cacd;
+}
+.timeframe h2 {
+  text-align: left;
+  margin-left: 1.5em
 }
 .forecast-12hr {
   display: grid;
@@ -156,9 +163,18 @@ i.angle {
 }
 .weather-icon-12hr {
   width: 4em;
+  margin: 0.5em 0;
 }
 .downsize {
   font-size: 0.75em;
+}
+.temperature-12hr h1 {
+  font-size: 2em;
+  line-height: 3em;
+}
+.table-12hr > table {
+  margin: 0 auto;
+  width: 90%;
 }
 .weather-info {
   display: grid;

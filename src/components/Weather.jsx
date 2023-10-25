@@ -71,7 +71,7 @@ function CurrentWeather() {
 
   return (
     weatherData ? (
-    <Card style={{ minWidth: "36em" }}>
+    <Card style={{ minWidth: "40em" }}>
       <Card.Content className="heading">
         {country === "us" ? (
           <Card.Header>{capitalizeName(city)}, {state.toUpperCase()}</Card.Header>

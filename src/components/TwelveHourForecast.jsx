@@ -38,25 +38,43 @@ function TwelveHourForecast({ lat, long, timeZone }) {
 
   useEffect(() => {
     if (weatherData && currentTime.length !== 0) {
-      setForecastArr(setTwelveHour(currentTime, weatherData.list, timeZone))
-      console.log(forecastArr)
+      setForecastArr(setTwelveHour(currentTime, weatherData.list, "America/New_York"))
     }
   }, [currentTime, weatherData])
 
+  useEffect(() => {
+    if (weatherData) {
+      for (let i = 0; i <= 10; i++) {
+        const dateObj = new Date(parseInt(weatherData.list[i].dt, 10) * 1000)
+        const timeString = dateObj.toLocaleTimeString("en-US", {
+          timeZone: timeZone,
+          hour: "numeric",
+          minute: "2-digit"
+        })
+        console.log(timeString)
+      }
+    }
+  }, [weatherData])
+
   return (
     forecastArr ? (
-      <Card.Content>
-        <div className="timeframe">{currentTime}</div>
-        <div className="timeframe">
+      <Card.Content id="twelve-hour">
           {forecastArr.map(period => {
             const description = period.weather[0].description
-            const newDescription = description.replace(description[0], description[0].toUpperCase())
+            const newDescription = description.replace(description[0], description[0].toUpperCase()) 
+            const currentHour = Number(currentTime.split(":")[0])
+            const index = forecastArr.indexOf(period)
 
             return (
+              <div className="timeframe">
+                {index === 0 ? (
+                  currentHour >= 0 && currentHour < 17 ? (<h2>Today</h2>) : (<h2>Tonight</h2>)
+                ) : (currentHour >= 0 && currentHour < 17 ? (<h2>Tonight</h2>) : (<h2>Tomorrow</h2>))
+                }
               <div className="forecast-12hr">
                 <div className="weather-info-12hr">
                   <img src={displayIcon(period)} alt="" className="weather-icon-12hr" />
-                  <p>{newDescription}</p>
+                  <p className="downsize">{newDescription}</p>
                 </div>
                 <div className="temperature-12hr">
                   <h1>{Math.round(period.main.temp)}&deg;F</h1>
@@ -66,7 +84,7 @@ function TwelveHourForecast({ lat, long, timeZone }) {
                     <tbody>
                       <tr>
                         <td className="left downsize">Feels like</td>
-                        <td className="right downsize">{Math.round(period.main.feels_like)}</td>
+                        <td className="right downsize">{Math.round(period.main.feels_like)}&deg;F</td>
                       </tr>
                       <tr>
                         <td className="left downsize">Wind speed</td>
@@ -92,19 +110,15 @@ function TwelveHourForecast({ lat, long, timeZone }) {
                       </tr>
                       <tr>
                         <td className="left downsize">Chance of precipitation</td>
-                        <td className="right downsize">{Math.round(period.pop * 100)}</td>
+                        <td className="right downsize">{Math.round(period.pop * 100)}%</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
+              </div>
             )
           })}
-          {/* {forecastArr ? (
-            "The data is here. First time: " + getTime(forecastArr[0].dt, timeZone)
-            ) : "There is no data"
-          } */}
-        </div>
       </Card.Content>
     ) : (<Loader active>Loading</Loader>)
   )
