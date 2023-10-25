@@ -60,7 +60,7 @@ function SearchCity() {
         <h1>Weather App</h1>
         <h4 style={{ marginBlockStart: "0.25em" }}>Powered by the OpenWeather API</h4>
       </div>
-      <p>Enter your city in the search bar below.</p>
+      <p>Enter a city in the search bar below.</p>
       <div id="search" style={styles.searchDiv}>
         <input type="text" id="city-input" ref={inputElem} onChange={(e) => {
           e.target.value === "" ? setDropdownDisplay("none") : fetchData(e.target.value)

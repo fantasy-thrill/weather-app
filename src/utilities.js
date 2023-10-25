@@ -152,14 +152,16 @@ export function getCurrentDateAndTime() {
   return currentTime
 }
 
-export function getTime(timestamp, timeZone) {
+export function getTime(timestamp, twentyFourHour, timeZone) {
   const dateObject = new Date(parseInt(timestamp, 10) * 1000)
   const options = {
+    hour12: twentyFourHour,
     timeZone: timeZone,
     hour: "numeric",
     minute: "2-digit"
   }
-  return dateObject.toLocaleTimeString("en-US", options)
+  const local = twentyFourHour ? "en-US" : "en-GB"
+  return dateObject.toLocaleTimeString(local, options)
 }
 
 export function getDayOfWeek(timestamp, length) {
@@ -210,14 +212,9 @@ export function uvIndexFormat(index) {
   }
 }
 
-export function isTimeWithinFrame(current, startTime, endTime) {
+export function isTimeWithinFrame(current, startHour, endHour) {
   const currentHourAndMin = current.split(":")
-  const startHourAndMin = startTime.split(":")
-  const endHourAndMin = endTime.split(":")
-
   const currentHour = Number(currentHourAndMin[0])
-  const startHour = Number(startHourAndMin[0])
-  const endHour = Number(endHourAndMin[0])
 
   if (startHour > endHour) {
     return currentHour >= startHour || currentHour < endHour
@@ -226,38 +223,44 @@ export function isTimeWithinFrame(current, startTime, endTime) {
   }
 }
 
-export function buildTwelveHour(objArr, firstTime, secondTime, timeZone) {
+export function buildTwelveHour(objArr, startHour, endHour, timeZone) {
   const forecastArr = []
+
+  const equalHour = (obj, num) => {
+    const timeString = getTime(obj.dt, false, timeZone)
+    const strHour = Number(timeString.split(":")[0])
+    return strHour >= num
+  }
   
-  const firstForecast = objArr.find(hour => getTime(hour.dt, timeZone) === firstTime)
-  const secondForecast = objArr.find(hour => getTime(hour.dt, timeZone) === secondTime)
+  const firstForecast = objArr.find(hour => equalHour(hour, startHour))
+  const secondForecast = objArr.find(hour => equalHour(hour, endHour))
   forecastArr.push(firstForecast, secondForecast)
   return forecastArr
 }
 
 export function setTwelveHour(current, objArr, timeZone) {
-  if (isTimeWithinFrame(current, "0:00", "11:00")) {
+  if (isTimeWithinFrame(current, 0, 11)) {
 
-    return buildTwelveHour(objArr, "11:00 AM", "8:00 PM", timeZone)
+    return buildTwelveHour(objArr, 11, 20, timeZone)
 
-  } else if (isTimeWithinFrame(current, "11:00", "14:00")) {
+  } else if (isTimeWithinFrame(current, 11, 14)) {
 
-    return buildTwelveHour(objArr, "2:00 PM", "8:00 PM", timeZone)
+    return buildTwelveHour(objArr, 14, 20, timeZone)
 
-  } else if (isTimeWithinFrame(current, "14:00", "17:00")) {
+  } else if (isTimeWithinFrame(current, 14, 17)) {
 
-    return buildTwelveHour(objArr, "5:00 PM", "11:00 PM", timeZone)
+    return buildTwelveHour(objArr, 16, 21, timeZone)
 
-  } else if (isTimeWithinFrame(current, "17:00", "20:00")) {
+  } else if (isTimeWithinFrame(current, 17, 20)) {
 
-    return buildTwelveHour(objArr, "8:00 PM", "8:00 AM", timeZone)
+    return buildTwelveHour(objArr, 20, 7, timeZone)
 
-  } else if (isTimeWithinFrame(current, "20:00", "23:00")) {
+  } else if (isTimeWithinFrame(current, 20, 23)) {
 
-    return buildTwelveHour(objArr, "11:00 PM", "8:00 AM", timeZone)
+    return buildTwelveHour(objArr, 22, 7, timeZone)
 
-  } else if (isTimeWithinFrame(current, "23:00", "0:00")) {
+  } else if (isTimeWithinFrame(current, 23, 0)) {
 
-    return buildTwelveHour(objArr, "2:00 AM", "8:00 AM", timeZone)
+    return buildTwelveHour(objArr, 1, 7, timeZone)
   }
 }

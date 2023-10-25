@@ -87,7 +87,7 @@ function HourlyForecast() {
 
           return (
             <React.Fragment key={hour.dt}>
-              {getTime(hour.dt, timeZone) === "12:00 AM" ? (<div className="new-day">{getDayOfWeek(hour.dt, "long")}</div>) : ""}
+              {getTime(hour.dt, true, timeZone) === "12:00 AM" ? (<div className="new-day">{getDayOfWeek(hour.dt, "long")}</div>) : ""}
               <div className="hourly-fcast">
                 <div className="weather-info">
                   <div>
@@ -99,7 +99,7 @@ function HourlyForecast() {
                     }}></i>
                   </div>
                   <div>
-                    <p>{getTime(hour.dt, timeZone)}</p>
+                    <p>{getTime(hour.dt, true, timeZone)}</p>
                   </div>
                   <div className="weather-condition">
                     <img src={displayIcon(hour)} alt="" id="weather-icon"/>

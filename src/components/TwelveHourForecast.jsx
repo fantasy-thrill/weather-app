@@ -38,7 +38,7 @@ function TwelveHourForecast({ lat, long, timeZone }) {
 
   useEffect(() => {
     if (weatherData && currentTime.length !== 0) {
-      setForecastArr(setTwelveHour(currentTime, weatherData.list, "America/New_York"))
+      setForecastArr(setTwelveHour(currentTime, weatherData.list, timeZone))
     }
   }, [currentTime, weatherData])
 
@@ -55,6 +55,8 @@ function TwelveHourForecast({ lat, long, timeZone }) {
       }
     }
   }, [weatherData])
+
+  useEffect(() => console.log(forecastArr), [forecastArr])
 
   return (
     forecastArr ? (
