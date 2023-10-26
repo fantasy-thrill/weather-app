@@ -226,14 +226,26 @@ export function isTimeWithinFrame(current, startHour, endHour) {
 export function buildTwelveHour(objArr, startHour, endHour, timeZone) {
   const forecastArr = []
 
-  const equalHour = (obj, num) => {
+  const equalHour = (obj, num, carryOver) => {
     const timeString = getTime(obj.dt, false, timeZone)
     const strHour = Number(timeString.split(":")[0])
-    return strHour >= num
+
+    if (startHour > endHour && carryOver) {
+      const current = new Date()
+      current.setDate(current.getDate() + 1)
+      const dayString = current.toLocaleDateString("en-US", {
+        weekday: "long",
+        month: "long",
+        day: "numeric"
+      })
+      return strHour >= num && getDayOfWeek(obj.dt, "long") === dayString
+    } else {
+      return strHour >= num
+    }
   }
   
   const firstForecast = objArr.find(hour => equalHour(hour, startHour))
-  const secondForecast = objArr.find(hour => equalHour(hour, endHour))
+  const secondForecast = objArr.find(hour => equalHour(hour, endHour, true))
   forecastArr.push(firstForecast, secondForecast)
   return forecastArr
 }
