@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams, Link } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import '../App.css';
-import config from '../../config';
+import config from '../../config.js';
 import { Card, Loader } from 'semantic-ui-react'
-import { displayIcon, getTime, getDayOfWeek, capitalizeName, degreesToCardinal, uvIndexFormat } from '../utilities';
+import { displayIcon, getTime, getDayOfWeek, capitalizeName, degreesToCardinal, uvIndexFormat } from '../utilities.js';
+import { ForecastObject, Parameters } from '../interfaces.js';
 
 function HourlyForecast() {
-  const { city, state, country } = useParams()
+  const { city, state, country } = useParams<Parameters>()
 
-  const [weatherData, setWeatherData] = useState(null)
-  const [timeZone, setTimeZone] = useState("")
-  const [startIndex, setStartIndex] = useState(0)
-  const [endIndex, setEndIndex] = useState(12)
+  const [weatherData, setWeatherData] = useState<ForecastObject[] | null>(null)
+  const [timeZone, setTimeZone] = useState<string>("")
+  const [startIndex, setStartIndex] = useState<number>(0)
+  const [endIndex, setEndIndex] = useState<number | undefined>(12)
 
   const navigate = useNavigate()
-  let hourlyGroup = weatherData ? weatherData.slice(startIndex, endIndex) : null
+  let hourlyGroup: ForecastObject[] | null = weatherData ? weatherData.slice(startIndex, endIndex) : null
 
   useEffect(() => {
     async function fetchData() {
@@ -46,18 +47,21 @@ function HourlyForecast() {
   }, [city, state, country])
 
   useEffect(() => {
-    const body = document.querySelector("body")
-    body.setAttribute("id", "hourly-and-daily")
+    const body = document.querySelector("body");
+    (body as HTMLBodyElement).setAttribute("id", "hourly-and-daily")
   }, [])
   
   return (
     <Card style={{ minWidth: "40em" }}>
       <Card.Content className="heading">
-        {country === "us" ? (
+        {city && country ? (
+          country === "us" && state ? (
           <Card.Header>{capitalizeName(city)}, {state.toUpperCase()}</Card.Header>
-        ) : (
+          ) : (
           <Card.Header>{capitalizeName(city)}, {country.toUpperCase()}</Card.Header>
-        )}
+          )
+         ) : ""
+        }
         <p style={{ fontSize: "0.75em", color: "#a9a9a9" }}>Hourly forecast</p>
       </Card.Content>
       <Card.Content style={{ padding: "0" }}>
@@ -87,22 +91,22 @@ function HourlyForecast() {
 
           return (
             <React.Fragment key={hour.dt}>
-              {getTime(hour.dt, true, timeZone) === "12:00 AM" ? (<div className="new-day">{getDayOfWeek(hour.dt, "long")}</div>) : ""}
+              {getTime(hour.dt, timeZone) === "12:00 AM" ? (<div className="new-day">{getDayOfWeek(hour.dt, "long")}</div>) : ""}
               <div className="hourly-fcast">
                 <div className="weather-info">
                   <div>
-                    <i className="angle right icon" onClick={(e) => {
-                      e.target.classList.toggle("active")
-                      const parentDiv = e.target.closest(".hourly-fcast")
-                      const extraConditions = parentDiv.querySelector(".extra-info")
-                      extraConditions.classList.toggle("flex-displayed")
+                    <i className="angle right icon" onClick={(e: React.MouseEvent<HTMLElement>) => {
+                      (e.target as HTMLElement).classList.toggle("active")
+                      const parentDiv = (e.target as HTMLElement).closest(".hourly-fcast")
+                      const extraConditions = parentDiv?.querySelector(".extra-info")
+                      extraConditions?.classList.toggle("flex-displayed")
                     }}></i>
                   </div>
                   <div>
-                    <p>{getTime(hour.dt, true, timeZone)}</p>
+                    <p>{getTime(hour.dt, timeZone)}</p>
                   </div>
                   <div className="weather-condition">
-                    <img src={displayIcon(hour)} alt="" id="weather-icon"/>
+                    <img src={displayIcon(hour.weather[0])} alt="" id="weather-icon"/>
                     <p>{newDescription}</p>
                   </div>
                   <div className="temperature">
@@ -168,7 +172,7 @@ function HourlyForecast() {
           )
         })) : (<Loader>Loading</Loader>)}
         <div className="nav-buttons">
-          {startIndex !== 0 ? (
+          {weatherData && startIndex !== 0 ? (
             <div className="nav-btn" onClick={() => {
               setStartIndex(startIndex - 12)
               endIndex === undefined ? setEndIndex(startIndex) : setEndIndex(endIndex - 12)
@@ -177,7 +181,7 @@ function HourlyForecast() {
               Previous
             </div>
           ) : ""}
-          {endIndex !== undefined ? (
+          {weatherData && endIndex !== undefined ? (
             <div className="nav-btn" style={{ margin: "0 0 0 auto" }} onClick={() => {
               setStartIndex(startIndex + 12)
               endIndex + 12 > weatherData.length - 1 ? setEndIndex(undefined) : setEndIndex(endIndex + 12)

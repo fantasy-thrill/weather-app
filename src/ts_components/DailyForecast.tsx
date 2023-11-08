@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import config from '../../config';
+import config from '../../config.js';
 import { Card, Loader } from 'semantic-ui-react'
-import { getDayOfWeek, capitalizeName, degreesToCardinal, displayIcon, uvIndexFormat } from '../utilities';
+import { getDayOfWeek, capitalizeName, degreesToCardinal, displayIcon, uvIndexFormat } from '../utilities.js';
+import { Parameters, DailyForecastObject } from '../interfaces.js';
 
 function DailyForecast() {
-  const { city, state, country } = useParams()
+  const { city, state, country } = useParams<Parameters>()
 
-  const [weatherData, setWeatherData] = useState(null)
+  const [weatherData, setWeatherData] = useState<DailyForecastObject[] | null>(null)
 
   const navigate = useNavigate()
 
@@ -40,18 +41,21 @@ function DailyForecast() {
   }, [city, state, country])
 
   useEffect(() => {
-    const body = document.querySelector("body")
-    body.setAttribute("id", "hourly-and-daily")
+    const body = document.querySelector("body");
+    (body as HTMLBodyElement).setAttribute("id", "hourly-and-daily")
   }, [])
 
   return (
     <Card style={{ minWidth: "40em" }}>
       <Card.Content className="heading">
-        {country === "us" ? (
+      {city && country ? (
+          country === "us" && state ? (
           <Card.Header>{capitalizeName(city)}, {state.toUpperCase()}</Card.Header>
-        ) : (
+          ) : (
           <Card.Header>{capitalizeName(city)}, {country.toUpperCase()}</Card.Header>
-        )}
+          )
+         ) : ""
+        }
         <p style={{ fontSize: "0.75em", color: "#a9a9a9" }}>Eight-day forecast</p>
       </Card.Content>
       <Card.Content style={{ padding: "0" }}>
@@ -84,20 +88,21 @@ function DailyForecast() {
               <div className="weather-info">
                 <div>
                   <i className="angle right icon" onClick={(e) => {
-                    e.target.classList.toggle("active")
-                    const parentDiv = e.target.closest(".daily-fcast")
-                    const extraConditions = parentDiv.querySelector(".extra-info")
-                    extraConditions.classList.toggle("flex-displayed")
+                    (e.target as HTMLElement).classList.toggle("active")
+                    const parentDiv = (e.target as HTMLElement).closest(".daily-fcast")
+                    const extraConditions = parentDiv?.querySelector(".extra-info")
+                    extraConditions?.classList.toggle("flex-displayed")
                   }}></i>
                 </div>
                 <div>{getDayOfWeek(weatherDay["dt"], "short")}</div>
                 <div className="weather-condition">
-                  <img src={displayIcon(weatherDay)} alt="" id="weather-icon" />
+                  <img src={displayIcon(weatherDay.weather[0])} alt="" id="weather-icon" />
                   <p>{newDescription}</p>
                 </div>
                 <div className="temperature">
                   <h1 style={{ fontSize: "1.5em" }}>
-                    {Math.round(weatherDay.temp.max) + "\u00B0F"} / <span className="low-temp">{Math.round(weatherDay.temp.min) + "\u00B0F"}</span>
+                    {Math.round(weatherDay.temp.max) + "\u00B0F"}
+                     / <span className="low-temp">{Math.round(weatherDay.temp.min) + "\u00B0F"}</span>
                   </h1>
                 </div>
                 <div className="main-info">

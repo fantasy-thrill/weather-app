@@ -38,6 +38,13 @@
 #search-page-body > #root {
   margin: -10em auto 0;
 }
+#dropdown-menu {
+  position: absolute;
+  background-color: #e7e7e7;
+  border: 1px solid silver;
+  display: none;
+  width: 20em;
+}
 #city-input {
   width: 12.5em;
   font-size: 1.5em;
@@ -59,6 +66,16 @@
 }
 .content.heading::after {
   display: none !important;
+}
+#main-weather {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+#main-weather-conditions {
+  margin: 0 2.5em;
+}
+#main-weather-table {
+  width: 90%;
 }
 .subheader {
   font-size: 0.75em;
@@ -87,6 +104,9 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
+.rise-and-set div {
+  text-align: left;
+}
 #footer {
   font-size: 0.50em;
   margin: 20px 0 10px;
@@ -105,7 +125,7 @@ i.icon {
   border-right: 1px solid #c0cacd;
 }
 i.icon {
-  margin: 0 0 0 10px !important;
+  margin: 0 10px 0 0  !important;
 }
 .choice:last-of-type {
   border-right: none;
@@ -159,7 +179,7 @@ i.angle {
 }
 .forecast-12hr {
   display: grid;
-  grid-template-columns: 1fr 1fr 30% 30%;
+  grid-template-columns: 20% 20% 1fr;
 }
 .weather-icon-12hr {
   width: 4em;
@@ -172,9 +192,12 @@ i.angle {
   font-size: 2em;
   line-height: 3em;
 }
+.table-12hr {
+  display: flex;
+  justify-content: space-evenly;
+}
 .table-12hr > table {
-  margin: 0 auto;
-  width: 90%;
+  width: 10.5em;
 }
 .weather-info {
   display: grid;
@@ -226,4 +249,50 @@ i.angle {
 
 .read-the-docs {
   color: #888;
+}
+
+/* Responsive style rules for smartphones */
+@media screen and (max-width: 425px) {
+  #weather-body, #hourly-and-daily {
+    width: 100vh;
+  }
+  .content.heading {
+    font-size: 1.5em !important;
+  }
+  .choice {
+    padding: 1em 0;
+  }
+  .choice span {
+    font-size: 1.5em;
+  }
+  i.icon {
+    display: block !important;
+    margin: 0.25em auto !important;
+    font-size: 3em !important;
+  }
+  i.angle {
+    font-size: 2em !important;
+  }
+  #main-weather {
+    grid-template-columns: 1fr;
+  }
+  #main-weather-conditions {
+    font-size: 1.75em;
+  }
+  #main-weather-table {
+    width: 70%;
+    margin: 1.5em auto;
+    font-size: 1.5em;
+  }
+  #main-weather-table td {
+    padding: 0.75em 0.25em;
+  }
+  .rise-and-set {
+    font-size: 1.25em;
+  }
+  .rise-and-set div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 }

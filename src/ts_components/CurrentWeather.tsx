@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import config from '../../config';
+import config from '../../config.js';
 import { Card, Loader } from 'semantic-ui-react'
-import TwelveHourForecast from './TwelveHourForecast';
+import TwelveHourForecast from './TwelveHourForecast.js';
 import { 
   degreesToCardinal, 
   dateFormat,
@@ -11,18 +11,19 @@ import {
   displayIcon,
   capitalizeName, 
   uvIndexFormat, 
-  icons } from '../utilities';
+  icons } from '../utilities.js';
+  import { Parameters, CoordinatesFormat, ForecastObject } from '../interfaces.js';
 
 function CurrentWeather() {
-  const { city, state, country } = useParams()
+  const { city, state, country } = useParams<Parameters>()
 
-  const [weatherData, setWeatherData] = useState(null)
-  const [background, setBackground] = useState("")
-  const [timeZone, setTimeZone] = useState("")
-  const [coordinates, setCoordinates] = useState({ lat: 0, long: 0 })
+  const [weatherData, setWeatherData] = useState<ForecastObject | null>(null)
+  const [background, setBackground] = useState<string>("")
+  const [timeZone, setTimeZone] = useState<string>("")
+  const [coordinates, setCoordinates] = useState<CoordinatesFormat>({ lat: 0, long: 0 })
 
-  const description = weatherData ? weatherData.weather[0].description : null;
-  const newDescription = weatherData ? description.replace(description[0], description[0].toUpperCase()) : null;
+  const description: string | null = weatherData ? weatherData.weather[0].description : null;
+  const newDescription = weatherData ? description?.replace(description[0], description[0].toUpperCase()) : null;
   const fahrenheit = weatherData ? Math.round(weatherData.temp) : null
   const feelsLike = weatherData ? Math.round(weatherData.feels_like) : null
   const windSpeed = weatherData ? Math.round(weatherData.wind_speed) : null
@@ -64,13 +65,13 @@ function CurrentWeather() {
   }, [city, state, country])
 
   useEffect(() => {
-    const body = document.querySelector("body")
-    body.setAttribute("id", "weather-body")
-    body.style.backgroundColor = background
+    const body = document.querySelector("body");
+    (body as HTMLBodyElement).setAttribute("id", "weather-body");
+    (body as HTMLBodyElement).style.backgroundColor = background
   }, [background])
 
   return (
-    weatherData ? (
+    weatherData && (city && state && country) ? (
     <Card style={{ minWidth: "40em" }}>
       <Card.Content className="heading">
         {country === "us" ? (
@@ -102,7 +103,7 @@ function CurrentWeather() {
       </Card.Content>
       <Card.Content style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
           <div style={{ margin: "0 2.5em" }}>
-            <img src={displayIcon(weatherData)} alt="" style={{ width: "7.5em", margin: "0.5em" }} />
+            <img src={displayIcon(weatherData.weather[0])} alt="" style={{ width: "7.5em", margin: "0.5em" }} />
             <p>{newDescription}</p>
             <h2 id="temperature">{fahrenheit + "\u00B0F"}</h2>
             <p id="footer">Last updated {dateFormat(weatherData.dt)}</p>

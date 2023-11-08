@@ -2,3 +2,5 @@ node_modules
 .env
 .DS_Store
 src/weather-icons
+old_components/
+build/
