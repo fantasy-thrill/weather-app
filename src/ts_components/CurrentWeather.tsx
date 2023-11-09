@@ -84,20 +84,20 @@ function CurrentWeather() {
       <Card.Content style={{ padding: "0" }}>
         <div className="options">
           <div className="choice" onClick={() => window.location.reload()}>
-            Refresh
             <i className="sync alternate icon"></i>
+            Refresh
           </div>
           <div className="choice" onClick={() => navigate(`/hourly-forecast/${city}/${state}/${country}`)}>
-            Hourly Forecast
             <i className="clock outline icon"></i>
+            Hourly Forecast
           </div>
           <div className="choice" onClick={() => navigate(`/8-day-forecast/${city}/${state}/${country}`)}>
-            Eight-Day Forecast
             <i className="calendar outline icon"></i>
+            Eight-Day Forecast
           </div>
           <div className="choice" onClick={() => navigate("/search")}>
-            Search another city
             <i className="search icon"></i>
+            Search another city
           </div>
         </div>
       </Card.Content>

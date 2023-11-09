@@ -45,6 +45,7 @@ function TwelveHourForecast({ lat, long, timeZone }: { lat: number, long: number
   }, [currentTime, weatherData])
 
   useEffect(() => {
+    const objHours = []
     if (weatherData) {
       for (let i = 0; i <= 10; i++) {
         const dateObj = new Date(weatherData[i].dt * 1000)
@@ -53,8 +54,9 @@ function TwelveHourForecast({ lat, long, timeZone }: { lat: number, long: number
           hour: "numeric",
           minute: "2-digit"
         })
-        console.log(timeString)
+        objHours.push(timeString)
       }
+      console.log(timeZone, objHours)
     }
   }, [weatherData])
 

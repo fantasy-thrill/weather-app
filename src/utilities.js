@@ -224,7 +224,7 @@ export function buildTwelveHour(objArr, startHour, endHour, timeZone) {
     const equalHour = (obj, num, carryOver = false) => {
         const timeString = getTime(obj.dt, timeZone, false);
         const strHour = Number(timeString.split(":")[0]);
-        if (startHour > endHour && carryOver) {
+        if (startHour > endHour) {
             const current = new Date();
             current.setDate(current.getDate() + 1);
             const dayString = current.toLocaleDateString("en-US", {
@@ -232,7 +232,11 @@ export function buildTwelveHour(objArr, startHour, endHour, timeZone) {
                 month: "long",
                 day: "numeric"
             });
-            return strHour >= num && getDayOfWeek(obj.dt, "long") === dayString;
+            const nextDay = carryOver ? 
+              strHour >= num && getDayOfWeek(obj.dt, "long") === dayString : 
+              strHour >= num || getDayOfWeek(obj.dt, "long") === dayString
+            
+            return nextDay
         }
         else {
             return strHour >= num;

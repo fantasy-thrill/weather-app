@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import config from "../../config.js";
-import { degreesToCardinal, displayIcon, getTime, setTwelveHour } from "../utilities.js";
+import { degreesToCardinal, displayIcon, setTwelveHour } from "../utilities.js";
 import { Card, Loader } from "semantic-ui-react";
 import React from "react";
 function TwelveHourForecast({ lat, long, timeZone }) {
@@ -39,6 +39,7 @@ function TwelveHourForecast({ lat, long, timeZone }) {
         }
     }, [currentTime, weatherData]);
     useEffect(() => {
+        const objHours = []
         if (weatherData) {
             for (let i = 0; i <= 10; i++) {
                 const dateObj = new Date(weatherData[i].dt * 1000);
@@ -47,8 +48,9 @@ function TwelveHourForecast({ lat, long, timeZone }) {
                     hour: "numeric",
                     minute: "2-digit"
                 });
-                console.log(timeString);
+                objHours.push(timeString);
             }
+          console.log(timeZone, objHours)
         }
     }, [weatherData]);
     useEffect(() => console.log(forecastArr, currentTime), [forecastArr, currentTime]);

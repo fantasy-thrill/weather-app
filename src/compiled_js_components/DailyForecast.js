@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import config from '../../config.js';
 import { Card, Loader } from 'semantic-ui-react';
-import { getDayOfWeek, capitalizeName, degreesToCardinal, displayIcon, uvIndexFormat } from '../utilities.js';
+import { getDayOfWeek, capitalizeName, degreesToCardinal, displayIcon, uvIndexFormat } from '../../build/src/utilities.js';
 function DailyForecast() {
     const { city, state, country } = useParams();
     const [weatherData, setWeatherData] = useState(null);
@@ -44,32 +44,24 @@ function DailyForecast() {
                 ", ",
                 country.toUpperCase()))) : "",
             React.createElement("p", { style: { fontSize: "0.75em", color: "#a9a9a9" } }, "Eight-day forecast")),
-            React.createElement(
-                Card.Content,
-                { style: { padding: "0" } },
-                React.createElement("div", { className: "options" },
-                  React.createElement("div", { className: "choice", onClick: () => navigate(`/current/${city}/${state}/${country}`) },
+        React.createElement(Card.Content, { style: { padding: "0" } },
+            React.createElement("div", { className: "options" },
+                React.createElement("div", { className: "choice", onClick: () => navigate(`/current/${city}/${state}/${country}`) },
                     React.createElement("i", { className: "sun icon" }),
-                    React.createElement("span", null, "Current Weather")
-                  ),
-                  React.createElement("div", { className: "choice", onClick: () => navigate(`/hourly-forecast/${city}/${state}/${country}`) },
+                    "Current Weather"),
+                React.createElement("div", { className: "choice", onClick: () => navigate(`/hourly-forecast/${city}/${state}/${country}`) },
                     React.createElement("i", { className: "clock outline icon" }),
-                    React.createElement("span", null, "Hourly Forecast")
-                  ),
-                  React.createElement("div", { className: "choice", onClick: () => navigate(`/8-day-forecast/${city}/${state}/${country}`) },
+                    "Hourly Forecast"),
+                React.createElement("div", { className: "choice", onClick: () => navigate(`/8-day-forecast/${city}/${state}/${country}`) },
                     React.createElement("i", { className: "calendar outline icon" }),
-                    React.createElement("span", null, "Eight-Day Forecast")
-                  ),
-                  React.createElement("div", { className: "choice", onClick: () => navigate("/search") },
+                    "Eight-Day Forecast"),
+                React.createElement("div", { className: "choice", onClick: () => navigate("/search") },
                     React.createElement("i", { className: "search icon" }),
-                    React.createElement("span", null, "Search another city")
-                  )
-                )
-              ),
+                    "Search another city"))),
         React.createElement(Card.Content, { style: { padding: 0 } }, weatherData ? (weatherData.map(weatherDay => {
             const description = weatherDay.weather[0].description;
             const newDescription = description.replace(description[0], description[0].toUpperCase());
-            return (React.createElement("div", { className: "daily-fcast", key: weatherDay.dt },
+            return (React.createElement("div", { className: "daily-fcast" },
                 React.createElement("div", { className: "weather-info" },
                     React.createElement("div", null,
                         React.createElement("i", { className: "angle right icon", onClick: (e) => {

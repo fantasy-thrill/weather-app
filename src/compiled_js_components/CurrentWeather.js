@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import config from '../../config.js';
 import { Card, Loader } from 'semantic-ui-react';
 import TwelveHourForecast from './TwelveHourForecast.js';
-import { degreesToCardinal, dateFormat, getTime, getBackgroundColor, displayIcon, capitalizeName, uvIndexFormat, icons } from '../utilities.js';
+import { degreesToCardinal, dateFormat, getTime, getBackgroundColor, displayIcon, capitalizeName, uvIndexFormat, icons } from '../../build/src/utilities.js';
 function CurrentWeather() {
     const { city, state, country } = useParams();
     const [weatherData, setWeatherData] = useState(null);
@@ -60,28 +60,20 @@ function CurrentWeather() {
                 ", ",
                 country.toUpperCase())),
             React.createElement("p", { className: "subheader" }, "Current weather")),
-            React.createElement(
-                Card.Content,
-                { style: { padding: "0" } },
-                React.createElement("div", { className: "options" },
-                  React.createElement("div", { className: "choice", onClick: () => window.location.reload() },
+        React.createElement(Card.Content, { style: { padding: "0" } },
+            React.createElement("div", { className: "options" },
+                React.createElement("div", { className: "choice", onClick: () => window.location.reload() },
                     React.createElement("i", { className: "sync alternate icon" }),
-                    React.createElement("span", null, "Refresh")
-                  ),
-                  React.createElement("div", { className: "choice", onClick: () => navigate(`/hourly-forecast/${city}/${state}/${country}`) },
+                    "Refresh"),
+                React.createElement("div", { className: "choice", onClick: () => navigate(`/hourly-forecast/${city}/${state}/${country}`) },
                     React.createElement("i", { className: "clock outline icon" }),
-                    React.createElement("span", null, "Hourly Forecast")
-                  ),
-                  React.createElement("div", { className: "choice", onClick: () => navigate(`/8-day-forecast/${city}/${state}/${country}`) },
+                    "Hourly Forecast"),
+                React.createElement("div", { className: "choice", onClick: () => navigate(`/8-day-forecast/${city}/${state}/${country}`) },
                     React.createElement("i", { className: "calendar outline icon" }),
-                    React.createElement("span", null, "Eight-Day Forecast")
-                  ),
-                  React.createElement("div", { className: "choice", onClick: () => navigate("/search") },
+                    "Eight-Day Forecast"),
+                React.createElement("div", { className: "choice", onClick: () => navigate("/search") },
                     React.createElement("i", { className: "search icon" }),
-                    React.createElement("span", null, "Search another city")
-                  )
-                )
-              ),
+                    "Search another city"))),
         React.createElement(Card.Content, { style: { display: "grid", gridTemplateColumns: "1fr 1fr" } },
             React.createElement("div", { style: { margin: "0 2.5em" } },
                 React.createElement("img", { src: displayIcon(weatherData.weather[0]), alt: "", style: { width: "7.5em", margin: "0.5em" } }),
