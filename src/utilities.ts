@@ -242,13 +242,14 @@ export function buildTwelveHour(objArr: Hour3ForecastItem[], startHour: number, 
       const dayString = current.toLocaleDateString("en-US", {
         weekday: "long",
         month: "long",
-        day: "numeric"
+        day: "numeric" 
       })
       const nextDay = carryOver ? 
         strHour >= num && getDayOfWeek(obj.dt, "long") === dayString : 
         strHour >= num || getDayOfWeek(obj.dt, "long") === dayString
       
-      return nextDay    
+      return nextDay 
+
     } else {
       return strHour >= num
     }

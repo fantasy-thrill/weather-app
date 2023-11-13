@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import config from '../../config.js';
 import { Card, Loader } from 'semantic-ui-react';
-import { getDayOfWeek, capitalizeName, degreesToCardinal, displayIcon, uvIndexFormat } from '../../build/src/utilities.js';
+import { getDayOfWeek, capitalizeName, degreesToCardinal, displayIcon, uvIndexFormat } from '../utilities.js';
 function DailyForecast() {
     const { city, state, country } = useParams();
     const [weatherData, setWeatherData] = useState(null);
@@ -61,7 +61,7 @@ function DailyForecast() {
         React.createElement(Card.Content, { style: { padding: 0 } }, weatherData ? (weatherData.map(weatherDay => {
             const description = weatherDay.weather[0].description;
             const newDescription = description.replace(description[0], description[0].toUpperCase());
-            return (React.createElement("div", { className: "daily-fcast" },
+            return (React.createElement("div", { className: "daily-fcast", key: weatherDay.dt },
                 React.createElement("div", { className: "weather-info" },
                     React.createElement("div", null,
                         React.createElement("i", { className: "angle right icon", onClick: (e) => {

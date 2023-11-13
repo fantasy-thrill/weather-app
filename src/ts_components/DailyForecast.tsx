@@ -84,7 +84,7 @@ function DailyForecast() {
           const newDescription = description.replace(description[0], description[0].toUpperCase())
 
           return (
-            <div className="daily-fcast">
+            <div className="daily-fcast" key={weatherDay.dt}>
               <div className="weather-info">
                 <div>
                   <i className="angle right icon" onClick={(e) => {

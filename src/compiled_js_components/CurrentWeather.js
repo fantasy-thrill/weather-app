@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import config from '../../config.js';
 import { Card, Loader } from 'semantic-ui-react';
 import TwelveHourForecast from './TwelveHourForecast.js';
-import { degreesToCardinal, dateFormat, getTime, getBackgroundColor, displayIcon, capitalizeName, uvIndexFormat, icons } from '../../build/src/utilities.js';
+import { degreesToCardinal, dateFormat, getTime, getBackgroundColor, displayIcon, capitalizeName, uvIndexFormat, icons } from '../utilities.js';
 function CurrentWeather() {
     const { city, state, country } = useParams();
     const [weatherData, setWeatherData] = useState(null);

@@ -39,9 +39,9 @@ function TwelveHourForecast({ lat, long, timeZone }) {
         }
     }, [currentTime, weatherData]);
     useEffect(() => {
-        const objHours = []
+        const objHours = [];
         if (weatherData) {
-            for (let i = 0; i <= 10; i++) {
+            for (let i = 0; i < 10; i++) {
                 const dateObj = new Date(weatherData[i].dt * 1000);
                 const timeString = dateObj.toLocaleTimeString("en-US", {
                     timeZone: timeZone,
@@ -50,17 +50,19 @@ function TwelveHourForecast({ lat, long, timeZone }) {
                 });
                 objHours.push(timeString);
             }
-          console.log(timeZone, objHours)
+            console.log(timeZone, objHours);
         }
     }, [weatherData]);
-    useEffect(() => console.log(forecastArr, currentTime), [forecastArr, currentTime]);
+    useEffect(() => console.log(forecastArr), [forecastArr]);
     return (forecastArr ? (React.createElement(Card.Content, { id: "twelve-hour" }, forecastArr.map(period => {
         const description = period.weather[0].description;
         const newDescription = description.replace(description[0], description[0].toUpperCase());
         const currentHour = Number(currentTime.split(":")[0]);
         const index = forecastArr.indexOf(period);
         return (React.createElement("div", { className: "timeframe", key: period.dt },
-            index === 0 ? (currentHour >= 0 && currentHour < 17 ? (React.createElement("h2", null, "Today")) : (React.createElement("h2", null, "Tonight"))) : (currentHour >= 0 && currentHour < 17 ? (React.createElement("h2", null, "Tonight")) : (React.createElement("h2", null, "Tomorrow"))),
+            index === 0 ? (currentHour >= 0 && currentHour < 14 ? (React.createElement("h2", null, "Today")) :
+                currentHour >= 14 && currentHour < 17 ? (React.createElement("h2", null, "This Evening")) : (React.createElement("h2", null, "Tonight"))) : (currentHour >= 0 && currentHour < 14 ? (React.createElement("h2", null, "Tonight")) :
+                currentHour >= 14 && currentHour < 17 ? (React.createElement("h2", null, "Later Tonight")) : (React.createElement("h2", null, "Tomorrow"))),
             React.createElement("div", { className: "forecast-12hr" },
                 React.createElement("div", { className: "weather-info-12hr" },
                     React.createElement("img", { src: displayIcon(period.weather[0]), alt: "", className: "weather-icon-12hr" }),
@@ -69,40 +71,39 @@ function TwelveHourForecast({ lat, long, timeZone }) {
                     React.createElement("h1", null,
                         Math.round(period.main.temp),
                         "\u00B0F")),
-                        React.createElement("div", { className: "table-12hr" },
-                        React.createElement("table", null,
-                          React.createElement("tbody", null,
+                React.createElement("div", { className: "table-12hr" },
+                    React.createElement("table", null,
+                        React.createElement("tbody", null,
                             React.createElement("tr", null,
-                              React.createElement("td", { className: "left downsize" }, "Feels like"),
-                              React.createElement("td", { className: "right downsize" }, Math.round(period.main.feels_like) + "\u00B0F")
-                            ),
+                                React.createElement("td", { className: "left downsize" }, "Feels like"),
+                                React.createElement("td", { className: "right downsize" },
+                                    Math.round(period.main.feels_like),
+                                    "\u00B0F")),
                             React.createElement("tr", null,
-                              React.createElement("td", { className: "left downsize" }, "Wind speed"),
-                              React.createElement("td", { className: "right downsize" }, `${degreesToCardinal(period.wind.deg)} ${Math.round(period.wind.speed)} mph`)
-                            ),
+                                React.createElement("td", { className: "left downsize" }, "Wind speed"),
+                                React.createElement("td", { className: "right downsize" }, `${degreesToCardinal(period.wind.deg)} ${Math.round(period.wind.speed)} mph`)),
                             React.createElement("tr", null,
-                              React.createElement("td", { className: "left downsize" }, "Wind gusts"),
-                              React.createElement("td", { className: "right downsize" }, Math.round(period.wind.gust) + " mph")
-                            )
-                          )
-                        ),
-                        React.createElement("table", null,
-                          React.createElement("tbody", null,
+                                React.createElement("td", { className: "left downsize" }, "Wind gusts"),
+                                React.createElement("td", { className: "right downsize" },
+                                    Math.round(period.wind.gust),
+                                    " mph")))),
+                    React.createElement("table", null,
+                        React.createElement("tbody", null,
                             React.createElement("tr", null,
-                              React.createElement("td", { className: "left downsize" }, "Humidity"),
-                              React.createElement("td", { className: "right downsize" }, period.main.humidity + "%")
-                            ),
+                                React.createElement("td", { className: "left downsize" }, "Humidity"),
+                                React.createElement("td", { className: "right downsize" },
+                                    period.main.humidity,
+                                    "%")),
                             React.createElement("tr", null,
-                              React.createElement("td", { className: "left downsize" }, "Cloud cover"),
-                              React.createElement("td", { className: "right downsize" }, period.clouds.all + "%")
-                            ),
+                                React.createElement("td", { className: "left downsize" }, "Cloud cover"),
+                                React.createElement("td", { className: "right downsize" },
+                                    period.clouds.all,
+                                    "%")),
                             React.createElement("tr", null,
-                              React.createElement("td", { className: "left downsize" }, "Chance of precipitation"),
-                              React.createElement("td", { className: "right downsize" }, Math.round(period.pop * 100) + "%")
-                            )
-                          )
-                        )
-                      ))));
+                                React.createElement("td", { className: "left downsize" }, "Chance of precipitation"),
+                                React.createElement("td", { className: "right downsize" },
+                                    Math.round(period.pop * 100),
+                                    "%"))))))));
     }))) : (React.createElement(Loader, { active: true }, "Loading")));
 }
 export default TwelveHourForecast;

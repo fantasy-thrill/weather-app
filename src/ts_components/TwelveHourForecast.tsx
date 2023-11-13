@@ -47,7 +47,7 @@ function TwelveHourForecast({ lat, long, timeZone }: { lat: number, long: number
   useEffect(() => {
     const objHours = []
     if (weatherData) {
-      for (let i = 0; i <= 10; i++) {
+      for (let i = 0; i < 10; i++) {
         const dateObj = new Date(weatherData[i].dt * 1000)
         const timeString = dateObj.toLocaleTimeString("en-US", {
           timeZone: timeZone,
@@ -74,8 +74,12 @@ function TwelveHourForecast({ lat, long, timeZone }: { lat: number, long: number
             return (
               <div className="timeframe" key={period.dt}>
                 {index === 0 ? (
-                  currentHour >= 0 && currentHour < 17 ? (<h2>Today</h2>) : (<h2>Tonight</h2>)
-                ) : (currentHour >= 0 && currentHour < 17 ? (<h2>Tonight</h2>) : (<h2>Tomorrow</h2>))
+                  currentHour >= 0 && currentHour < 14 ? (<h2>Today</h2>) : 
+                  currentHour >= 14 && currentHour < 17 ? (<h2>This Evening</h2>) : (<h2>Tonight</h2>)
+                 ) : (
+                  currentHour >= 0 && currentHour < 14 ? (<h2>Tonight</h2>) : 
+                  currentHour >= 14 && currentHour < 17 ? (<h2>Later Tonight</h2>) : (<h2>Tomorrow</h2>)
+                 )
                 }
                 <div className="forecast-12hr">
                   <div className="weather-info-12hr">
