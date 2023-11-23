@@ -1,10 +1,10 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
 import React from "react";
-import CurrentWeather from "./compiled_js_components/CurrentWeather"
-import DailyForecast from './compiled_js_components/DailyForecast';
-import HourlyForecast from './compiled_js_components/HourlyForecast';
-import SearchCity from './compiled_js_components/SearchCity';
+import CurrentWeather from "./components/CurrentWeather"
+import DailyForecast from './components/DailyForecast';
+import HourlyForecast from './components/HourlyForecast';
+import SearchCity from './components/SearchCity';
 
 function App() {
   return (

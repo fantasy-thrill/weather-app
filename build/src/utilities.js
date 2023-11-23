@@ -232,11 +232,10 @@ export function buildTwelveHour(objArr, startHour, endHour, timeZone) {
                 month: "long",
                 day: "numeric"
             });
-            const nextDay = carryOver ? 
-              strHour >= num && getDayOfWeek(obj.dt, "long") === dayString : 
-              strHour >= num || getDayOfWeek(obj.dt, "long") === dayString
-            return nextDay 
-
+            const nextDay = carryOver ?
+                strHour >= num && getDayOfWeek(obj.dt, "long") === dayString :
+                strHour >= num || getDayOfWeek(obj.dt, "long") === dayString;
+            return nextDay;
         }
         else {
             return strHour >= num;
