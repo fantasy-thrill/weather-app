@@ -38,21 +38,6 @@ function TwelveHourForecast({ lat, long, timeZone }) {
             setForecastArr(setTwelveHour(currentTime, weatherData, timeZone));
         }
     }, [currentTime, weatherData]);
-    useEffect(() => {
-        const objHours = [];
-        if (weatherData) {
-            for (let i = 0; i < 10; i++) {
-                const dateObj = new Date(weatherData[i].dt * 1000);
-                const timeString = dateObj.toLocaleTimeString("en-US", {
-                    timeZone: timeZone,
-                    hour: "numeric",
-                    minute: "2-digit"
-                });
-                objHours.push(timeString);
-            }
-            console.log(timeZone, objHours);
-        }
-    }, [weatherData]);
     useEffect(() => console.log(forecastArr), [forecastArr]);
     return (forecastArr ? (React.createElement(Card.Content, { id: "twelve-hour" }, forecastArr.map(period => {
         const description = period.weather[0].description;
