@@ -19,7 +19,7 @@
 }
 .ui.card {
   width: 400px !important;
-  background: rgb(255, 255, 255, 0.5) !important;
+  background: rgb(255, 255, 255, 0.8) !important;
 }
 .heading {
   display: flex;
@@ -33,7 +33,7 @@
   font-size: 1.25em;
 }
 #search-page-body {
-  background: linear-gradient(#ffee00, #ffc400);
+  background: linear-gradient(#ffee00, #ffc400) !important;
 }
 #search-page-body > #root {
   margin: -10em auto 0;
@@ -132,6 +132,9 @@ i.icon {
 }
 #weather-body, #hourly-and-daily {
   height: fit-content !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+  background-size: cover !important;
 }
 .hourly-fcast {
   border-bottom: 5px solid #a09f9f;

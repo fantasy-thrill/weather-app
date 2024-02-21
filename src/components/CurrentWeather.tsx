@@ -7,7 +7,7 @@ import {
   degreesToCardinal, 
   dateFormat,
   getTime, 
-  getBackgroundColor, 
+  getBackgroundImage, 
   displayIcon,
   capitalizeName, 
   uvIndexFormat, 
@@ -52,7 +52,7 @@ function CurrentWeather() {
           if (obj.cod !== '400') {
             setWeatherData(obj.current);
             setCoordinates(prevState => ({ ...prevState, lat: obj.lat, long: obj.lon }))
-            setBackground(getBackgroundColor(obj.current));
+            setBackground(getBackgroundImage(obj.current));
             setTimeZone(obj.timezone);
             console.log(obj.current, "current weather object");
           }
@@ -67,7 +67,7 @@ function CurrentWeather() {
   useEffect(() => {
     const body = document.querySelector("body");
     (body as HTMLBodyElement).setAttribute("id", "weather-body");
-    (body as HTMLBodyElement).style.backgroundColor = background
+    (body as HTMLBodyElement).style.background = background
   }, [background])
 
   return (
