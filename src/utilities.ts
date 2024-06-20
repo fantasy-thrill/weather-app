@@ -295,33 +295,34 @@ export function buildTwelveHour(objArr: Hour3ForecastItem[], startHour: number, 
 }
 
 export function setTwelveHour(current: string, objArr: Hour3ForecastItem[], timeZone: string): Hour3ForecastItem[] {
-  if (isTimeWithinFrame(current, 0, 11)) {
+  if (isTimeWithinFrame(current, 0, 12)) {
 
-    return buildTwelveHour(objArr, 11, 20, timeZone)
+    return buildTwelveHour(objArr, 12, 21, timeZone)
 
-  } else if (isTimeWithinFrame(current, 11, 14)) {
+  } else if (isTimeWithinFrame(current, 12, 15)) {
 
-    return buildTwelveHour(objArr, 14, 20, timeZone)
+    return buildTwelveHour(objArr, 15, 21, timeZone)
 
-  } else if (isTimeWithinFrame(current, 14, 17)) {
+  } else if (isTimeWithinFrame(current, 15, 18)) {
 
-    return buildTwelveHour(objArr, 16, 21, timeZone)
+    return buildTwelveHour(objArr, 17, 22, timeZone)
 
-  } else if (isTimeWithinFrame(current, 17, 20)) {
+  } else if (isTimeWithinFrame(current, 18, 21)) {
 
-    return buildTwelveHour(objArr, 20, 7, timeZone)
+    return buildTwelveHour(objArr, 21, 7, timeZone)
 
-  } else if (isTimeWithinFrame(current, 20, 23)) {
+  } else if (isTimeWithinFrame(current, 21, 0)) {
 
-    return buildTwelveHour(objArr, 22, 7, timeZone)
-
-  } else if (isTimeWithinFrame(current, 23, 0)) {
-
-    return buildTwelveHour(objArr, 1, 7, timeZone)
+    return buildTwelveHour(objArr, 23, 7, timeZone)
 
   } else {
 
     return []
     
   }
+
+  // Seasonal timeframe condition 
+  //  } else if (isTimeWithinFrame(current, 23, 0)) {
+
+  //   return buildTwelveHour(objArr, 1, 7, timeZone)
 }

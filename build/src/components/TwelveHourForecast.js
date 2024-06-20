@@ -14,6 +14,9 @@ function TwelveHourForecast({ lat, long, timeZone }) {
                 const data = await result.json();
                 if (data.cod === "200") {
                     setWeatherData(data.list);
+                    for (let i = 0; i < 12; i++) {
+                        // console.log(`${i}: ` + getTime(data.list[i].dt, "America/New_York"))
+                    }
                 }
                 console.log(data, "twelve hour object");
             }

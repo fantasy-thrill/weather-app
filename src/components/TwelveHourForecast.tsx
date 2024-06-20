@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import config from "../../config.js";
-import { degreesToCardinal, displayIcon, setTwelveHour } from "../utilities.js";
+import { degreesToCardinal, displayIcon, getTime, setTwelveHour } from "../utilities.js";
 import { Card, Loader } from "semantic-ui-react";
 import React from "react";
 import { Hour3ForecastItem } from "../interfaces.js";
@@ -18,6 +18,9 @@ function TwelveHourForecast({ lat, long, timeZone }: { lat: number, long: number
 
         if (data.cod === "200") {
           setWeatherData(data.list)
+          for (let i = 0; i < 12; i++) {
+            // console.log(`${i}: ` + getTime(data.list[i].dt, "America/New_York"))
+          }
         }
         console.log(data, "twelve hour object")
       } catch (error) {

@@ -116,7 +116,6 @@ export function degreesToCardinal(degrees) {
 export function getBackgroundImage(data) {
     const weatherCode = data?.weather[0]?.id;
     const period = data?.weather[0]?.icon[2];
-    // const description = data?.weather[0]?.description
     const condition = data?.weather[0]?.main;
     let background = "#ffffff";
     if (period === "d") {
@@ -283,25 +282,25 @@ export function buildTwelveHour(objArr, startHour, endHour, timeZone) {
     return forecastArr;
 }
 export function setTwelveHour(current, objArr, timeZone) {
-    if (isTimeWithinFrame(current, 0, 11)) {
-        return buildTwelveHour(objArr, 11, 20, timeZone);
+    if (isTimeWithinFrame(current, 0, 12)) {
+        return buildTwelveHour(objArr, 12, 21, timeZone);
     }
-    else if (isTimeWithinFrame(current, 11, 14)) {
-        return buildTwelveHour(objArr, 14, 20, timeZone);
+    else if (isTimeWithinFrame(current, 12, 15)) {
+        return buildTwelveHour(objArr, 15, 21, timeZone);
     }
-    else if (isTimeWithinFrame(current, 14, 17)) {
-        return buildTwelveHour(objArr, 16, 21, timeZone);
+    else if (isTimeWithinFrame(current, 15, 18)) {
+        return buildTwelveHour(objArr, 17, 22, timeZone);
     }
-    else if (isTimeWithinFrame(current, 17, 20)) {
-        return buildTwelveHour(objArr, 20, 7, timeZone);
+    else if (isTimeWithinFrame(current, 18, 21)) {
+        return buildTwelveHour(objArr, 21, 7, timeZone);
     }
-    else if (isTimeWithinFrame(current, 20, 23)) {
-        return buildTwelveHour(objArr, 22, 7, timeZone);
-    }
-    else if (isTimeWithinFrame(current, 23, 0)) {
-        return buildTwelveHour(objArr, 1, 7, timeZone);
+    else if (isTimeWithinFrame(current, 21, 0)) {
+        return buildTwelveHour(objArr, 23, 7, timeZone);
     }
     else {
         return [];
     }
+    // Seasonal timeframe condition 
+    //  } else if (isTimeWithinFrame(current, 23, 0)) {
+    //   return buildTwelveHour(objArr, 1, 7, timeZone)
 }
