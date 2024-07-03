@@ -68,7 +68,7 @@ function HourlyForecast() {
             hourlyGroup ? (hourlyGroup.map(hour => {
                 const description = hour.weather[0].description;
                 const newDescription = description.replace(description[0], description[0].toUpperCase());
-                return (React.createElement(React.Fragment, { key: hour.dt },
+                return (React.createElement("div", { className: "hour-row", key: hour.dt },
                     getTime(hour.dt, timeZone) === "12:00 AM" ? (React.createElement("div", { className: "new-day" }, getDayOfWeek(hour.dt, "long"))) : "",
                     React.createElement("div", { className: "hourly-fcast" },
                         React.createElement("div", { className: "weather-info" },

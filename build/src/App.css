@@ -136,10 +136,11 @@ i.icon {
   background-attachment: fixed !important;
   background-size: cover !important;
 }
-.hourly-fcast {
+.hour-row {
+  animation: fade-in 1s linear forwards;
   border-bottom: 5px solid #a09f9f;
 }
-.daily-fcast, .hourly-fcast:first-of-type {
+.daily-fcast, .hour-row:first-of-type {
   border-top: 5px solid #a09f9f;
 }
 .new-day {
@@ -244,6 +245,11 @@ i.angle {
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
   }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .card {

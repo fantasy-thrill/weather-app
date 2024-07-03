@@ -90,7 +90,7 @@ function HourlyForecast() {
           const newDescription = description.replace(description[0], description[0].toUpperCase())
 
           return (
-            <React.Fragment key={hour.dt}>
+            <div className="hour-row" key={hour.dt}>
               {getTime(hour.dt, timeZone) === "12:00 AM" ? (<div className="new-day">{getDayOfWeek(hour.dt, "long")}</div>) : ""}
               <div className="hourly-fcast">
                 <div className="weather-info">
@@ -168,7 +168,7 @@ function HourlyForecast() {
                   </div>
                 </div>
               </div>
-            </React.Fragment>
+            </div>
           )
         })) : (<Loader>Loading</Loader>)}
         <div className="nav-buttons">

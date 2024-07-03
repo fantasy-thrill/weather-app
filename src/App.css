@@ -138,6 +138,9 @@ i.icon {
 #weather-body, #hourly-and-daily {
   height: fit-content !important;
 }
+.hour-row {
+  animation: fade-in 1s linear forwards;
+}
 .hourly-fcast {
   border-bottom: 5px solid #a09f9f;
 }
@@ -240,6 +243,11 @@ i.angle {
   to {
     transform: rotate(360deg);
   }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @media (prefers-reduced-motion: no-preference) {
