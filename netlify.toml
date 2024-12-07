@@ -7,3 +7,6 @@ Content-Type = "application/javascript"
 for = "/*.mjs"
 [headers.values]
 Content-Type = "application/javascript"
+
+[build]
+  functions = "netlify/functions"
