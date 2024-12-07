@@ -9,7 +9,7 @@ function SearchCity() {
   const navigate = useNavigate()
 
   function fetchData(inputValue: string) {
-    fetch(`http://api.geonames.org/searchJSON?q=united+states&name_startsWith=${inputValue}&maxRows=10&username=${config.geoApiUsername}`)
+    fetch(`/.netlify/functions/proxy-fetch?startsWith=${inputValue}&username=${config.geoApiUsername}`)
       .then(result => result.json())
       .then(cities => {
         if (dropdownMenu.current) {
