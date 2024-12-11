@@ -10,7 +10,7 @@ function DailyForecast() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const result = await fetch(`${config.geoApiURL}/direct?q=${city},${state},${country}&limit=5&appid=${config.apiKey}`);
+                const result = await fetch(`/geoapi/direct?q=${city},${state},${country}&limit=5&appid=${config.apiKey}`);
                 const res = await result.json();
                 if (res.length === 0) {
                     console.log("City not found");
