@@ -34,8 +34,8 @@ function CurrentWeather() {
     async function fetchData() {
       let fetchURL =
         country === 'us'
-          ? `${config.geoApiURL}/direct?q=${city},${state},${country}&limit=5&appid=${config.apiKey}`
-          : `${config.geoApiURL}/direct?q=${city},${country}&limit=5&appid=${config.apiKey}`;
+          ? `/geoapi/direct?q=${city},${state},${country}&limit=5&appid=${config.apiKey}`
+          : `/geoapi/direct?q=${city},${country}&limit=5&appid=${config.apiKey}`;
     
       try {
         const result = await fetch(fetchURL);

@@ -21,7 +21,7 @@ function HourlyForecast() {
     async function fetchData() {
       try {
         const result = await fetch(
-          `${config.geoApiURL}/direct?q=${city},${state},${country}&limit=5&appid=${config.apiKey}`
+          `/geoapi/direct?q=${city},${state},${country}&limit=5&appid=${config.apiKey}`
         )
         const res = await result.json()
         
