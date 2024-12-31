@@ -6,7 +6,7 @@ function SearchCity() {
     const dropdownMenu = useRef(null);
     const navigate = useNavigate();
     function fetchData(inputValue) {
-        fetch(`/api/searchJSON?q=united+states&name_startsWith=${inputValue}&maxRows=10&username=${config.geoApiUsername}`)
+        fetch(`/api/city-data/searchJSON?q=united+states&name_startsWith=${inputValue}&maxRows=10&username=${config.geoApiUsername}`)
             .then(result => result.json())
             .then(cities => {
             if (dropdownMenu.current) {

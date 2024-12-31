@@ -1,0 +1,17 @@
+{
+  "frontend": {
+    "build": {
+      "buildDir": "dist",
+      "index": "index.html"
+    }
+  },
+  "backend": {
+    "functions": {
+      "path": "lib",
+      "build": {
+        "buildDir": "dist",
+        "index": "index.js"
+      }
+    }
+  }
+}
