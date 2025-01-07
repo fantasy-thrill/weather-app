@@ -6,25 +6,26 @@ function SearchCity() {
     const dropdownMenu = useRef(null);
     const navigate = useNavigate();
     function fetchData(inputValue) {
-        fetch(`/api/city-data/searchJSON?q=united+states&name_startsWith=${inputValue}&maxRows=10&username=${config.geoApiUsername}`)
+        fetch(`https://dataservice.accuweather.com/locations/v1/search?apikey=${config.geoApiKey}&q=${inputValue}&language=en-us`)
             .then(result => result.json())
             .then(cities => {
+            const cleanList = cities.filter((location) => location["Type"] === "City");
             if (dropdownMenu.current) {
-                if (cities.geonames.length > 0 || inputValue !== "") {
+                if (cleanList.length > 0 && inputValue !== "") {
                     dropdownMenu.current.style.display = "block";
                     dropdownMenu.current.innerHTML = "";
-                    cities.geonames.forEach(city => {
+                    for (let i = 0; i < 10; i++) {
                         const cityDiv = document.createElement("div");
-                        cityDiv.textContent = `${city.toponymName}, ${city.adminName1}, ${city.countryCode}`;
+                        cityDiv.textContent = `${cleanList[i]["EnglishName"]}, ${cleanList[i]["AdministrativeArea"]["EnglishName"]}, ${cleanList[i]["Country"]["EnglishName"]}`;
                         cityDiv.setAttribute("class", "city-choice");
                         const parameters = {
-                            cityName: city.toponymName.toLowerCase(),
-                            stateAbbr: city.adminCode1.toLowerCase(),
-                            countryAbbr: city.countryCode.toLowerCase()
+                            cityName: cleanList[i]["EnglishName"].toLowerCase(),
+                            stateAbbr: cleanList[i]["AdministrativeArea"]["ID"].toLowerCase(),
+                            countryAbbr: cleanList[i]["Country"]["ID"].toLowerCase()
                         };
                         cityDiv.addEventListener("click", () => navigate(`/current/${parameters.cityName}/${parameters.stateAbbr}/${parameters.countryAbbr}`));
                         dropdownMenu.current?.appendChild(cityDiv);
-                    });
+                    }
                 }
                 else {
                     dropdownMenu.current.style.display = "none";

@@ -3,7 +3,7 @@ interface EnvTypes {
   geoApiURL: string,
   apiKey: string,
   iconURL: string,
-  geoApiUsername: string
+  geoApiKey: string
 }
 
 const config: EnvTypes = {
@@ -11,7 +11,7 @@ const config: EnvTypes = {
   geoApiURL: import.meta.env.VITE_GEO_API_URL,
   apiKey: import.meta.env.VITE_API_KEY,
   iconURL: import.meta.env.VITE_ICON_URL,
-  geoApiUsername: import.meta.env.VITE_GEO_API_USERNAME
+  geoApiKey: import.meta.env.VITE_GEO_API_KEY
 }
 
 export default config

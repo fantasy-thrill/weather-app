@@ -91,6 +91,24 @@ export interface DailyForecastObject {
   wind_speed: number
 }
 
+export interface LocationObject {
+  "Type": string,
+  "EnglishName": string,
+  "Country": Country,
+  "AdministrativeArea": Province
+}
+
+export interface Country {
+  "ID": string,
+  "EnglishName": string
+}
+
+export interface Province {
+  "ID": string,
+  "EnglishName": string,
+  "CountryID": string
+}
+
 // export type HourlyArray = {
 //   map(arg0: (hour: any) => import("react").JSX.Element): import("react").ReactNode;
 //   slice(startIndex: number, endIndex: number | undefined): HourlyArray

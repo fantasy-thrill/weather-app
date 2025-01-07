@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import config from '../../config.js';
-import { FetchCity } from '../interfaces.js';
+import { FetchCity, LocationObject } from '../interfaces.js';
 
 function SearchCity() {
   const inputElem = useRef<HTMLInputElement | null>(null)
@@ -9,28 +9,36 @@ function SearchCity() {
   const navigate = useNavigate()
 
   function fetchData(inputValue: string) {
-    fetch(`/api/city-data/searchJSON?q=united+states&name_startsWith=${inputValue}&maxRows=10&username=${config.geoApiUsername}`)
+    fetch(`https://dataservice.accuweather.com/locations/v1/search?apikey=${config.geoApiKey}&q=${inputValue}&language=en-us`)
       .then(result => result.json())
       .then(cities => {
+        const cleanList: LocationObject[] = cities.filter((location: LocationObject) => location["Type"] === "City")
+
         if (dropdownMenu.current) {
-          if (cities.geonames.length > 0 || inputValue !== "") {
-            dropdownMenu.current.style.display = "block";
-            dropdownMenu.current.innerHTML = "";
-            (cities.geonames as FetchCity[]).forEach(city => {
-              const cityDiv = document.createElement("div");
-              cityDiv.textContent = `${city.toponymName}, ${city.adminName1}, ${city.countryCode}`
+          if (cleanList.length > 0 && inputValue !== "") {
+            dropdownMenu.current.style.display = "block"
+            dropdownMenu.current.innerHTML = ""
+
+            for (let i = 0; i < 10; i++) {
+              const cityDiv = document.createElement("div")
+              cityDiv.textContent = `${cleanList[i]["EnglishName"]}, ${cleanList[i]["AdministrativeArea"]["EnglishName"]}, ${cleanList[i]["Country"]["EnglishName"]}`
               cityDiv.setAttribute("class", "city-choice")
 
               const parameters = {
-                cityName: city.toponymName.toLowerCase(),
-                stateAbbr: city.adminCode1.toLowerCase(),
-                countryAbbr: city.countryCode.toLowerCase()
+                cityName: cleanList[i]["EnglishName"].toLowerCase(),
+                stateAbbr: cleanList[i]["AdministrativeArea"]["ID"].toLowerCase(),
+                countryAbbr: cleanList[i]["Country"]["ID"].toLowerCase()
               }
-              cityDiv.addEventListener("click", () => navigate(`/current/${parameters.cityName}/${parameters.stateAbbr}/${parameters.countryAbbr}`))
-              dropdownMenu.current?.appendChild(cityDiv);
-            });
+              cityDiv.addEventListener("click", () => 
+                navigate(
+                  `/current/${parameters.cityName}/${parameters.stateAbbr}/${parameters.countryAbbr}`
+                )
+              )
+              dropdownMenu.current?.appendChild(cityDiv)
+            }
+
           } else {
-          dropdownMenu.current.style.display = "none"
+            dropdownMenu.current.style.display = "none"
           }
         }
       })
