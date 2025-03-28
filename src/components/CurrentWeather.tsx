@@ -7,7 +7,7 @@ import {
   degreesToCardinal, 
   dateFormat,
   getTime, 
-  getBackgroundImage, 
+  getBackgroundColor, 
   displayIcon,
   capitalizeName, 
   uvIndexFormat, 
@@ -52,7 +52,7 @@ function CurrentWeather() {
           if (obj.cod !== '400') {
             setWeatherData(obj.current);
             setCoordinates(prevState => ({ ...prevState, lat: obj.lat, long: obj.lon }))
-            setBackground(getBackgroundImage(obj.current));
+            setBackground(getBackgroundColor(obj.current));
             setTimeZone(obj.timezone);
             console.log(obj.current, "current weather object");
           }

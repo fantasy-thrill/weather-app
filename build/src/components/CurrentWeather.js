@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import config from '../../config.js';
 import { Card, Loader } from 'semantic-ui-react';
 import TwelveHourForecast from './TwelveHourForecast.js';
-import { degreesToCardinal, dateFormat, getTime, getBackgroundImage, displayIcon, capitalizeName, uvIndexFormat, icons } from '../utilities.js';
+import { degreesToCardinal, dateFormat, getTime, getBackgroundColor, displayIcon, capitalizeName, uvIndexFormat, icons } from '../utilities.js';
 function CurrentWeather() {
     const { city, state, country } = useParams();
     const [weatherData, setWeatherData] = useState(null);
@@ -33,7 +33,7 @@ function CurrentWeather() {
                     if (obj.cod !== '400') {
                         setWeatherData(obj.current);
                         setCoordinates(prevState => ({ ...prevState, lat: obj.lat, long: obj.lon }));
-                        setBackground(getBackgroundImage(obj.current));
+                        setBackground(getBackgroundColor(obj.current));
                         setTimeZone(obj.timezone);
                         console.log(obj.current, "current weather object");
                     }

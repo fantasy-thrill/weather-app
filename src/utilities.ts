@@ -26,21 +26,6 @@ export const icons = {
   sunset: "https://i.postimg.cc/SQPnvzfB/sunset.png"
 }
 
-const backgrounds = {
-  sunny: "https://i.postimg.cc/Kjt8T9mW/sunny.jpg",
-  clearNight: "https://i.postimg.cc/g0rcscY8/clear-night-sky.jpg",
-  partlyCloudy: "https://i.postimg.cc/DZ9z8V3s/partly-cloudy.jpg",
-  mostlyCloudy: "https://i.postimg.cc/NGXMZ0Rx/mostly-cloudy.jpg",
-  cloudy: "https://i.postimg.cc/0yky6dFt/cloudy.jpg",
-  cloudyNight: "https://i.postimg.cc/zfPvYbdx/cloudy-night.jpg",
-  rain: "https://i.postimg.cc/W3F3NNCT/rain.jpg",
-  rainNight: "https://i.postimg.cc/v8k3QgW1/rainy-night.jpg",
-  thunderstorms: "https://i.postimg.cc/0yV27Kq9/thunderstorm.jpg",
-  nightStorms: "https://i.postimg.cc/15ZtSZH1/stormy-night.jpg",
-  snow: "https://i.postimg.cc/SN7KNtT2/snow.jpg",
-  snowNight: "https://i.postimg.cc/Dzz0NdcW/snowy-night.webp",
-}
-
 export function displayIcon(obj: WeatherItem): string {
   const period: string = obj.icon[2]
 
@@ -118,60 +103,44 @@ export function degreesToCardinal(degrees: number): string {
   return cardinalDirections[cardinalIndex];
 }
 
- export function getBackgroundImage(data: ForecastObject): string {
+export function getBackgroundColor(data: ForecastObject): string {
   const weatherCode = data?.weather[0]?.id
   const period = data?.weather[0]?.icon[2]
-  const condition = data?.weather[0]?.main
+  const description = data?.weather[0]?.description
 
-  let background = "#ffffff"
+  let backgroundColor = "#ffffff"
 
   if (period === "d") {
     if (weatherCode === 800 || weatherCode === 801) {
-      background = backgrounds.sunny
-    } else if (weatherCode > 801) {
-      switch (weatherCode) {
-        case 802:
-          background = backgrounds.partlyCloudy
-          break;
-        case 803:
-          background = backgrounds.mostlyCloudy
-          break;
-        case 804:
-          background = backgrounds.cloudy
-          break;
-      }
-    } else if (condition === "Thunderstorm") {
-      background = backgrounds.thunderstorms
-    } else if (condition === "Rain") {
-      background = backgrounds.rain
-    } else if (condition === "Snow") {
-      background = backgrounds.snow
+      backgroundColor = "#87ceeb"
+    } else if (weatherCode >= 802 && weatherCode <= 804) {
+      backgroundColor = "#A6B9C2"
+    } else if (weatherCode >= 200 && weatherCode <= 531) {
+      backgroundColor = "#7F888C"
+    } else if (description.includes("snow") || description.includes("sleet")) {
+      backgroundColor = "#C1CFD5"
     }
   }
 
   if (period === "n") {
     if (weatherCode === 800 || weatherCode === 801) {
-      background = backgrounds.clearNight
+      backgroundColor = "#3192F4"
     } else if (weatherCode >= 802 && weatherCode <= 804) {
-      background = backgrounds.cloudyNight
-    } else if (condition === "Thunderstorm") {
-      background = backgrounds.nightStorms
-    } else if (condition === "Rain") {
-      background = backgrounds.rainNight
-    } else if (condition === "Snow") {
-      background = backgrounds.snowNight
+      backgroundColor = "#2C77E5"
+    } else if (weatherCode >= 200 && weatherCode <= 531) {
+      backgroundColor = "#5B5B8E"
+    } else if (description.includes("snow") || description.includes("sleet")) {
+      backgroundColor = "#9191CE"
     }
   }
 
-  console.log(background)
-  return background.startsWith("https") ? `url(\"${background}\")` : background 
+  return backgroundColor;
 }
 
 export function setWeatherBackground(data: ForecastObject) {
   const background = document.getElementById("weather-body")
   if (background) {
-    background.style.background = `url(\"${getBackgroundImage(data)}\")`
-    console.log(background.style.background)
+    background.style.backgroundColor = getBackgroundColor(data)
   }
 }
 
