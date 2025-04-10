@@ -67,6 +67,9 @@
 .content.heading::after {
   display: none !important;
 }
+#weather-card {
+  min-width: 40em;
+}
 #main-weather {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -203,6 +206,10 @@ i.angle {
 .table-12hr > table {
   width: 10.5em;
 }
+#rise-and-set-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
 .weather-info {
   display: grid;
   grid-template-columns: 1.5em 1fr 1fr 1fr 45%;
@@ -261,12 +268,34 @@ i.angle {
 }
 
 /* Responsive style rules for smartphones */
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 440px) {
+  #root {
+    padding: 0;
+    margin: 0.25em;
+  }
+  #city-input {
+    width: auto;
+  }
+  #weather-card {
+    max-width: 40em;
+    min-width: 0;
+  }
   #weather-body, #hourly-and-daily {
-    width: 100vh;
+    width: auto;
+    line-height: 1em;
   }
   .content.heading {
     font-size: 1.5em !important;
+  }
+  .heading {
+    display: block;
+    padding: 0.5em 2em !important;
+  }
+  .header {
+    font-size: 0.75em !important;
+  }
+  .subheader {
+    font-size: 0.5em !important;
   }
   .choice {
     padding: 1em 0;
@@ -276,25 +305,32 @@ i.angle {
   }
   i.icon {
     display: block !important;
-    margin: 0.25em auto !important;
-    font-size: 3em !important;
+    margin: 0.25em auto 0.5em !important;
+    font-size: 1.5em !important;
   }
   i.angle {
     font-size: 2em !important;
   }
-  #main-weather {
+  #main-weather,
+  .forecast-12hr,
+  #rise-and-set-container {
     grid-template-columns: 1fr;
   }
-  #main-weather-conditions {
-    font-size: 1.75em;
+  #main-weather-conditions, #main-weather-table {
+    font-size: 1em;
   }
   #main-weather-table {
-    width: 70%;
+    width: 100%;
     margin: 1.5em auto;
-    font-size: 1.5em;
   }
   #main-weather-table td {
     padding: 0.75em 0.25em;
+  }
+  .table-12hr {
+    display: block;
+  }
+  .table-12hr > table {
+    width: 100%;
   }
   .rise-and-set {
     font-size: 1.25em;

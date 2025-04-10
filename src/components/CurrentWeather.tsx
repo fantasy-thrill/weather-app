@@ -72,7 +72,7 @@ function CurrentWeather() {
 
   return (
     weatherData && (city && state && country) ? (
-    <Card style={{ minWidth: "40em" }}>
+    <Card id="weather-card">
       <Card.Content className="heading">
         {country === "us" ? (
           <Card.Header>{capitalizeName(city)}, {state.toUpperCase()}</Card.Header>
@@ -101,15 +101,15 @@ function CurrentWeather() {
           </div>
         </div>
       </Card.Content>
-      <Card.Content style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
-          <div style={{ margin: "0 2.5em" }}>
+      <Card.Content id="main-weather">
+          <div id="main-weather-conditions">
             <img src={displayIcon(weatherData.weather[0])} alt="" style={{ width: "7.5em", margin: "0.5em" }} />
             <p>{newDescription}</p>
             <h2 id="temperature">{fahrenheit + "\u00B0F"}</h2>
             <p id="footer">Last updated {dateFormat(weatherData.dt)}</p>
           </div>
           <div>
-            <table style={{ width: "90%" }}>
+            <table id="main-weather-table">
               <tbody>
                 <tr>
                   <td className="left">Feels Like</td>
@@ -142,7 +142,7 @@ function CurrentWeather() {
           </div>
       </Card.Content>
       <TwelveHourForecast lat={coordinates.lat} long={coordinates.long} timeZone={timeZone}/>
-      <Card.Content style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+      <Card.Content id="rise-and-set-container">
         <div className="rise-and-set">
           <img src={icons.sunrise} alt="sunrise" style={{ width: "3em", margin: "0 auto" }} />
           <div style={{ textAlign: "left" }}>
