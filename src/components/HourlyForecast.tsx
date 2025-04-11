@@ -52,7 +52,7 @@ function HourlyForecast() {
   }, [])
   
   return (
-    <Card style={{ minWidth: "40em" }}>
+    <Card id="weather-card">
       <Card.Content className="heading">
         {city && country ? (
           country === "us" && state ? (
@@ -62,7 +62,7 @@ function HourlyForecast() {
           )
          ) : ""
         }
-        <p style={{ fontSize: "0.75em", color: "#a9a9a9" }}>Hourly forecast</p>
+        <p className="subheader">Hourly forecast</p>
       </Card.Content>
       <Card.Content style={{ padding: "0" }}>
         <div className="options">
@@ -84,7 +84,7 @@ function HourlyForecast() {
           </div>
         </div>
       </Card.Content>
-      <Card.Content style={{ padding: 0, animation: 'opac 0.8s' }}>
+      <Card.Content id="hour-fcast-wrapper">
         {hourlyGroup ? (hourlyGroup.map(hour => {
           const description = hour.weather[0].description
           const newDescription = description.replace(description[0], description[0].toUpperCase())

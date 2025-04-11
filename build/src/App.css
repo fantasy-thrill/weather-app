@@ -11,33 +11,42 @@
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
+
 .ui.card {
   width: 400px !important;
   background: rgb(255, 255, 255, 0.8) !important;
 }
+
 .heading {
   display: flex;
   justify-content: space-between;
   padding: 1em 2em !important;
 }
+
 #header h1 {
   font-size: 2.5em;
 }
+
 #header h4 {
   font-size: 1.25em;
 }
+
 #search-page-body {
   background: linear-gradient(#ffee00, #ffc400) !important;
 }
-#search-page-body > #root {
+
+#search-page-body>#root {
   margin: -10em auto 0;
 }
+
 #dropdown-menu {
   position: absolute;
   background-color: #e7e7e7;
@@ -45,18 +54,22 @@
   display: none;
   width: 20em;
 }
+
 #city-input {
   width: 12.5em;
   font-size: 1.5em;
   border-radius: 0.25em;
 }
+
 .city-choice {
   cursor: pointer;
   font-size: 0.75em;
 }
+
 .city-choice:hover {
   background-color: #a5a5a5;
 }
+
 #city-submit {
   vertical-align: top;
   margin-left: 0.5em;
@@ -64,152 +77,199 @@
   background: #ff4500;
   color: #ffffff;
 }
+
 .content.heading::after {
   display: none !important;
 }
+
 #weather-card {
   min-width: 40em;
 }
+
 #main-weather {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
+
 #main-weather-conditions {
   margin: 0 2.5em;
 }
+
 #main-weather-table {
   width: 90%;
 }
+
 .subheader {
   font-size: 0.75em;
   color: #a9a9a9;
 }
+
 #temperature {
   margin: 10px 0;
   font-size: 2.5em;
 }
+
 #weather-icon {
   width: 4em;
   margin: 1em 0;
 }
+
 #details {
   margin: 0 auto;
   width: 80%;
 }
+
 .left {
   text-align: left;
 }
+
 .right {
   text-align: right;
   font-weight: bold;
 }
+
 .rise-and-set {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
+
 .rise-and-set div {
   text-align: left;
 }
+
 #footer {
   font-size: 0.50em;
   margin: 20px 0 10px;
 }
+
 i.icon {
   margin: 0 10px !important;
 }
+
 .options {
   display: flex;
   font-size: 0.75em;
 }
+
 .choice {
   padding: 0.5em 0.25em;
   width: 25%;
   cursor: pointer;
   border-right: 1px solid #c0cacd;
 }
+
 i.icon {
-  margin: 0 10px 0 0  !important;
+  margin: 0 10px 0 0 !important;
 }
+
 .choice:last-of-type {
   border-right: none;
 }
-#weather-body, #hourly-and-daily {
+
+#weather-body,
+#hourly-and-daily {
   height: fit-content !important;
   background-repeat: no-repeat !important;
   background-attachment: fixed !important;
   background-size: cover !important;
 }
+
+#hour-fcast-wrapper {
+  padding: 0;
+  animation: 0.8s opac;
+}
+
 .hour-row {
   animation: fade-in 1s linear forwards;
   border-bottom: 5px solid #a09f9f;
 }
-.daily-fcast, .hour-row:first-of-type {
+
+.daily-fcast,
+.hour-row:first-of-type {
   border-top: 5px solid #a09f9f;
 }
+
 .new-day {
   font-weight: bold;
   text-align: left;
   border-bottom: 1px solid #c0c0c0;
   padding-left: 1em;
 }
+
 .nav-buttons {
   display: flex;
   justify-content: space-between;
   padding: 0.5em 0.5em;
 }
+
 .nav-btn {
   cursor: pointer;
 }
+
 i.arrow {
   margin: 0 0.5em !important;
 }
+
 i.angle {
   margin: 0 !important;
   cursor: pointer;
   font-size: 1.5em !important;
 }
+
 .active {
   transform: rotate(90deg);
 }
+
 #twelve-hour {
   padding: 0;
 }
+
 .timeframe {
   padding: 1em;
 }
+
 .timeframe:first-of-type {
   border-bottom: 1px solid #c1cacd;
 }
+
 .timeframe h2 {
   text-align: left;
   margin-left: 1.5em
 }
+
 .forecast-12hr {
   display: grid;
   grid-template-columns: 20% 20% 1fr;
 }
+
 .weather-icon-12hr {
   width: 4em;
   margin: 0.5em 0;
 }
+
 .downsize {
   font-size: 0.75em;
 }
+
 .temperature-12hr h1 {
   font-size: 2em;
   line-height: 3em;
 }
+
 .table-12hr {
   display: flex;
   justify-content: space-evenly;
 }
-.table-12hr > table {
+
+.table-12hr>table {
   width: 10.5em;
 }
+
 #rise-and-set-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
+
 .weather-info {
   display: grid;
   grid-template-columns: 1.5em 1fr 1fr 1fr 45%;
@@ -217,24 +277,31 @@ i.angle {
   align-items: center;
   padding-left: 0.75em;
 }
-.weather-condition, .main-info {
+
+.weather-condition,
+.main-info {
   font-size: 0.75em;
 }
+
 .extra-info {
   background-color: #bdbdbd;
   display: none;
 }
-.extra-info > div {
+
+.extra-info>div {
   width: 50%
 }
-.extra-info > div > table {
+
+.extra-info>div>table {
   width: 90%;
   margin: 0 auto;
   font-size: 0.75em;
 }
+
 .flex-displayed {
   display: flex;
 }
+
 .low-temp {
   color: #5e5e5e;
 }
@@ -243,6 +310,7 @@ i.angle {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -255,8 +323,13 @@ i.angle {
 }
 
 @keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .card {
@@ -271,73 +344,111 @@ i.angle {
 @media screen and (max-width: 440px) {
   #root {
     padding: 0;
-    margin: 0.25em;
+    margin: 0.5em auto;
   }
+
   #city-input {
     width: auto;
   }
+
   #weather-card {
     max-width: 40em;
     min-width: 0;
   }
-  #weather-body, #hourly-and-daily {
+
+  #weather-body,
+  #hourly-and-daily {
     width: auto;
     line-height: 1em;
   }
+
   .content.heading {
     font-size: 1.5em !important;
   }
+
   .heading {
     display: block;
     padding: 0.5em 2em !important;
   }
+
   .header {
     font-size: 0.75em !important;
   }
+
   .subheader {
     font-size: 0.5em !important;
   }
+
+  .options {
+    font-size: 0.5em;
+  }
+
   .choice {
     padding: 1em 0;
   }
+
   .choice span {
     font-size: 1.5em;
   }
+
   i.icon {
     display: block !important;
     margin: 0.25em auto 0.5em !important;
     font-size: 1.5em !important;
   }
+
   i.angle {
-    font-size: 2em !important;
+    font-size: 1em !important;
   }
+
   #main-weather,
   .forecast-12hr,
   #rise-and-set-container {
     grid-template-columns: 1fr;
   }
-  #main-weather-conditions, #main-weather-table {
+
+  #main-weather-conditions,
+  #main-weather-table {
     font-size: 1em;
   }
+
   #main-weather-table {
     width: 100%;
     margin: 1.5em auto;
   }
+
   #main-weather-table td {
     padding: 0.75em 0.25em;
   }
+
   .table-12hr {
     display: block;
   }
-  .table-12hr > table {
+
+  .table-12hr>table {
     width: 100%;
   }
-  .rise-and-set {
-    font-size: 1.25em;
+
+  #rise-and-set-container {
+    row-gap: 1.25em;
   }
+
+  .rise-and-set {
+    font-size: 1em;
+  }
+
   .rise-and-set div {
     display: flex;
     flex-direction: column;
     justify-content: center;
+  }
+
+  #hour-fcast-wrapper {
+    font-size: 0.575em;
+  }
+
+  .nav-btn {
+    display: flex;
+    align-items: center;
   }
 }

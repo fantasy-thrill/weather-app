@@ -174,6 +174,11 @@ i.icon {
   background-size: cover !important;
 }
 
+#hour-fcast-wrapper {
+  padding: 0;
+  animation: 0.8s opac;
+}
+
 .hour-row {
   animation: fade-in 1s linear forwards;
   border-bottom: 5px solid #a09f9f;
@@ -339,7 +344,7 @@ i.angle {
 @media screen and (max-width: 440px) {
   #root {
     padding: 0;
-    margin: 0.25em;
+    margin: 0.5em auto;
   }
 
   #city-input {
@@ -374,6 +379,10 @@ i.angle {
     font-size: 0.5em !important;
   }
 
+  .options {
+    font-size: 0.5em;
+  }
+
   .choice {
     padding: 1em 0;
   }
@@ -389,7 +398,7 @@ i.angle {
   }
 
   i.angle {
-    font-size: 2em !important;
+    font-size: 1em !important;
   }
 
   #main-weather,
@@ -420,13 +429,26 @@ i.angle {
     width: 100%;
   }
 
+  #rise-and-set-container {
+    row-gap: 1.25em;
+  }
+
   .rise-and-set {
-    font-size: 1.25em;
+    font-size: 1em;
   }
 
   .rise-and-set div {
     display: flex;
     flex-direction: column;
     justify-content: center;
+  }
+
+  #hour-fcast-wrapper {
+    font-size: 0.575em;
+  }
+
+  .nav-btn {
+    display: flex;
+    align-items: center;
   }
 }

@@ -40,7 +40,7 @@ function HourlyForecast() {
         const body = document.querySelector("body");
         body.setAttribute("id", "hourly-and-daily");
     }, []);
-    return (React.createElement(Card, { style: { minWidth: "40em" } },
+    return (React.createElement(Card, { id: "weather-card" },
         React.createElement(Card.Content, { className: "heading" },
             city && country ? (country === "us" && state ? (React.createElement(Card.Header, null,
                 capitalizeName(city),
@@ -49,7 +49,7 @@ function HourlyForecast() {
                 capitalizeName(city),
                 ", ",
                 country.toUpperCase()))) : "",
-            React.createElement("p", { style: { fontSize: "0.75em", color: "#a9a9a9" } }, "Hourly forecast")),
+            React.createElement("p", { className: "subheader" }, "Hourly forecast")),
         React.createElement(Card.Content, { style: { padding: "0" } },
             React.createElement("div", { className: "options" },
                 React.createElement("div", { className: "choice", onClick: () => navigate(`/current/${city}/${state}/${country}`) },
@@ -64,7 +64,7 @@ function HourlyForecast() {
                 React.createElement("div", { className: "choice", onClick: () => navigate("/search") },
                     React.createElement("i", { className: "search icon" }),
                     "Search another city"))),
-        React.createElement(Card.Content, { style: { padding: 0, animation: 'opac 0.8s' } },
+        React.createElement(Card.Content, { id: "hour-fcast-wrapper" },
             hourlyGroup ? (hourlyGroup.map(hour => {
                 const description = hour.weather[0].description;
                 const newDescription = description.replace(description[0], description[0].toUpperCase());
