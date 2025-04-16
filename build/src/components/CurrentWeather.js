@@ -50,7 +50,7 @@ function CurrentWeather() {
         body.setAttribute("id", "weather-body");
         body.style.background = background;
     }, [background]);
-    return (weatherData && (city && state && country) ? (React.createElement(Card, { style: { minWidth: "40em" } },
+    return (weatherData && (city && state && country) ? (React.createElement(Card, { id: "weather-card" },
         React.createElement(Card.Content, { className: "heading" },
             country === "us" ? (React.createElement(Card.Header, null,
                 capitalizeName(city),
@@ -74,8 +74,8 @@ function CurrentWeather() {
                 React.createElement("div", { className: "choice", onClick: () => navigate("/search") },
                     React.createElement("i", { className: "search icon" }),
                     "Search another city"))),
-        React.createElement(Card.Content, { style: { display: "grid", gridTemplateColumns: "1fr 1fr" } },
-            React.createElement("div", { style: { margin: "0 2.5em" } },
+        React.createElement(Card.Content, { id: "main-weather" },
+            React.createElement("div", { id: "main-weather-conditions" },
                 React.createElement("img", { src: displayIcon(weatherData.weather[0]), alt: "", style: { width: "7.5em", margin: "0.5em" } }),
                 React.createElement("p", null, newDescription),
                 React.createElement("h2", { id: "temperature" }, fahrenheit + "\u00B0F"),
@@ -83,7 +83,7 @@ function CurrentWeather() {
                     "Last updated ",
                     dateFormat(weatherData.dt))),
             React.createElement("div", null,
-                React.createElement("table", { style: { width: "90%" } },
+                React.createElement("table", { id: "main-weather-table" },
                     React.createElement("tbody", null,
                         React.createElement("tr", null,
                             React.createElement("td", { className: "left" }, "Feels Like"),
@@ -104,7 +104,7 @@ function CurrentWeather() {
                             React.createElement("td", { className: "left" }, "UV Index"),
                             React.createElement("td", { className: "right" }, uvIndexFormat(weatherData.uvi)))) : "")))),
         React.createElement(TwelveHourForecast, { lat: coordinates.lat, long: coordinates.long, timeZone: timeZone }),
-        React.createElement(Card.Content, { style: { display: "grid", gridTemplateColumns: "1fr 1fr" } },
+        React.createElement(Card.Content, { id: "rise-and-set-container" },
             React.createElement("div", { className: "rise-and-set" },
                 React.createElement("img", { src: icons.sunrise, alt: "sunrise", style: { width: "3em", margin: "0 auto" } }),
                 React.createElement("div", { style: { textAlign: "left" } },
